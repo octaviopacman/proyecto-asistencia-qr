@@ -14,6 +14,7 @@ function Registro()
 
     });
 
+    //////// ESTE REGISTRO ESTA ROTO, SIRVE PARA EXTRAER LAS VARIABLES, PERO NO FUNCIONA
     
     const handleChange = (event) => {
         const { name, value } = event.target;
