@@ -14,7 +14,7 @@ function Login(props){
 
     let codigo;
 
-    if (mostrarCodigo == true){
+    if (mostrarCodigo === true){
       codigo = <QRCodeComponent data={formData.nombre}/>
     };
 
@@ -59,7 +59,7 @@ function Login(props){
 
       <div>
         {codigo}
-        <p>{formData.Nombre}</p>
+        <p>{formData.nombre}</p>
       </div>
     </div>
   );

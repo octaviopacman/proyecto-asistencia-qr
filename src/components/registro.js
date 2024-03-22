@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "./registro.css";
 
-function Registro()
+function Registro(props)
 {
     const [formData, setFormData] = useState({
       nombre: '',
@@ -14,12 +14,15 @@ function Registro()
 
     });
 
-    //////// ESTE REGISTRO ESTA ROTO, SIRVE PARA EXTRAER LAS VARIABLES, PERO NO FUNCIONA
+    //// Arreglado, cada formulario debe llevar un "name" en cada input.
     
     const handleChange = (event) => {
         const { name, value } = event.target;
-        setFormData({ ...formData, [name]: value });
-      };
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
     
   
       const handleForm = (e) => {
@@ -37,6 +40,7 @@ function Registro()
             <input
                 type="text"
                 id="nombre"
+                name='nombre'
                 value={formData.nombre}
                 onChange={handleChange}
             ></input>
@@ -44,6 +48,7 @@ function Registro()
 
         <label htmlFor="apellido"><h4>APELLIDO:</h4>
             <input type="text"
+            name='apellido'
             value={formData.apellido}
             onChange={handleChange}
             id="apellido"></input>
@@ -51,6 +56,7 @@ function Registro()
 
         <label htmlFor="telefono"><h4>TELEFONO:</h4>
             <input type="number"
+            name='telefono'
             value={formData.telefono}
             onChange={handleChange}
              id="telefono" placeholder="ej: 1123456789"></input>
@@ -58,6 +64,7 @@ function Registro()
 
         <label htmlFor="domicilio"><h4>DOMICILIO:</h4>
             <input type="text"
+            name='domicilio'
             value={formData.domicilio}
             onChange={handleChange} 
             id="domicilio"></input>
@@ -65,6 +72,7 @@ function Registro()
 
         <label htmlFor="dni"><h4>DNI:</h4>
             <input type="number"
+            name='dni'
             value={formData.dni}
             onChange={handleChange}
             id="dni"></input>
@@ -74,11 +82,14 @@ function Registro()
             <h4>CONTRASEÑA:</h4>
           
             <input type="password"
+            name='contrasena1'
             value={formData.contrasena}
             onChange={handleChange}
             id="contrasena1"></input>
+
             <h4>REPETI TU CONTRASEÑA:</h4>
             <input type="password"
+            name='contrasena2'
             value={formData.contrasena2}
             onChange={handleChange}
             id="contrasena2"></input>
