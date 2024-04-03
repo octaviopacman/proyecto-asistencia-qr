@@ -1,6 +1,7 @@
 import React,{useState} from 'react';
 import Login from './components/login';
 import Registro from './components/registro'
+import CompShowBlogs from './components/showBlogs';
 import './App.css'
 
 
@@ -23,6 +24,7 @@ function App() {
     <div className="App">
       {contenido}
       <button onClick={() => setestaRegistrado(!estaRegistrado)}>{contenidoBoton}</button>
+      <CompShowBlogs />
     </div>
   );
 }
