@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 
-const URI = 'http://localhost:8001/blogs'
+const URI = 'http://localhost:8000/profesores'
 
 const CompShowBlogs = () => {
     const [blogs, setBlog] = useState([]);
