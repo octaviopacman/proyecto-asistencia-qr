@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 
 const URI = 'http://localhost:8000/profesores'
 
-const CompShowBlogs = () => {
+const Admin = () => {
     const [blogs, setBlog] = useState([]);
     useEffect( () => {
         getBlogs();
@@ -60,4 +60,4 @@ const CompShowBlogs = () => {
     )
 
 }
-export default CompShowBlogs;
+export default Admin;

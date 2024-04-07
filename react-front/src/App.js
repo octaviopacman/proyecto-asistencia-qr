@@ -2,28 +2,38 @@ import React,{useState} from 'react';
 import Login from './components/login';
 import Registro from './components/registro'
 import './App.css'
-import CompShowBlogs from './components/showBlogs';
+import Admin from './components/admin';
 
 function App() {
   
   const[estaRegistrado, setestaRegistrado] =useState(false);
+  const[estaLogeado, setestaLogeado] = useState(false);
  
   
   let contenido;
   let contenidoBoton;
+  let mostrarBoton;
   if (estaRegistrado){
     contenido = <Registro/>;
     contenidoBoton = 'Volver al inicio de sesion';
   } else {
-    contenido = <Login/>;
+    contenido = <Login />;
+    console.log('appjs' + estaLogeado);
     contenidoBoton = 'No estas registrado?';
+  }
+
+  if (estaLogeado) {
+    console.log('0' + estaLogeado);
+  
+    contenido = <Admin/>;
+    
   }
 
   return (
     <div className="App">
       {contenido}
-      <button onClick={() => setestaRegistrado(!estaRegistrado)}>{contenidoBoton}</button>
-      <CompShowBlogs />
+      <button style={mostrarBoton} onClick={() => setestaRegistrado(!estaRegistrado)}>{contenidoBoton}</button>
+      
     </div>
   );
 }

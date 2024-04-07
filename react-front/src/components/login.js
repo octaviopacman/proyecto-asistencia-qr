@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import QRCodeComponent from './codigo';
+import loginTry from './logintry';
 import './login.css';
 
 // Definición de un componente de función
-function Login(props){
-    let [mostrarCodigo, setMostrarCodigo] = useState(false);
+function Login(setestaLogeado){
+    const [mostrarCodigo, setMostrarCodigo] = useState(false);
     const [formData, setFormData] = useState({
-      nombre: '',
+      correo: '',
       contrasena: '',
 
     });
-    console.log(mostrarCodigo);
 
     let codigo;
 
     if (mostrarCodigo === true){
-      codigo = <QRCodeComponent data={formData.nombre}/>
+      codigo = <QRCodeComponent data={formData.correo}/> ///// A cambiar
     };
 
     const handleChange = (event) => {
@@ -28,19 +28,20 @@ function Login(props){
       e.preventDefault();
       console.log("Inicio de Sesion");
       setMostrarCodigo(true);
-      console.log(formData);
+      setestaLogeado = loginTry(formData);
+      console.log('loginjs logeado = ' + setestaLogeado);
     };
     
   return (
     <div className='loginStyle'>
       <h1 className='texto'>Login</h1>
       <form className='texto' onSubmit={handleForm}>
-        <label htmlFor='nombre_usuario'>Nombre de Usuario:</label><br></br>
+        <label htmlFor='nombre_usuario'>Correo:</label><br></br>
         <input
           type="text"
-          id="nombre"
-          name="nombre"
-          value={formData.nombre}
+          id="correo"
+          name="correo"
+          value={formData.correo}
           onChange={handleChange}
         />
         <br></br>
