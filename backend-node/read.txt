@@ -1,0 +1,12 @@
+en package.json se agrego '"type": "module", ' 
+para usar import en vez de require
+
+npm i express cors mysql sequelize
+
+los modelos tienen nombre en singular y empiezan con mayusculas, 
+mintras que las tablas tienen nombre en plural, 
+por ejemplo: User users
+
+
+
+npx nodemon app
