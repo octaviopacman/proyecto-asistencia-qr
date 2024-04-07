@@ -1,8 +1,8 @@
-# App de Asistencia QR 
+## App de Asistencia QR 
 
 Este es el front-end de la aplicación en React.
 
-# Uso
+## Uso
 
 Abrir 2 terminales, uno en 'backend-node' y el otro en 'react-front'
 
