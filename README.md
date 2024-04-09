@@ -13,3 +13,14 @@ En el terminal de 'backend-node' ejecutar:
 Y en el terminal de 'react-front' ejecutar:
 
 'npm start'
+
+## Dependencias
+
+Instalar nodemon en la carpeta 'backend-node'
+'npm install nodemon'
+
+Instalar 'react-scripts' dentro de 'react-front'
+'npm install react-scripts'
+
+Instalar XAMPP para la base de datos
+'https://www.apachefriends.org/es/index.html'
