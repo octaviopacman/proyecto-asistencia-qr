@@ -19,8 +19,9 @@ Y en el terminal de 'react-front' ejecutar:
 Instalar nodemon en la carpeta 'backend-node'
 'npm install nodemon'
 
-Instalar 'react-scripts' dentro de 'react-front'
+Instalar 'react-scripts' y 'axios' dentro de 'react-front'
 'npm install react-scripts'
+'npm install axios'
 
 Instalar XAMPP para la base de datos
 'https://www.apachefriends.org/es/index.html'
