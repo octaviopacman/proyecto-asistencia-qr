@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+import axios  from 'axios';
 import "./registro.css";
+
+const URI = 'http://localhost:8000/profesores'
 
 function Registro(props)
 {
