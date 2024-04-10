@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import Login from './components/login';
-import Registro from './components/registro'
+import RegistroNuevo from './components/registronuevo';
 import './App.css'
 import Admin from './components/admin';
 
@@ -14,7 +14,7 @@ function App() {
   let contenidoBoton;
   let mostrarBoton;
   if (estaRegistrado){
-    contenido = <Registro/>;
+    contenido = <RegistroNuevo/>;
     contenidoBoton = 'Volver al inicio de sesion';
   } else {
     contenido = <Login />;
