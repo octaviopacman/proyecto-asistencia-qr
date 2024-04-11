@@ -1,0 +1,12 @@
+header{
+    background-color: gray;
+    display:flex;
+}
+.title{
+    text-align: center;
+    width: 100%;
+}
+.botonMenu{
+    height: 100%;
+   
+}
