@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import Login from './components/login';
 import RegistroNuevo from './components/registronuevo';
-import './App.css'
+
 import Admin from './components/admin';
 
 function App() {
