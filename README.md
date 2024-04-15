@@ -25,3 +25,9 @@ Instalar 'react-scripts' y 'axios' dentro de 'react-front'
 
 Instalar XAMPP para la base de datos
 'https://www.apachefriends.org/es/index.html'
+
+## Para hacer
+
+Pasar de 'create-react-app' a next.js/vite
+
+Borrar archivos innecesarios
