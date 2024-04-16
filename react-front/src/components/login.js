@@ -23,13 +23,29 @@ function Login(setestaLogeado){
       setFormData({ ...formData, [name]: value });
     };
   
-
+   //la ruta del login es http://localhost:8000/login
     const handleForm = (e) => {
       e.preventDefault();
       console.log("Inicio de Sesion");
       setMostrarCodigo(true);
       setestaLogeado = loginTry(formData);
       console.log('loginjs logeado = ' + setestaLogeado);
+      //algo asi tienen que poner, pero ni idea, arreglense ustedes con el front, el back anda perfecccttt
+     /*  const info = {
+        correo: formData.correo,
+        password: formData.contrasena
+      };
+    
+      // Hacer la solicitud de inicio de sesión al servidor
+      fetch('http://localhost:8000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(info)
+      }) */
+      
+      
     };
     
   return (

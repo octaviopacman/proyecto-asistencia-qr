@@ -1,7 +1,30 @@
-//importamos el modelo
+//importamos el modelo de la bd
+import connection from 'express-myconnection';
 import profesorModel from '../models/Model.js';
+import { Sequelize } from 'sequelize';
 
-//** Metodos del CRUD */
+
+export const login = async (req, res) => {
+    const { correo, password } = req.body;
+    try {
+        const profesor = await profesorModel.findOne({
+            where: {
+                Correo: correo,
+                ContrasenaHash: password  
+            }
+        });
+
+        if (profesor) {
+            //aca se puede agregar autenticacion adicional para el profesor, como hash de contra y demas
+            return res.status(200).json(profesor);
+        } else {
+            return res.status(404).json({ message: 'Credenciales inválidas o usuario inexistente' });
+        }
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+
 
 //mostrar todos los registros
 export const getAllprofesores = async (req, res) => {

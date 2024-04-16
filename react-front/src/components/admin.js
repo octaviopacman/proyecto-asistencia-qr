@@ -14,7 +14,6 @@ const Admin = () => {
         setBlog(data);
     }
 
-
     const deleteBlog = async (id) => {
         try {
             await fetch(`${URI}${id}`, {

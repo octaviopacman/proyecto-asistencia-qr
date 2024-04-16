@@ -7,6 +7,7 @@ los modelos tienen nombre en singular y empiezan con mayusculas,
 mintras que las tablas tienen nombre en plural, 
 por ejemplo: User users
 
+npm install express mysql express-handlebars express-myconnection express-session body-parser
 
 
 npx nodemon app
