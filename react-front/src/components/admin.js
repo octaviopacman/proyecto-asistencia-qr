@@ -1,25 +1,34 @@
-import axios from 'axios'
 import { useState, useEffect } from 'react'
 
 const URI = 'http://localhost:8000/profesores'
 
 const Admin = () => {
     const [blogs, setBlog] = useState([]);
-    useEffect( () => {
+    useEffect(() => {
         getBlogs();
-    },[])
+    }, [])
 
     const getBlogs = async () => {
-        const res = await axios.get(URI);
-        setBlog(res.data)
+        const response = await fetch(URI);
+        const data = await response.json();
+        setBlog(data);
     }
 
-    const deleteBlog =  async(id) => {
-        axios.delete(`${URI}${id}`);
-        getBlogs();
+
+    const deleteBlog = async (id) => {
+        try {
+            await fetch(`${URI}${id}`, {
+                method: 'DELETE'
+            });
+            getBlogs();
+        } catch (error) {
+            console.error('Error:', error);
+            // Handle errors if necessary
+        }
     }
 
-    return(
+
+    return (
         <div className='container'>
             <div className='row'>
                 <div className='col'>
@@ -37,7 +46,7 @@ const Admin = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            { blogs.map ( (blog) => (
+                            {blogs.map((blog) => (
                                 <tr key={blog.id}>
                                     <td>{blog.id}</td>
                                     <td> {blog.Nombre} </td>
@@ -47,7 +56,7 @@ const Admin = () => {
                                     <td> {blog.Correo} </td>
                                     <td> {blog.Domicilio} </td>
                                     <td> {blog.ContrasenaHash} </td>
-                                    
+
                                 </tr>
                             ))}
                         </tbody>
