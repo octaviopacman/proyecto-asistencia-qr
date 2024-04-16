@@ -24,32 +24,34 @@ export default function RegistroNuevo() {
 
 
     console.log(JSON.stringify(data));
+    postData(data);
+
+    
 
 
-    const postData = async (data) => {
-      try {
-        const response = await fetch('http://localhost:8000/profesores', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
-        });
+  }
 
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
+  const postData = async (data) => {
+    try {
+      const response = await fetch('http://localhost:8000/profesores', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
 
-        const responseData = await response.json();
-        console.log('Success:', responseData);
-        // Here you could redirect the user or clear the form
-      } catch (error) {
-        console.error('Error:', error);
-        // Here you could inform the user of the error
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
+
+      const responseData = await response.json();
+      console.log('Success:', responseData);
+      // Here you could redirect the user or clear the form
+    } catch (error) {
+      console.error('Error:', error);
+      // Here you could inform the user of the error
     }
-
-
   }
 
   return (
