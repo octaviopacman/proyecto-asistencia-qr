@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import "./registro.css"
-export default function RegistroNuevo() {
+export default function Registro() {
 
   const {
     register,
