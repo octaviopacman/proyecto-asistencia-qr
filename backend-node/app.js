@@ -9,10 +9,10 @@ const app = express()
 app.use(express.urlencoded({ extended: true }));
 
 
-app.use(cors()); /* {
-    origin: ["http://localhost:3000"], // o solo una cadena si es un solo origen
-    methods: ['GET', 'POST'],
-} */
+app.use(cors({
+    origin: ["http://localhost:3000"], 
+    methods: ['GET', 'POST', 'PUT', 'DELETE']
+}));
 
 app.use(express.json());
 app.use('/profesores', Routes);

@@ -1,19 +1,17 @@
 //importamos el modelo de la bd
 import connection from 'express-myconnection';
-import profesorModel from '../models/Model.js';
+import {TablaProfesor, TablaAsistencia, TablaCurso, TablaHorario, TablaMateria} from '../models/Model.js';
 import { Sequelize } from 'sequelize';
 
-
+//comprobar login
 export const login = async (req, res) => {
     const { correo, password } = req.body;
     try {
-        const profesor = await profesorModel.findOne({
+        const profesor = await TablaProfesor.findOne({
             where: {
                 Correo: correo,
                 ContrasenaHash: password  
-            }
-        });
-
+            }});
         if (profesor) {
             //aca se puede agregar autenticacion adicional para el profesor, como hash de contra y demas
             return res.status(200).json(profesor);
@@ -24,12 +22,10 @@ export const login = async (req, res) => {
         return res.status(500).json({ message: error.message });
     }
 };
-
-
 //mostrar todos los registros
 export const getAllprofesores = async (req, res) => {
     try{
-        const blogs = await profesorModel.findAll();
+        const blogs = await TablaProfesor.findAll();
         res.json(blogs);
     } catch (error){
         res.json( {message: error.message} );
@@ -38,7 +34,7 @@ export const getAllprofesores = async (req, res) => {
 //mostrar un registro 
 export const getprofesor = async (req, res) => {
     try {
-        const blog = await profesorModel.findAll({
+        const blog = await TablaProfesor.findAll({
             where:{ id:req.params.id }
         });
         res.json(blog[0]);
@@ -49,7 +45,7 @@ export const getprofesor = async (req, res) => {
 //crear un registro
 export const createprofesor = async (req, res) => {
     try{
-      await  profesorModel.create(req.body);
+      await  TablaProfesor.create(req.body);
       res.json({
         'message':'Registro Creado correctamente'
       });
@@ -60,7 +56,7 @@ export const createprofesor = async (req, res) => {
 //actualizar un registro
 export const updateprofesor = async (req, res) =>{
     try{
-        profesorModel.update(req.body, {
+        TablaProfesor.update(req.body, {
             where: { id: req.params.id}
         })
         res.json({
@@ -71,18 +67,24 @@ export const updateprofesor = async (req, res) =>{
     }
 }
 //eliminar registro
-export const deleteprofesor = (req, res) =>{
-    try{
-        profesorModel.destroy({
-            where: { id: req.params.id}
+export const deleteprofesor = async (req, res) => {
+    try {
+        await TablaProfesor.destroy({
+            where: { id: req.params.id }
         });
         res.json({
-            'message':'registro eliminado correctamente'
+            'message': 'Registro eliminado correctamente'
         });
-    }catch (error){
-        res.json( {message: error.message} );
+    } catch (error) {
+        if (error.name === 'SequelizeForeignKeyConstraintError') {
+            res.status(409).json({ 'message': 'No se puede eliminar el profesor porque está referenciado por otros registros.' });
+        } else {
+            // Manejar otros tipos de errores
+            res.status(500).json({ 'message': error.message });
+        }
     }
 }
+
 
 
 
