@@ -1,11 +1,13 @@
-import React,{useState} from 'react';
-import Login from './components/login';
-import RegistroNuevo from './components/registronuevo';
+'use client'
+import Image from "next/image";
+import styles from "./page.module.css";
+import React, {useState} from "react";
+import Registro from "./components/registronuevo"
+import Login from "./components/login"
+import Admin from "./components/admin"
 
-import Admin from './components/admin';
 
-function App() {
-  
+export default function Home() {
   const[estaRegistrado, setestaRegistrado] =useState(false);
   const[estaLogeado, setestaLogeado] = useState(false);
  
@@ -14,7 +16,7 @@ function App() {
   let contenidoBoton;
   let mostrarBoton;
   if (estaRegistrado){
-    contenido = <RegistroNuevo/>;
+    contenido = <Registro/>;
     contenidoBoton = 'Volver al inicio de sesion';
   } else {
     contenido = <Login />;
@@ -37,5 +39,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
