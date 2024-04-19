@@ -1,14 +1,21 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import "./registro.css"
-export default function Registro() {
+import  React from 'react';
+import { useForm } from 'react-hook-form';
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    trigger
-  } = useForm();
+import "./registro.css"
+ function Registro () {
+
+
+  const {register, handleSubmit,formState: { errors }} = useForm();
+
+
+  const onSubmit = (data) => {
+
+    console.log(data);
+
+    console.log(JSON.stringify(data));
+    postData(data);
+
+  };
 
   const style = {
     error: {
@@ -18,18 +25,6 @@ export default function Registro() {
     
   };
 
-  const onSubmit = (data) => {
-
-    console.log("Inicio de Sesion");
-
-
-    console.log(JSON.stringify(data));
-    postData(data);
-
-    
-
-
-  }
 
   const postData = async (data) => {
     try {
@@ -62,28 +57,28 @@ export default function Registro() {
           <h4>NOMBRE:</h4>
           <input
             type="text"
-            id="Nombre"
-            {...register("Nombre",
-              {
-                required: true,
-                minLength: 3,
-                maxLength: 25,
-                pattern: /^[A-Za-z]+$/,
-              })}
-            onChange={() => trigger("Nombre")}
+            id="nombre"
+            name="nombre"
+              {...register("nombre",{
+              required: 'Completa este campo',
+              minLength: {
+                value:3,
+                message:'El nombre es muy corto',
+              },
+              maxLength: {
+                value:30,
+              message:'El nombre es muy largo',
+            },
+              pattern:{
+                value:/^[A-Za-z]+$/,
+                message: 'Solo se aceptan letras',
+              }
+            })}
           />
-          {errors.Nombre && errors.Nombre.type === "minLength" && (
-            <p style={style.error}>El nombre es demasiado corto (mínimo 3 caracteres).</p>
-          )}
-          {errors.Nombre && errors.Nombre.type === "maxLength" && (
-            <p style={style.error}>Ingrese un nombre válido.</p>
-          )}
-          {errors.Nombre && errors.Nombre.type === "pattern" && (
-            <p style={style.error}>Ingrese solo letras en el nombre.</p>
-          )}
-          {errors.Nombre && errors.Nombre.type === "maxLength" && (
-            <p style={style.error}>Ingrese un nombre mas corto.</p>
-          )}
+          {
+          errors.nombre && <p>{errors.nombre.message}</p>
+          }
+       
 
 
         </label>
@@ -94,26 +89,26 @@ export default function Registro() {
           <input
             type="text"
             id="Apellido"
-            {...register("Apellido", {
-              required: true,
-              minLength: 3,
-              maxLength: 25,
-              pattern: /^[A-Za-z]+$/,
+            {...register("Apellido",{
+              required: 'Completa el campo',
+              minLength:{
+                value:3,
+                message:'El apellido es muy corto',
+              },
+              maxLength:{
+                value:40,
+                message:'El nombre es muy corto',
+                pattern:{
+                  value:/^[A-Za-z]+$/,
+                  message:'Ingrese solo letras',
+                }
+              }
             })}
-            onChange={() => trigger("Apellido")}
+            
           />
-          {errors.Apellido && errors.Apellido.type === "minLength" && (
-            <p style={style.error}>El apellido es demasiado corto (mínimo 3 caracteres).</p>
-          )}
-          {errors.Apellido && errors.Apellido.type === "maxLength" && (
-            <p style={style.error}>Ingrese un apellido mas corto.</p>
-          )}
-          {errors.Apellido && errors.Apellido.type === "required" && (
-            <p style={style.error}>El apellido es requerido.</p>
-          )}
-          {errors.Apellido && errors.Apellido.type === "pattern" && (
-            <p style={style.error}>Ingrese solo letras en el apellido.</p>
-          )}
+          {
+          errors.Apellido && <p>{errors.Apellido.message}</p>
+          }
         </label>
         <br />
 
@@ -122,57 +117,44 @@ export default function Registro() {
           <input
             type="tel"
             id="Telefono"
-            {...register("Telefono", {
-              required: true,
-              pattern: /^[0-9]+$/,
-              minLength: 10
+            {...register("Telefono",{
+              required:'Completa este campo',
+              minLength:{
+                value:10,
+                message:'Ingrese minimo 10 caracteres',
+              },
+              pattern:{
+                value:/^\d+$/,
+                message:'Ingrese solo numeros',
+              }
             })}
             placeholder="ej: 1123456789"
-            onChange={() => trigger("Telefono")}
           />
-          {errors.Telefono && errors.Telefono.type === "pattern" && (
-            <p style={style.error}>Ingrese solo números en el telefono.</p>
-          )}
-          {errors.Telefono && errors.Telefono.type === "minLength" && (
-            <p style={style.error}>El numero de telefono es demasiado corto (mínimo 10 caracteres).</p>
-          )}
-          {errors.Telefono && errors.Telefono.type === "required" && (
-            <p style={style.error}>El telefono es requerido.</p>
-          )}
+          {
+            errors.Telefono && <p>{errors.Telefono.message}</p>
+          }
+          
         </label>
         <br />
 
-        <label htmlFor="Domicilio">
-          <h4>DOMICILIO:</h4>
-          <input
-            type="text"
-            id="Domicilio"
-            {...register("Domicilio", { required: true })}
-            onChange={() => trigger("domicilio")}
-          />
-          {errors.Domicilio && errors.Domicilio.type === "required" && (
-            <p style={style.error}>El Domicilio es requerido.</p>
-          )}
-        </label>
-        <br />
+       
 
         <label htmlFor="Correo">
           <h4>CORREO:</h4>
           <input
             type="email"
             id="Correo"
-            {...register("Correo", {
-              required: true,
-              pattern: /@/ // Verificar que al menos un símbolo '@' esté presente
+            {...register("Correo",{
+              requiered:'Completa este campo',
+              pattern:{
+                value:/^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message:'Ingrese un correo valido',
+              }
             })}
-            onChange={() => trigger("correo")}
           />
-          {errors.Correo && errors.Correo.type === "required" && (
-            <p style={style.error}>El Correo es requerido.</p>
-          )}
-          {errors.Correo && errors.Correo.type === "pattern" && (
-            <p style={style.error}>Ingrese un correo válido (debe contener '@').</p>
-          )}
+         {
+          errors.Correo && <p>{errors.Correo.message}</p>
+         }
         </label>
         <br />
 
@@ -181,27 +163,26 @@ export default function Registro() {
           <input
             type="text"
             id="DNI"
-            {...register("DNI", {
-              required: true,
-              pattern: /^[0-9]+$/, // Expresión regular para permitir solo números
-              minLength: 8,
-              maxLength: 9,
-
+            {...register("DNI",{
+              requiered:'Complete este campo',
+              minLength:{ 
+              value: 8,
+              message:'El DNI debe tener como minimo 8 caracteres',
+              },
+              maxLength:{
+                value:10,
+                message:'El DNI debe tener como maximo 10 caracteres',
+              },
+              pattern:{
+                value:/^\d+$/,
+                message:'Ingrese solo numeros'
+              }
             })}
-            onChange={() => trigger("DNI")}
+            
           />
-          {errors.DNI && errors.DNI.type === "required" && (
-            <p style={style.error}>El DNI es requerido.</p>
-          )}
-          {errors.DNI && errors.DNI.type === "pattern" && (
-            <p style={style.error}>Ingrese solo números en el DNI.</p>
-          )}
-          {errors.DNI && errors.DNI.type === "minLength" && (
-            <p style={style.error}>El DNI debe tener como minimo 8 caracteres.</p>
-          )}
-          {errors.DNI && errors.DNI.type === "maxLength" && (
-            <p style={style.error}>El DNI debe tener como maximo 9 caracteres.</p>
-          )}
+          {
+            errors.DNI && <p>{errors.DNI.message}</p>
+          }
         </label>
         <br />
 
@@ -211,18 +192,17 @@ export default function Registro() {
           <input
             type="password"
             id="ContrasenaHash"
-            {...register("ContrasenaHash", {
-              required: true,
-              minLength: 8
+            {...register("ContrasenaHash",{
+              required:'Completa este campo',
+              minLength:{
+                value:8,
+                message:'La contraseña debe tener 8 caracteres como minimos',
+              },
             })}
-            onChange={() => trigger("ContrasenaHash")}
           />
-          {errors.Contrasena && errors.Contrasena.type === "required" && (
-            <p style={style.error}>La contraseña es requerida.</p>
-          )}
-          {errors.Contrasena && errors.Contrasena.type === "minLength" && (
-            <p style={style.error}>La contraseña debe tener 8 caracteres minimos.</p>
-          )}
+         {
+          errors.ConstrasenaHash && <p>{errors.ConstrasenaHash.message}</p>
+         }
         </label>
         <br />
 
@@ -231,3 +211,4 @@ export default function Registro() {
     </div>
   );
 }
+export default Registro;
