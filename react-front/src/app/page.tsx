@@ -5,6 +5,7 @@ import React, {useState} from "react";
 import Registro from "./components/registronuevo"
 import Login from "./components/login"
 import Admin from "./components/admin"
+import Header from "./components/header"
 
 
 export default function Home() {
@@ -15,6 +16,8 @@ export default function Home() {
   let contenido;
   let contenidoBoton;
   let mostrarBoton;
+
+  //// ARREGLAR, SE DEBE UTILIZAR DISPLAY PARA CADA COMPONENTE
   if (estaRegistrado){
     contenido = <Registro/>;
     contenidoBoton = 'Volver al inicio de sesion';
