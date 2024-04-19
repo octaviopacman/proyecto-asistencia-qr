@@ -1,0 +1,20 @@
+body{
+    background: url("./components/background.png");
+}
+
+.contenido{
+    display: block;
+    width: 300px;
+    
+    margin: auto;
+    border: 1px solid black;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+}
+
+input, button{
+    background-color: rgba(0, 0, 0, 0.282);
+    border: 0;
+    border-radius: 10px;
+}
+

@@ -33,7 +33,9 @@ export default function Home() {
 
   return (
     <div className="App">
-      {contenido}
+      <div className="contenido">
+        {contenido}
+      </div>
       <button style={mostrarBoton} onClick={() => setestaRegistrado(!estaRegistrado)}>{contenidoBoton}</button>
       
     </div>
