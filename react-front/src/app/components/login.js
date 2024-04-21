@@ -3,8 +3,21 @@ import QRCodeComponent from './codigo';
 import loginTry from './logintry';
 import './login.css';
 
+import {useForm } from 'react-hook-form';
+
 // Definición de un componente de función
 function Login(setestaLogeado){
+  const {register, handleSubmit,formState: {errors}} = useForm();
+
+  const onSubmit = (data) => {
+
+    console.log(data);
+
+    console.log(JSON.stringify(data));
+    postData(data);
+
+  };
+
     const [mostrarCodigo, setMostrarCodigo] = useState(false);
     const [formData, setFormData] = useState({
       correo: '',
@@ -47,11 +60,15 @@ function Login(setestaLogeado){
       
       
     };
+   
+
+    
+    
     
   return (
     <div className='loginStyle'>
       <h1 className='texto'>Login</h1>
-      <form className='texto' onSubmit={handleForm}>
+      <form className='texto' onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor='nombre_usuario'>Correo:</label><br></br>
         <input
           type="text"
@@ -59,7 +76,19 @@ function Login(setestaLogeado){
           name="correo"
           value={formData.correo}
           onChange={handleChange}
+          {...register("correo",{
+            requiered:'Completa este campo',
+              pattern:{
+                value:/^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message:'Ingrese un correo valido',
+              },
+          })}
+
+          
         />
+        {
+          errors.correo && <p>{errors.correo.message}</p>
+        }
         <br></br>
         <label htmlFor='contrasena_usuario'>Contraseña:</label><br></br>
         <input
@@ -68,7 +97,18 @@ function Login(setestaLogeado){
           name="contrasena"
           value={formData.contrasena}
           onChange={handleChange}
+          {...register("contrasena",{
+            required:'Completa este campo',
+              minLength:{
+                value:8,
+                message:'La contraseña debe tener 8 caracteres como minimos',
+              },
+          })}
+         
         />
+        {
+          errors.contrasena && <p>{errors.contrasena.message}</p>
+        }
         <br></br>
 
         <button type="submit" id='login'>Iniciar Sesión</button>
