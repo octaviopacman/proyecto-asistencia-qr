@@ -1,27 +1,11 @@
+//ProfesorController
 //importamos el modelo de la bd
 import connection from 'express-myconnection';
-import {TablaProfesor, TablaAsistencia, TablaCurso, TablaHorario, TablaMateria} from '../models/Model.js';
+import { TablaProfesor } from '../models/ModelProfesor.js';
+import TablaHorario  from '../models/ModelHorario.js';
+import { TablaAsistencia } from '../models/ModelAsitencia.js';
 import { Sequelize } from 'sequelize';
-
-//comprobar login
-export const login = async (req, res) => {
-    const { correo, password } = req.body;
-    try {
-        const profesor = await TablaProfesor.findOne({
-            where: {
-                Correo: correo,
-                ContrasenaHash: password  
-            }});
-        if (profesor) {
-            //aca se puede agregar autenticacion adicional para el profesor, como hash de contra y demas
-            return res.status(200).json(profesor);
-        } else {
-            return res.status(404).json({ message: 'Credenciales inválidas o usuario inexistente' });
-        }
-    } catch (error) {
-        return res.status(500).json({ message: error.message });
-    }
-};
+import db from '../database/db.js';
 //mostrar todos los registros
 export const getAllprofesores = async (req, res) => {
     try{
@@ -68,20 +52,37 @@ export const updateprofesor = async (req, res) =>{
 }
 //eliminar registro
 export const deleteprofesor = async (req, res) => {
+    const idProfesor = req.params.id;
+
+    const t = await db.transaction();
     try {
+        // Eliminar las relaciones en TablaHorario
+        await TablaHorario.destroy({
+            where: { ProfesorID: idProfesor }
+        }, { transaction: t });
+
+        // Eliminar las relaciones en TablaAsistencia
+        await TablaAsistencia.destroy({
+            where: { ProfesorID: idProfesor }
+        }, { transaction: t });
+        
+        //eliminar el profesor
         await TablaProfesor.destroy({
-            where: { id: req.params.id }
-        });
+            where: { id: idProfesor }
+        }, { transaction: t });
+
+        // Si todo sale bien, hacemos commit de la transacción
+        await t.commit();
+
         res.json({
-            'message': 'Registro eliminado correctamente'
+            'message': 'Profesor y todas sus relaciones eliminadas correctamente'
         });
+
     } catch (error) {
-        if (error.name === 'SequelizeForeignKeyConstraintError') {
-            res.status(409).json({ 'message': 'No se puede eliminar el profesor porque está referenciado por otros registros.' });
-        } else {
-            // Manejar otros tipos de errores
-            res.status(500).json({ 'message': error.message });
-        }
+        // Si hay un error, revertimos los cambios
+        await t.rollback();
+
+        res.status(500).json({ 'message': error.message });
     }
 }
 
