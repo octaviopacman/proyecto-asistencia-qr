@@ -2,7 +2,7 @@ import express from 'express'
 import cors from 'cors';
 import db from "./database/db.js";//base de datos
 import Routes from './routes/routes.js'//enrutador
-import { login } from './controllers/Controller.js';
+import login from './controllers/LoginController.js';
 
 const app = express()
 

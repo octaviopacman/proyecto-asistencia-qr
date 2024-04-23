@@ -3,7 +3,7 @@
 import connection from 'express-myconnection';
 import { TablaProfesor } from '../models/ModelProfesor.js';
 import TablaHorario  from '../models/ModelHorario.js';
-import { TablaAsistencia } from '../models/ModelAsitencia.js';
+import  {TablaAsistencia}  from '../models/ModelAsistencia.js';
 import { Sequelize } from 'sequelize';
 import db from '../database/db.js';
 //mostrar todos los registros
