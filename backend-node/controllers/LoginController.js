@@ -6,7 +6,7 @@ import { Sequelize } from 'sequelize';
 
 //comprobar login
 const login = async (req, res) => {
-    const { Correo, ContrasenaHash } = req.body;
+    const { correo, password } = req.body;
     try {
         const profesor = await TablaProfesor.findOne({
             where: {

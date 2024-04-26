@@ -11,25 +11,22 @@ export const TablaProfesor = db.define('profesores',{
         primaryKey: true,
         autoIncrement: true
       },
-      Nombre: {
+      nombre: {
         type: DataTypes.STRING,
       },
-      Apellido: {
+      apellido: {
         type: DataTypes.STRING,
       },
-      DNI: {
+      dni: {
         type: DataTypes.STRING,
       },
-      Telefono: {
+      telefono: {
         type: DataTypes.STRING,
       },
-      Correo: {
+      correo: {
         type: DataTypes.STRING,
       },
-      Domicilio: {
-        type: DataTypes.STRING,
-      },
-      ContrasenaHash: {
+      password: {
         type: DataTypes.STRING,
       }
     }, {
