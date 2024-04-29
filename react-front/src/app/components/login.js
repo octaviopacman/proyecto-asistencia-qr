@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import "./login.css"
+import { Navigate } from 'react-router-dom';
 
 function Login() {
   const [correo, setcorreo] = useState('');
@@ -24,6 +25,7 @@ function Login() {
 
       const data = await response.json();
       setMessage(`Welcome ${data.correo}!`);
+      <Navigate to="/admin"/>
     } catch (error) {
       setMessage('Login failed: ' + error.message);
     }
