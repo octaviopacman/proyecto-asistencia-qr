@@ -10,8 +10,8 @@ const login = async (req, res) => {
     try {
         const profesor = await TablaProfesor.findOne({
             where: {
-                Correo: Correo,
-                ContrasenaHash: ContrasenaHash  
+                correo: correo,
+                password: password  
             }});
         if (profesor) {
             //aca se puede agregar autenticacion adicional para el profesor, como hash de contra y demas

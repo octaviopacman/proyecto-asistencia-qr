@@ -22,8 +22,8 @@ export default function Home() {
     <div className="App">
       <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Admin />}>
-          <Route index element={<Admin />} />
+        <Route path="/" element={<Login />}>
+          <Route index element={<Login />} />
           <Route path="/Admin" element={<Admin />} />
           <Route path="/Registro" element={<Registro />} />
           <Route path="/admin/asistencias" element={<Asistencias />}/>

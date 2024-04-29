@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import "./login.css"
 
 function Login() {
-  const [username, setUsername] = useState('');
+  const [correo, setcorreo] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
 
@@ -15,7 +15,7 @@ function Login() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ correo, password }),
       });
 
       if (!response.ok) {
@@ -23,7 +23,7 @@ function Login() {
       }
 
       const data = await response.json();
-      setMessage(`Welcome ${data.username}!`);
+      setMessage(`Welcome ${data.correo}!`);
     } catch (error) {
       setMessage('Login failed: ' + error.message);
     }
@@ -34,11 +34,11 @@ function Login() {
       <h1>Asistencia QR</h1>
       <form onSubmit={handleLogin}>
         <div>
-          <label>Username:</label><br/>
+          <label>correo:</label><br/>
           <input
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={correo}
+            onChange={(e) => setcorreo(e.target.value)}
           />
         </div>
         <div>

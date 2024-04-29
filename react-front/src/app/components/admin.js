@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import "./admin.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
 const URI = 'http://localhost:8000/profesores/'
 
 const Admin = () => {
@@ -56,6 +57,8 @@ const Admin = () => {
                         Some quick example text to build on the card title and make up the
                         bulk of the card's content.
                     </Card.Text>
+
+
                     <Link className="btn btn-primary" to="/somewhere">Go somewhere</Link>
                 </Card.Body>
             </Card>
