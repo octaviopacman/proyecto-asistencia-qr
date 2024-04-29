@@ -1,3 +1,10 @@
+.Todo{
+  font-size: larger;
+  
+}
+input, .boton{
+  height: 20px;
+}
 
 .texto{
         text-align: 'center';
