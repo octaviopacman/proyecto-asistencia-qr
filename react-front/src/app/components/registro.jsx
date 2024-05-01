@@ -1,11 +1,16 @@
-import  React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import "./registro.css"
- function Registro () {
+import { Navigate } from 'react-router-dom';
+function Registro() {
+  const [irALogin, setIrALogin] = useState(false);
 
+  if (irALogin) {
+    return <Navigate to="/" />;
+  }
 
-  const {register, handleSubmit,formState: { errors }} = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
 
   const onSubmit = (data) => {
@@ -22,7 +27,7 @@ import "./registro.css"
       color: "red",
       fontSize: '11px'
     },
-    
+
   };
 
 
@@ -59,26 +64,26 @@ import "./registro.css"
             type="text"
             id="nombre"
             name="nombre"
-              {...register("nombre",{
+            {...register("nombre", {
               required: 'Completa este campo',
               minLength: {
-                value:3,
-                message:'El nombre es muy corto',
+                value: 3,
+                message: 'El nombre es muy corto',
               },
               maxLength: {
-                value:30,
-              message:'El nombre es muy largo',
-            },
-              pattern:{
-                value:/^[A-Za-z]+$/,
+                value: 30,
+                message: 'El nombre es muy largo',
+              },
+              pattern: {
+                value: /^[A-Za-z]+$/,
                 message: 'Solo se aceptan letras',
               }
             })}
           />
           {
-          errors.nombre && <p>{errors.nombre.message}</p>
+            errors.nombre && <p>{errors.nombre.message}</p>
           }
-       
+
 
 
         </label>
@@ -89,25 +94,25 @@ import "./registro.css"
           <input
             type="text"
             id="Apellido"
-            {...register("Apellido",{
+            {...register("Apellido", {
               required: 'Completa el campo',
-              minLength:{
-                value:3,
-                message:'El apellido es muy corto',
+              minLength: {
+                value: 3,
+                message: 'El apellido es muy corto',
               },
-              maxLength:{
-                value:40,
-                message:'El nombre es muy corto',
-                pattern:{
-                  value:/^[A-Za-z]+$/,
-                  message:'Ingrese solo letras',
+              maxLength: {
+                value: 40,
+                message: 'El nombre es muy corto',
+                pattern: {
+                  value: /^[A-Za-z]+$/,
+                  message: 'Ingrese solo letras',
                 }
               }
             })}
-            
+
           />
           {
-          errors.Apellido && <p>{errors.Apellido.message}</p>
+            errors.Apellido && <p>{errors.Apellido.message}</p>
           }
         </label>
         <br />
@@ -117,15 +122,15 @@ import "./registro.css"
           <input
             type="tel"
             id="Telefono"
-            {...register("Telefono",{
-              required:'Completa este campo',
-              minLength:{
-                value:10,
-                message:'Ingrese minimo 10 caracteres',
+            {...register("Telefono", {
+              required: 'Completa este campo',
+              minLength: {
+                value: 10,
+                message: 'Ingrese minimo 10 caracteres',
               },
-              pattern:{
-                value:/^\d+$/,
-                message:'Ingrese solo numeros',
+              pattern: {
+                value: /^\d+$/,
+                message: 'Ingrese solo numeros',
               }
             })}
             placeholder="ej: 1123456789"
@@ -133,28 +138,28 @@ import "./registro.css"
           {
             errors.Telefono && <p>{errors.Telefono.message}</p>
           }
-          
+
         </label>
         <br />
 
-       
+
 
         <label htmlFor="Correo">
           <h4>CORREO:</h4>
           <input
             type="email"
             id="Correo"
-            {...register("Correo",{
-              requiered:'Completa este campo',
-              pattern:{
-                value:/^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message:'Ingrese un correo valido',
+            {...register("Correo", {
+              requiered: 'Completa este campo',
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: 'Ingrese un correo valido',
               }
             })}
           />
-         {
-          errors.Correo && <p>{errors.Correo.message}</p>
-         }
+          {
+            errors.Correo && <p>{errors.Correo.message}</p>
+          }
         </label>
         <br />
 
@@ -163,22 +168,22 @@ import "./registro.css"
           <input
             type="text"
             id="DNI"
-            {...register("DNI",{
-              requiered:'Complete este campo',
-              minLength:{ 
-              value: 8,
-              message:'El DNI debe tener como minimo 8 caracteres',
+            {...register("DNI", {
+              requiered: 'Complete este campo',
+              minLength: {
+                value: 8,
+                message: 'El DNI debe tener como minimo 8 caracteres',
               },
-              maxLength:{
-                value:10,
-                message:'El DNI debe tener como maximo 10 caracteres',
+              maxLength: {
+                value: 10,
+                message: 'El DNI debe tener como maximo 10 caracteres',
               },
-              pattern:{
-                value:/^\d+$/,
-                message:'Ingrese solo numeros'
+              pattern: {
+                value: /^\d+$/,
+                message: 'Ingrese solo numeros'
               }
             })}
-            
+
           />
           {
             errors.DNI && <p>{errors.DNI.message}</p>
@@ -192,17 +197,17 @@ import "./registro.css"
           <input
             type="password"
             id="ContrasenaHash"
-            {...register("ContrasenaHash",{
-              required:'Completa este campo',
-              minLength:{
-                value:8,
-                message:'La contraseña debe tener 8 caracteres como minimos',
+            {...register("ContrasenaHash", {
+              required: 'Completa este campo',
+              minLength: {
+                value: 8,
+                message: 'La contraseña debe tener 8 caracteres como minimos',
               },
             })}
           />
-         {
-          errors.ConstrasenaHash && <p>{errors.ConstrasenaHash.message}</p>
-         }
+          {
+            errors.ConstrasenaHash && <p>{errors.ConstrasenaHash.message}</p>
+          }
         </label>
         <br />
 
