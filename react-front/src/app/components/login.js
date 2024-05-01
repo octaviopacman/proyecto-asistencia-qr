@@ -47,7 +47,7 @@ function Login() {
       <h1>Asistencia QR</h1>
       <form onSubmit={handleLogin}>
         <div>
-          <label>correo:</label><br/>
+          <label>Correo:</label><br/>
           <input
             type="text"
             value={correo}

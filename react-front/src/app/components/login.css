@@ -5,6 +5,7 @@
   padding: 5px;
   border-radius: 10px;
   margin: auto;
+  min-width: fit-content;
   
 }
 .Todo img{
