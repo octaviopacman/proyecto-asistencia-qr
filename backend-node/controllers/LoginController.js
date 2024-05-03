@@ -11,7 +11,7 @@ const login = async (req, res) => {
     const { correo, password } = req.body;
     try {
         // Buscar al profesor por su correo
-        const profesor = await TablaProfesor.findOne({
+        const profesor = await TablaProfesor.findOne({  
             where: {
                 correo: correo
             }
