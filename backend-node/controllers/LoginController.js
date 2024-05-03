@@ -16,8 +16,7 @@ const login = async (req, res) => {
                 correo: correo
             }
         });
-        const hashqr = await bcrypt.hash(profesor.id.toString(), 10);
-
+        const hashqr = await bcrypt.hash(profesor.id.toString(), 8);
 
         if (profesor) {
             // Verificar la contraseña
