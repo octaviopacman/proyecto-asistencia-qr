@@ -1,17 +1,45 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
+import { Nav, Navbar, Container, Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import "./admin.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import DonutChart from './admin/donutchart';
+import AttendanceDoughnut from './admin/donutchart';
+import TiempoParaClases from './clases';
 
-const URI = 'http://localhost:8000/profesores'
+const URI = 'http://localhost:8000/profesores/'
 
 const Admin = () => {
-    const [blogs, setBlog] = useState([]);
+    const [blogs, setBlogs] = useState([]);
+
     useEffect(() => {
         getBlogs();
-    }, [])
+    }, []);
+
+    let horaActual = new Date();
+    let horas = horaActual.getHours();
+    let minutos = horaActual.getMinutes();
+    let ampm = horas >= 12 ? 'PM' : 'AM';
+
+    horas = horas % 12;
+    horas = horas ? horas : 12; // la hora '0' debe ser '12'
+    minutos = minutos < 10 ? '0' + minutos : minutos;
+
+    let strHora = horas + ':' + minutos + ' ' + ampm;
+    console.log(strHora);
+    
+
+
 
     const getBlogs = async () => {
-        const response = await fetch(URI);
-        const data = await response.json();
-        setBlog(data);
+        try {
+            const response = await fetch(URI);
+            const data = await response.json();
+            setBlogs(data);
+        } catch (error) {
+            console.error('Error:', error);
+            // Optionally update the UI to show an error message
+        }
     }
 
     const deleteBlog = async (id) => {
@@ -22,50 +50,79 @@ const Admin = () => {
             getBlogs();
         } catch (error) {
             console.error('Error:', error);
-            // Handle errors if necessary
+            // Optionally update the UI to show an error message
         }
     }
 
-
     return (
-        <div className='container'>
-            <div className='row'>
-                <div className='col'>
-                    <table className='table'>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>DNI</th>
-                                <th>Telefono</th>
-                                <th>Correo</th>
-                                <th>Direccion</th>
-                                <th>Contrasena</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {blogs.map((blog) => (
-                                <tr key={blog.id}>
-                                    <td>{blog.id}</td>
-                                    <td> {blog.Nombre} </td>
-                                    <td> {blog.Apellido} </td>
-                                    <td> {blog.DNI} </td>
-                                    <td> {blog.Telefono} </td>
-                                    <td> {blog.Correo} </td>
-                                    <td> {blog.Domicilio} </td>
-                                    <td> {blog.ContrasenaHash} </td>
+        <div className='todo'>
+            <Navbar bg="dark" data-bs-theme="dark">
+                <Container>
+                    <Navbar.Brand href="#home">Menú de Asistencias</Navbar.Brand>
+                    <Nav className="me-auto">
+                        <Nav.Link href="#home">Asistencias</Nav.Link>
+                        <Nav.Link href="#features">Materias</Nav.Link>
+                        <Nav.Link href="#pricing">Preceptores</Nav.Link>
+                        <p className='hora'>{strHora}</p>
 
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                    </Nav>
+                    
+                </Container>
+            </Navbar>
+            <div className='tarjetas'>
+                <Card style={{ width: '18rem' }} className='tarjeta'>
 
+                    <Card.Body>
+                        <Card.Title>Asistencias</Card.Title>
+                        <AttendanceDoughnut absence={70} attendance={30} />
+
+
+
+                        <Link className="btn btn-primary" to="/somewhere">Ver Asistencias</Link>
+                    </Card.Body>
+                </Card>
+                <Card style={{ width: '18rem' }} className='tarjeta'>
+
+                    <Card.Body>
+                        <Card.Title>Materias</Card.Title>
+                        <Card.Text>Materia1</Card.Text>
+                        <Card.Text>Materia1</Card.Text>
+                        <Card.Text>Materia1</Card.Text>
+                        <Card.Text>Materia1</Card.Text>
+
+                        <Link className='btn btn-primary'>Ver Materias</Link>
+                    </Card.Body>
+                </Card>
+                <Card style={{ width: '18rem' }} className='tarjeta'>
+
+                    <Card.Body>
+                        <Card.Title>Clases</Card.Title>
+                        <Card.Text>Materia1 - 15:00</Card.Text>
+                        <Card.Text>Materia1 - 13:00</Card.Text>
+                        <Card.Text>Materia1</Card.Text>
+                        <Card.Text>Materia1</Card.Text>
+
+                        <Link className='btn btn-primary'>Ver Materias</Link>
+                    </Card.Body>
+                </Card>
+                <Card style={{ width: '18rem' }} className='tarjeta'>
+
+                    <Card.Body>
+                        <Card.Title>Materias</Card.Title>
+                        <Card.Text>Materia1 - 15:00</Card.Text>
+                        <Card.Text>Materia1 - 13:00</Card.Text>
+                        <Card.Text>Materia1</Card.Text>
+                        <Card.Text>Materia1</Card.Text>
+
+                        <Link className='btn btn-primary'>Ver Materias</Link>
+                    </Card.Body>
+                </Card>
+                <TiempoParaClases />
             </div>
-
         </div>
-    )
-
+    );
 }
+
+
 export default Admin;
+

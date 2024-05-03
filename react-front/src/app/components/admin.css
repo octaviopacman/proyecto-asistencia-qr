@@ -1,0 +1,13 @@
+.tarjetas{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 30px;
+    gap: 10px;
+}
+.hora{
+    color: white;
+    margin: auto;
+    margin-left: 1000px;
+    
+}
