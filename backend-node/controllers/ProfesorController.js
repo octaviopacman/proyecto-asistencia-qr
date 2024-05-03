@@ -1,4 +1,3 @@
-//ProfesorController
 //importamos el modelo de la bd
 import connection from 'express-myconnection';
 import { TablaProfesor } from '../models/ModelProfesor.js';
@@ -6,6 +5,8 @@ import TablaHorario  from '../models/ModelHorario.js';
 import  {TablaAsistencia}  from '../models/ModelAsistencia.js';
 import { Sequelize } from 'sequelize';
 import db from '../database/db.js';
+import bcrypt from 'bcryptjs';
+
 //mostrar todos los registros
 export const getAllprofesores = async (req, res) => {
     try{
@@ -26,17 +27,27 @@ export const getprofesor = async (req, res) => {
         res.json( {message: error.message} );
     }
 }
-//crear un registro
+//crear registro
 export const createprofesor = async (req, res) => {
-    try{
-      await  TablaProfesor.create(req.body);
-      res.json({
-        'message':'Registro Creado correctamente'
-      });
-    } catch (error){
-        res.json( {message: error.message} );
+    try {
+        // Hashea la contraseña antes de insertarla en la base de datos
+        const hashedPassword = await bcrypt.hash(req.body.password, 8);
+        // Crea un nuevo objeto con la contraseña hasheada
+        const nuevoProfesor = {
+            ...req.body,
+            password: hashedPassword
+        };
+        // Crea el registro en la base de datos
+        await TablaProfesor.create(nuevoProfesor);
+
+        res.json({
+            'message': 'Registro Creado correctamente'
+        });
+    } catch (error) {
+        res.status(500).json({ 'message': error.message });
     }
 }
+
 //actualizar un registro
 export const updateprofesor = async (req, res) =>{
     try{

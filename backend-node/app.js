@@ -4,6 +4,8 @@ import db from "./database/db.js";//base de datos
 import Routes from './routes/routes.js'//enrutador
 import login from './controllers/LoginController.js';
 
+
+
 const app = express()
 
 app.use(express.urlencoded({ extended: true }));
