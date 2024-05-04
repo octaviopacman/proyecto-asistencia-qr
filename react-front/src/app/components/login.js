@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import "./login.css"
+import "./login.css";
+import QRCodeComponent from './codigo';
 import { Link, Navigate } from 'react-router-dom';
 
 function Login() {
@@ -8,6 +9,8 @@ function Login() {
   const [message, setMessage] = useState('');
   const [irARegistro, setIrARegistro] = useState(false);
   const [Sesion, setSesion] = useState(false);
+  const [codigo, setCodigo] = useState('');
+
 
   if (Sesion) {
     return <Navigate to="/admin" />
@@ -34,8 +37,9 @@ function Login() {
       }
 
       const data = await response.json();
-      setMessage(`Bienvenido ${data.correo}!`);
-      setSesion(!Sesion);
+      /////setSesion(!Sesion);
+      console.log(data.hashqr);
+      setCodigo(<QRCodeComponent data={data.hashqr} />)
     } catch (error) {
       setMessage('El login falló: ' + error.message);
     }
@@ -47,7 +51,7 @@ function Login() {
       <h1>Asistencia QR</h1>
       <form onSubmit={handleLogin}>
         <div>
-          <label>Correo:</label><br/>
+          <label>Correo:</label><br />
           <input
             type="text"
             value={correo}
@@ -55,7 +59,7 @@ function Login() {
           />
         </div>
         <div>
-          <label>Password:</label><br/>
+          <label>Password:</label><br />
           <input
             type="password"
             value={password}
@@ -65,6 +69,9 @@ function Login() {
         <button className='boton' type="submit">Login</button>
       </form>
       <p>{message}</p>
+      <div className='codigo'>
+        {codigo}
+      </div>
       <button className='boton' onClick={() => setIrARegistro(!irARegistro)}>Registro</button>
     </div>
   );

@@ -114,7 +114,7 @@ const Admin = () => {
                         <Card.Text>Materia1</Card.Text>
                         <Card.Text>Materia1</Card.Text>
 
-                        <Link className='btn btn-primary'>Ver Materias</Link>
+                        <Card.Text>Tu Código QR</Card.Text>
                     </Card.Body>
                 </Card>
                 <TiempoParaClases />

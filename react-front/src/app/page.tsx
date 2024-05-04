@@ -13,15 +13,13 @@ export default function Home() {
   return (
     <div className="App">
       <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login />}>
-          <Route index element={<Login />} />
+        <Routes>
+          <Route path="/" element={<Login />} />
           <Route path="/Admin" element={<Admin />} />
           <Route path="/registro" element={<Registro />} />
-          
-        </Route>
-      </Routes>
-    </BrowserRouter>
+
+        </Routes>
+      </BrowserRouter>
 
 
     </div>
