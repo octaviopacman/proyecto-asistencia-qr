@@ -14,6 +14,7 @@ const registrarAsistencia = async (req, res) => {
 
         // Obtener fecha y hora en formato adecuado
         const fechaActual = new Date();
+        //2024-03-24T08:00:00.000Z --- T es el delimitador que separa la fecha de la hora.
         const fecha = fechaActual.toISOString().split('T')[0]; // Formato 'YYYY-MM-DD'
         const hora = fechaActual.toTimeString().split(' ')[0]; // Formato 'HH:MM:SS'
 
