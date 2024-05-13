@@ -3,7 +3,7 @@ import cors from 'cors';
 import db from "./database/db.js";//base de datos
 import Routes from './routes/routes.js'//enrutador
 import login from './controllers/LoginController.js';
-
+import asistencia from './controllers/AsistenciaController.js';
 
 
 const app = express()
@@ -18,6 +18,8 @@ app.use(cors({
 app.use(express.json());
 app.use('/profesores', Routes);
 app.post('/login', login);
+app.post('/login/asistencia', asistencia);
+
 try{
     db.authenticate();
     console.log('Conexion exitosa a la DB');

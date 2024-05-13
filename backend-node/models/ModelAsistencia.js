@@ -18,10 +18,6 @@ export const TablaAsistencia = db.define('asistencias', {
     type: DataTypes.TIME,
     allowNull: true
   },
-  HoraSalida: {
-    type: DataTypes.TIME,
-    allowNull: true
-  },
   ProfesorID: {
     type: DataTypes.INTEGER,
     allowNull: true,

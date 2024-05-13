@@ -1,0 +1,8 @@
+{
+  "nombre": "siche",
+  "apellido": "caniche",
+  "dni": "47584659",
+  "telefono": "11236556",
+  "correo": "siche@example.com",
+  "password": "1234"
+}
