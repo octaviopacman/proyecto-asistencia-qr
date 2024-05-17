@@ -24,7 +24,7 @@ try{
     db.authenticate();
     console.log('Conexion exitosa a la DB');
 }catch (error){
-    console.log('El error de conexion es: ${erorr}');
+    console.log('El error de conexion es: ${error}');
 }
 
 /* app.get('/', (req, res)=> {
