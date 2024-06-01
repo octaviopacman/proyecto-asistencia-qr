@@ -19,7 +19,7 @@ const login = async (req, res) => {
                     id: profesor.id, // ID del profesor
                     time: new Date().toISOString() // Tiempo de generación del token
                 };
-                const token = jwt.sign(payload, secretKey, { expiresIn: '10m' }); // El token expira en 1 hora
+                const token = jwt.sign(payload, secretKey, { expiresIn: '10m' }); // El token expira en 10min
 
                 return res.status(200).json({
                     message: `Hola ${profesor.nombre} ${profesor.apellido}, bienvenido!`,

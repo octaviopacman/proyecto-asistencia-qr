@@ -5,15 +5,14 @@ import Routes from './routes/routes.js'//enrutador
 import login from './controllers/LoginController.js';
 import asistencia from './controllers/AsistenciaController.js';
 
-
-const app = express()
+const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors({
+app.use(cors(/* {
     origin: ["http://localhost:3000"], 
     methods: ['GET', 'POST', 'PUT', 'DELETE']
-}));
+} */));
 
 app.use(express.json());
 app.use('/profesores', Routes);
