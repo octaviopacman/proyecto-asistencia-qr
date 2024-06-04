@@ -11,3 +11,8 @@
     margin-left: 1000px;
     
 }
+.icono{
+    height: 70px;
+    filter: invert(1);
+    margin-right: 5px;
+}

@@ -10,11 +10,12 @@ import DonutChart from './donutchart';
 const URI = 'http://localhost:8000/profesores/'
 
 function Admin() {
-    
+
     return (
         <div className='todo'>
             <Navbar bg="dark" data-bs-theme="dark">
                 <Container>
+                    <Nav.Link><img src="appicon.png" className='icono'></img> </Nav.Link>
                     <Navbar.Brand href="#home">Menú de Asistencias</Navbar.Brand>
                     <Nav className="me-auto">
                         <Nav.Link href="#home">Asistencias</Nav.Link>
@@ -22,7 +23,7 @@ function Admin() {
                         <Nav.Link href="#pricing">Preceptores</Nav.Link>
 
                     </Nav>
-                    
+
                 </Container>
             </Navbar>
             <div className='tarjetas'>
@@ -34,7 +35,7 @@ function Admin() {
 
 
 
-                        
+
                     </Card.Body>
                 </Card>
                 <Card style={{ width: '18rem' }} className='tarjeta'>
@@ -71,7 +72,7 @@ function Admin() {
                         <Card.Text>Tu Código QR</Card.Text>
                     </Card.Body>
                 </Card>
-                
+
             </div>
         </div>
     );
