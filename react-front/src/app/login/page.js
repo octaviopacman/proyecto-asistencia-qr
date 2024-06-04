@@ -45,7 +45,9 @@ function Login() {
       <h1>Asistencia QR</h1>
       <form onSubmit={handleLogin}>
         <div>
-          <label>Correo:</label><br />
+          <label>
+            <h4>Correo:</h4>
+            </label>
           <input
             type="text"
             value={correo}
@@ -53,20 +55,25 @@ function Login() {
           />
         </div>
         <div>
-          <label>Password:</label><br />
+          <label>
+            <h4>Password:</h4>  
+            </label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button className='boton' type="submit">Login</button>
+        <button className='login' type="submit">Login</button>
       </form>
       <p>{message}</p>
       <div className='codigo'>
         {codigo}
       </div>
-      <button className='boton' onClick={() => Router.push('/registro')}>Registro</button>
+      <label>
+      <p>¿No tienes cuenta?</p>
+      </label>
+      <button className='registro' onClick={() => Router.push('/registro')}>Registro</button>
       
 
     </div>
