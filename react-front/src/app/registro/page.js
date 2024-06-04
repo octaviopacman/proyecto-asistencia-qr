@@ -1,15 +1,12 @@
 'use client'
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 
 import "./registro.css"
-import { Navigate } from 'react-router-dom';
-function Registro() {
-  const [irALogin, setIrALogin] = useState(false);
 
-  if (irALogin) {
-    return <Navigate to="/" />;
-  }
+function Registro() {
+  const Router = useRouter();
 
   const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -214,6 +211,8 @@ function Registro() {
 
         <input type="submit" />
       </form>
+      <button className='boton' onClick={() => Router.push('/login')}>Volver al Inicio de Sesión</button>
+
     </div>
   );
 }

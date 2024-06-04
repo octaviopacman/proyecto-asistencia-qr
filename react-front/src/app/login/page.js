@@ -2,24 +2,17 @@
 import React, { useState } from 'react';
 import "./login.css";
 import QRCodeComponent from './codigo';
-import { Link, Navigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
+import { redirect } from 'next/navigation';
 
 function Login() {
   const [correo, setcorreo] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [irARegistro, setIrARegistro] = useState(false);
-  const [Sesion, setSesion] = useState(false);
   const [codigo, setCodigo] = useState('');
+  const Router = useRouter();
 
 
-  if (Sesion) {
-    return <Navigate to="/admin" />
-  }
-
-  if (irARegistro) {
-    return <Navigate to="/registro" />
-  }
 
   const handleLogin = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
@@ -38,7 +31,7 @@ function Login() {
       }
 
       const data = await response.json();
-      /////setSesion(!Sesion);
+      Router.push('/dashboard');
       console.log(data.hashqr);
       setCodigo(<QRCodeComponent data={data.hashqr} />)
     } catch (error) {
@@ -73,7 +66,9 @@ function Login() {
       <div className='codigo'>
         {codigo}
       </div>
-      <button className='boton' onClick={() => setIrARegistro(!irARegistro)}>Registro</button>
+      <button className='boton' onClick={() => Router.push('/registro')}>Registro</button>
+      
+
     </div>
   );
 }
