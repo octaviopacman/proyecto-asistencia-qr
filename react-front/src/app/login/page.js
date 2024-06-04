@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from 'react';
 import "./login.css";
 import QRCodeComponent from './codigo';
