@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Nav, Navbar, Container, Card } from 'react-bootstrap';
 
+
 import "./admin.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DonutChart from './donutchart';
@@ -72,6 +73,9 @@ function Admin() {
                         <Card.Text>Tu Código QR</Card.Text>
                     </Card.Body>
                 </Card>
+
+            </div>
+            <div className='cargas'>
 
             </div>
         </div>

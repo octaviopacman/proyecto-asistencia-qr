@@ -85,3 +85,13 @@ input,
   width: 185px;
   text-align: 'center';
 }
+
+.input-error {
+  border: 2px solid red;
+}
+
+.mensaje-error{
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}

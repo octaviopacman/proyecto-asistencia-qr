@@ -6,11 +6,42 @@ import { useRouter } from 'next/navigation';
 import { redirect } from 'next/navigation';
 
 function Login() {
-  const [correo, setcorreo] = useState('');
+  const [correo, setCorreo] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [codigo, setCodigo] = useState('');
+  const [errors, setErrors] = useState({});
   const Router = useRouter();
+
+  const Validacion = () => {
+    const errors = {};
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    if (!correo) {
+      errors.correo = 'El correo es requerido';
+    } else if (!emailPattern.test(correo)){
+      errors.correo = 'El correo no es válido';
+    }
+    if (!password) {
+      errors.password = 'La contraseña es requerida';
+    } else if (password.length < 8) {
+      errors.password = 'La contraseña debe tener 8 caracteres como minimos';
+    }
+    return errors;
+  };
+
+  /*Valida los datos antes de enviar a la base de datos */
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const errors = Validacion();
+    setErrors(errors);
+
+    if (Object.keys(errors).length === 0) {
+      handleLogin(); /* lo llama al handleLogin para enviar los datos cuando hay 0 errores */
+    }
+  }
+
 
 
 
@@ -25,12 +56,13 @@ function Login() {
         },
         body: JSON.stringify({ correo, password }),
       });
+     
+      const data = await response.json();
 
       if (!response.ok) {
-        throw new Error('Failed to login');
+        throw new Error(data.message || 'Failed to login');
       }
 
-      const data = await response.json();
       Router.push('/dashboard');
       console.log(data.hashqr);
       setCodigo(<QRCodeComponent data={data.hashqr} />)
@@ -39,11 +71,26 @@ function Login() {
     }
   };
 
+  /* Creamos funciones para poder validar los campos*/
+  const handleCorreoChange = (e) => {
+    setCorreo(e.target.value);
+    if (errors.correo) {
+      setErrors((prevErrors) =>({...prevErrors, correo:''}));
+    }
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    if (errors.password){
+      setErrors((prevErrors) =>({...prevErrors, password:''}));
+    }
+  }
+
   return (
     <div className='Todo'>
       <img src='appicon.png' />
       <h1>Asistencia QR</h1>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleSubmit}>
         <div>
           <label>
             <h4>Correo:</h4>
@@ -51,8 +98,10 @@ function Login() {
           <input
             type="text"
             value={correo}
-            onChange={(e) => setcorreo(e.target.value)}
+            onChange={handleCorreoChange}
+            className = {errors.correo ? 'input-error': ''}
           />
+          {errors.correo && <div className = 'mensaje-error'>{errors.correo}</div>}
         </div>
         <div>
           <label>
@@ -61,12 +110,14 @@ function Login() {
           <input
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handlePasswordChange}
+            className = {errors.password ? 'input-error': ''}
           />
+          {errors.password && <div className ="mensaje-error">{errors.password}</div>}
         </div>
         <button className='login' type="submit">Login</button>
       </form>
-      <p>{message}</p>
+      {message  && <p className='mensaje-error'>{message}</p>}
       <div className='codigo'>
         {codigo}
       </div>
