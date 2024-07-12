@@ -1,0 +1,27 @@
+.tarjetas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 30px;
+    gap: 10px;
+}
+
+
+.icono {
+    height: 70px;
+    filter: invert(1);
+    margin-right: 5px;
+}
+
+.row > [class*='col-'] {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.tarjeta{
+height: 100% !important;
+}
+.tarjeta-QR{
+    align-items: center !important;
+    height: 100% !important;
+}
