@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import "./login.css";
 import QRCodeComponent from './codigo';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 function Login() {
   const [correo, setCorreo] = useState('');
