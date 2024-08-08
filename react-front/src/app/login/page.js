@@ -86,7 +86,7 @@ function Login() {
       <form onSubmit={handleSubmit}>
         <div>
           <label>
-            <h4>Correo:</h4>
+            <h4>Correo: </h4>
           </label>
           <input
             type="text"
