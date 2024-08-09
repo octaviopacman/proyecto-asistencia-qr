@@ -17,7 +17,7 @@ import DonutChart from './donutchart';
 
 
 
-const URI = 'https://backend-asistencia-qr.vercel.app//login/contarasistencias/12'
+const URI = 'https://backend-asistencia-qr.vercel.app/login/contarasistencias/12'
 
 function Admin() {
     
