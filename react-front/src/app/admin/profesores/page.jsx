@@ -1,5 +1,6 @@
 'use client'
-import React, { useEffect, useState } from 'react';
+/* import { Console } from 'console';
+ */import React, { useEffect, useState } from 'react';
 
 const CrudProfesores = () => {
   const [profesores, setProfesores] = useState([]);
@@ -14,15 +15,23 @@ const CrudProfesores = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentId, setCurrentId] = useState(null);
 
-  const apiUrl = 'http://localhost:5000/api/profesores'; // URL de la API
+  const apiUrl = 'http://localhost:8000/profesores'; // URL de la API
 
   // Obtener todos los profesores del backend cuando el componente se monta
   useEffect(() => {
     fetch(apiUrl)
-      .then((response) => response.json())
-      .then((data) => setProfesores(data))
-      .catch((error) => console.error('Error al obtener profesores:', error));
-  }, []);
+      .then((response) => {
+        if(!response.ok){
+          throw new error ('error al obtener los datos');
+        }
+        return response.json();
+      })
+    .then((data)=> {
+      console.log('datos de los profesores', data);
+      setProfesores(data);
+    })
+    .catch((error) => console.error('error de profesores', erorr))
+    },[])
 
   // Manejadores de formulario
   const handleChange = (e) => {
