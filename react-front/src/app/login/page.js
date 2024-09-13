@@ -56,9 +56,11 @@ function Login() {
       if (!response.ok) {
         throw new Error(data.message || 'Failed to login');
       }
+      localStorage.setItem('token',data.token)
 
       console.log(data.qrToken);
       setCodigo(<QRCodeComponent data={data.qrToken} /> );
+      Router.push('/dashboard');
       
     } catch (error) {
       setMessage('El login falló: ' + error.message);

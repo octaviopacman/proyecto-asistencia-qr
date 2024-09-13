@@ -14,28 +14,57 @@ import QRCodeComponent from '../login/codigo';
 import "./page.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DonutChart from './donutchart';
+import { useRouter } from 'next/navigation';
 
 
-
-const URI = 'https://backend-asistencia-qr.vercel.app/login/contarasistencias/12'
+const URI_MATERIAS = 'https://backend-asistencia-qr.vercel.app/profesor/'
+const URI_ASISTENCIAS = 'https://backend-asistencia-qr.vercel.app/login/contarasistencias/'
 
 function Admin() {
     
     const [data, setData] = useState(null);
+    const [materias,setMaterias] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null)
+    const Router = useRouter()
 
     useEffect(() => {
-        fetch(URI)
-          .then(response => response.json())
-          .then(data => setData(data))
-          .catch(error => console.error('Error fetching data:', error));
-      }, []);
-    
-      // Asegúrate de manejar el estado de la carga de datos (por ejemplo, mostrando un spinner si data es null)
-      if (!data) {
-        return <div>Loading...</div>;
-      }
 
+        const profesorID = localStorage.getItem('ProfesorID')
+
+    if(!profesorID) {
+        Router.push('/login')
+        return
+    }
+
+        fetch(`${URI_ASISTENCIAS}${ProfesorID}`)
+          .then(response => response.json())
+          .then(data =>{ 
+             setData(data)
+             setLoading(false)
+            })
+          .catch(error =>{ console.error('Error fetching data:', error)
+            setError('hubo un error con los datos')
+            setLoading(false)
+          });
+
+          fetch(`${URI_ASISTENCIAS}${ProfesorID}`)
+          .then(response => response.json())
+          .then(materiasData => setMaterias(materiasData))
+          .catch(error => {
+            console.error('Error fetching materias',error);
+            setError('Error al obtener las materias');
+          })
+          },[Router])
       
+        // Asegúrate de manejar el estado de la carga de datos (por ejemplo, mostrando un spinner si data es null)
+        if (loading) {
+          return <div>Loading...</div>;
+        }
+        if (error) {
+          return <div>Error: {error}</div>
+        }
+
 
     return (
         <div className='todo'>
@@ -68,10 +97,16 @@ function Admin() {
                         <Card className='tarjeta'>
                             <Card.Body>
                                 <Card.Title>Materias</Card.Title>
-                                <Card.Text>Materia1</Card.Text>
-                                <Card.Text>Materia1</Card.Text>
-                                <Card.Text>Materia1</Card.Text>
-                                <Card.Text>Materia1</Card.Text>
+                                {materias.length > 0 ? (
+                                    materias.map(materia => (
+                                        <Card.Text key={materia.MateriaID}>
+                                            {materia.NombreMateria} - {materia.horario}
+                                        </Card.Text>
+                                    ))
+                                ) : (
+                                    <Card.Text>No tienes Materias designadas</Card.Text>
+                                
+                                )}
                                 <Button href='/dashboard/materias'>Ver más</Button>
                             </Card.Body>
                         </Card>
