@@ -3,23 +3,47 @@ import React, { useEffect, useState } from 'react';
 
 const CrudHorarios = () => {
   const [horarios, setHorarios] = useState([]);
+  const [profesores, setProfesores] = useState([]);
+  const [materias, setMaterias] = useState([]);
+  const [cursos,setCursos] = useState([]);
+  const [anio, setAnio] = useState('');
+  const [division, setDivision] = useState('');
   const [form, setForm] = useState({
     ProfesorID: '',
     CursoID: '',
     MateriaID: '',
     Dia: '',
+    horaInicio:'',
+    horaFinal:'',
   });
   const [isEditing, setIsEditing] = useState(false);
   const [currentId, setCurrentId] = useState(null);
 
-  const apiUrl = 'http://localhost:8000/horarios'; // URL de la API para los horarios
-
+  const apiUrlHorarios = 'http://localhost:8000/api/insertar/horarios'; // URL de la API para los horarios
+  const apiUrlProfesores = 'http://localhost:8000/api/profesores';
+  const apiUrlMaterias = 'http://localhost:8000/api/listado/materias';
+  const apiUrlCursos = 'http://localhost:8000/api/listado/cursos';
   // Obtener todos los horarios del backend cuando el componente se monta
   useEffect(() => {
-    fetch(apiUrl)
+    fetch(apiUrlHorarios)
       .then((response) => response.json())
       .then((data) => setHorarios(data))
       .catch((error) => console.error('Error al obtener horarios:', error));
+
+      fetch(apiUrlProfesores)
+      .then((response) => response.json())
+      .then((data) => setProfesores(data))
+      .catch((error) => console.error('Error al obtener Profesores:', error));
+
+      fetch(apiUrlMaterias)
+      .then((response) => response.json())
+      .then((data) => setMaterias(data))
+      .catch((error) => console.error('Error al obtener Materias:', error));
+
+      fetch(apiUrlCursos)
+      .then((response) => response.json())
+      .then((data) => setCursos(data))
+      .catch((error) => console.error('Error al obtener Cursos:', error));
   }, []);
 
   // Manejadores de formulario
@@ -31,9 +55,14 @@ const CrudHorarios = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const formData = {
+      ...form,
+      CursoID: cursos.find((curso) => curso.Anio === anio && curso.division === division)?.CursoID
+    }
+
     if (isEditing) {
       // Actualizar un horario existente
-      fetch(`${apiUrl}/${currentId}`, {
+      fetch(`${apiUrlHorarios}/${currentId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -52,12 +81,12 @@ const CrudHorarios = () => {
         .catch((error) => console.error('Error al actualizar horario:', error));
     } else {
       // Agregar un nuevo horario
-      fetch(apiUrl, {
+      fetch(apiUrlHorarios, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify(formData),
       })
         .then((response) => response.json())
         .then((data) => {
@@ -72,12 +101,16 @@ const CrudHorarios = () => {
       CursoID: '',
       MateriaID: '',
       Dia: '',
+      horaInicio:'',
+      horaFinal:'',
     });
+    setAnio('');
+    setDivision('')
   };
 
   // Función para eliminar un horario
   const handleDelete = (id) => {
-    fetch(`${apiUrl}/${id}`, {
+    fetch(`${apiUrlHorarios}/${id}`, {
       method: 'DELETE',
     })
       .then(() => {
@@ -104,47 +137,118 @@ const CrudHorarios = () => {
         <div className="row mb-3">
           <div className="col-md-6">
             <label>Profesor ID</label>
-            <input
-              type="text"
+            <select
+              
               name="ProfesorID"
               className="form-control"
               value={form.ProfesorID}
-              onChange={handleChange}
+              onChange={(e) => setProfesores(e.target.value)}
               required
-            />
+            >
+            <option value=''>Selecciona Un Profesor</option>
+            {profesores.map((profesor) => (
+              <option key={profesor.ProfesorID} value={profesor.ProfesorID}>
+                {profesor.nombre}
+              </option>
+            ))}
+            </select>
           </div>
+
           <div className="col-md-6">
-            <label>Curso ID</label>
-            <input
-              type="text"
-              name="CursoID"
+            <label>Materia</label>
+            <select
+              
+              name="MateriaID"
               className="form-control"
-              value={form.CursoID}
-              onChange={handleChange}
+              value={form.MateriaID}
+              onChange={(e) => setMaterias(e.target.value)}
               required
-            />
+            >
+              <option value="">Selecciona Una Materia</option>
+              {materias.map((materia) => (
+                <option key={materias.MateriaID} value={materia.MateriaID}>
+                  {materia.NombreMateria}
+                </option>
+              ))}
+              </select>
           </div>
         </div>
 
         <div className="row mb-3">
           <div className="col-md-6">
-            <label>Materia ID</label>
-            <input
-              type="text"
-              name="MateriaID"
+            <label>Año</label>
+            <select
+              
+              name="Anio"
               className="form-control"
-              value={form.MateriaID}
+              value={anio}
+              onChange={(e) => setAnio(e.target.value)}
+              required
+            >
+              <option value="">Selecciona un año</option>
+              {[...new Set(cursos.map((curso) => curso.Anio))].map((anio) => (
+                <option key={anio} value={anio}>
+                  {anio}
+                </option>
+              ))}
+              </select>
+          </div>
+
+          
+          <div className="col-md-6">
+            <label>Division</label>
+            <select
+              name="Division"
+              className="form-control"
+              value={division}
+              onChange={(e) => setDivision(e.target.value)}
+              required
+            >
+              <option value="">Selecciona una Division</option>
+              {[...new Set(cursos.map((curso) => curso.division))].map((division) => (
+                <option key={division} value={division}>
+                  {division}
+                </option>
+              ))}
+              </select>
+          </div>
+
+          <div className="col-md-6">
+            <label>Día</label>
+            <select
+              name="Dia"
+              className="form-control"
+              value={form.Dia}
+              onChange={handleChange}
+              required
+            >
+            <option value="">Seleciona Un Dia</option>
+            <option value="Lunes">Lunes</option>
+            <option value="Martes">Martes</option>
+            <option value="Miercoles">Miercoles</option>
+            <option value="Jueves">Jueves</option>
+            <option value="Viernes">Viernes</option>
+            </select>
+          </div>
+
+          <div className="col-md-6">
+            <label>Hora Inicio de la clase</label>
+            <input
+              type="time"
+              name="horaInicio"
+              className="form-control"
+              value={form.horaInicio}
               onChange={handleChange}
               required
             />
           </div>
           <div className="col-md-6">
-            <label>Día</label>
+            <label>Hora Final de la clase</label>
             <input
-              type="text"
-              name="Dia"
+              type="time"
+              name="horaFinal"
               className="form-control"
-              value={form.Dia}
+              value={form.horaFinal}
               onChange={handleChange}
               required
             />
@@ -176,6 +280,8 @@ const CrudHorarios = () => {
               <tr key={horario.HorarioID}>
                 <td>{horario.ProfesorID}</td>
                 <td>{horario.CursoID}</td>
+                <td>{anio}</td>
+                <td>{division}</td>
                 <td>{horario.MateriaID}</td>
                 <td>{horario.Dia}</td>
                 <td>
