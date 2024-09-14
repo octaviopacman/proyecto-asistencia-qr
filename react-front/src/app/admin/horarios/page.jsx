@@ -5,7 +5,7 @@ const CrudHorarios = () => {
   const [horarios, setHorarios] = useState([]);
   const [profesores, setProfesores] = useState([]);
   const [materias, setMaterias] = useState([]);
-  const [cursos,setCursos] = useState([]);
+  const [cursos, setCursos] = useState([]);
   const [anio, setAnio] = useState('');
   const [division, setDivision] = useState('');
   const [form, setForm] = useState({
@@ -13,8 +13,8 @@ const CrudHorarios = () => {
     CursoID: '',
     MateriaID: '',
     Dia: '',
-    horaInicio:'',
-    horaFinal:'',
+    horaInicio: '',
+    horaFinal: '',
   });
   const [isEditing, setIsEditing] = useState(false);
   const [currentId, setCurrentId] = useState(null);
@@ -30,26 +30,26 @@ const CrudHorarios = () => {
       .then((data) => setHorarios(data))
       .catch((error) => console.error('Error al obtener horarios:', error));
 
-      fetch(apiUrlProfesores)
+    fetch(apiUrlProfesores)
       .then((response) => response.json())
       .then((data) => setProfesores(data))
       .catch((error) => console.error('Error al obtener Profesores:', error));
 
-      fetch(apiUrlMaterias)
+    fetch(apiUrlMaterias)
       .then((response) => response.json())
       .then((data) => setMaterias(data))
       .catch((error) => console.error('Error al obtener Materias:', error));
 
-      fetch(apiUrlCursos)
+    fetch(apiUrlCursos)
       .then((response) => response.json())
-      .then((data) => { 
+      .then((data) => {
         data.forEach(curso => {
           console.log(`Anio: ${curso.Anio}, Division: ${curso.Division}`);
         });
         setCursos(data);
       })
       .catch((error) => console.error('Error al obtener Cursos:', error));
-    
+
   }, []);
 
   // Manejadores de formulario
@@ -107,8 +107,8 @@ const CrudHorarios = () => {
       CursoID: '',
       MateriaID: '',
       Dia: '',
-      horaInicio:'',
-      horaFinal:'',
+      horaInicio: '',
+      horaFinal: '',
     });
     setAnio('');
     setDivision('')
@@ -144,26 +144,26 @@ const CrudHorarios = () => {
           <div className="col-md-6">
             <label>Profesor ID</label>
             <select
-              
+
               name="ProfesorID"
               className="form-control"
               value={form.ProfesorID}
               onChange={(e) => setProfesores(e.target.value)}
               required
             >
-            <option value=''>Selecciona Un Profesor</option>
-            {profesores.map((profesor) => (
-              <option key={profesor.ProfesorID} value={profesor.ProfesorID}>
-                {profesor.nombre}
-              </option>
-            ))}
+              <option value=''>Selecciona Un Profesor</option>
+              {profesores.map((profesor) => (
+                <option key={profesor.ProfesorID} value={profesor.ProfesorID}>
+                  {profesor.nombre}
+                </option>
+              ))}
             </select>
           </div>
 
           <div className="col-md-6">
             <label>Materia</label>
             <select
-              
+
               name="MateriaID"
               className="form-control"
               value={form.MateriaID}
@@ -176,7 +176,7 @@ const CrudHorarios = () => {
                   {materia.NombreMateria}
                 </option>
               ))}
-              </select>
+            </select>
           </div>
         </div>
 
@@ -184,7 +184,7 @@ const CrudHorarios = () => {
           <div className="col-md-6">
             <label>Año</label>
             <select
-              
+
               name="Anio"
               className="form-control"
               value={anio}
@@ -192,18 +192,24 @@ const CrudHorarios = () => {
               required
             >
               <option value="">Selecciona un año</option>
-              
-              {[...new Set(cursos.map((curso) => curso.anio))].map((anio) => (
-                
-                <option key={anio} value={anio}>
-                  {anio}
-                </option>
-              ))}
-              </select>
-          </div>
-                  
+              {cursos.length > 0 ? (
+                cursos.map((curso) => (
+                  <option key={`${curso.Anio} - ${curso.Division}`} value={`${curso.Anio} - ${curso.Division}`}>
+                    {`${curso.Anio} - ${curso.Division}`}
+                  </option>
+                ))
+              ) : (
+                <option value=''>No hay años disponibles</option>
+              )}
 
-          
+
+
+
+            </select>
+          </div>
+
+
+
           <div className="col-md-6">
             <label>Division</label>
             <select
@@ -219,7 +225,7 @@ const CrudHorarios = () => {
                   {division}
                 </option>
               ))}
-              </select>
+            </select>
           </div>
 
           <div className="col-md-6">
@@ -231,12 +237,12 @@ const CrudHorarios = () => {
               onChange={handleChange}
               required
             >
-            <option value="">Seleciona Un Dia</option>
-            <option value="Lunes">Lunes</option>
-            <option value="Martes">Martes</option>
-            <option value="Miercoles">Miercoles</option>
-            <option value="Jueves">Jueves</option>
-            <option value="Viernes">Viernes</option>
+              <option value="">Seleciona Un Dia</option>
+              <option value="Lunes">Lunes</option>
+              <option value="Martes">Martes</option>
+              <option value="Miercoles">Miercoles</option>
+              <option value="Jueves">Jueves</option>
+              <option value="Viernes">Viernes</option>
             </select>
           </div>
 
