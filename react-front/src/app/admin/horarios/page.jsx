@@ -42,8 +42,14 @@ const CrudHorarios = () => {
 
       fetch(apiUrlCursos)
       .then((response) => response.json())
-      .then((data) => setCursos(data))
+      .then((data) => { 
+        data.forEach(curso => {
+          console.log(`Anio: ${curso.Anio}, Division: ${curso.Division}`);
+        });
+        setCursos(data);
+      })
       .catch((error) => console.error('Error al obtener Cursos:', error));
+    
   }, []);
 
   // Manejadores de formulario
@@ -186,13 +192,16 @@ const CrudHorarios = () => {
               required
             >
               <option value="">Selecciona un año</option>
-              {[...new Set(cursos.map((curso) => curso.Anio))].map((anio) => (
+              
+              {[...new Set(cursos.map((curso) => curso.anio))].map((anio) => (
+                
                 <option key={anio} value={anio}>
                   {anio}
                 </option>
               ))}
               </select>
           </div>
+                  
 
           
           <div className="col-md-6">
