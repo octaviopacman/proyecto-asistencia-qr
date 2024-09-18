@@ -1,98 +1,98 @@
-.Todo {
+/* Global styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  justify-content: center;
   align-items: center;
-  font-size: larger;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background-color: #f0f0f0;
+}
+
+.login-box {
   background-color: white;
-  width: 30%;
-  padding: 5px;
-  border-radius: 10px;
-  margin: auto;
-  min-width: fit-content;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
-  margin-top: 2%;
-
+  width: 100%;
+  max-width: 400px;
 }
 
-.Todo img {
-  width: 25%;
+.login-icon {
+  width: 80px;
+  margin-bottom: 1rem;
 }
 
-.Todo h1,h4 {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  text-rendering: optimizeLegibility;
-}
-p{
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  text-rendering: optimizeLegibility;
-  font-size: 15px;
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-input,
-.boton {
-  /* Por alguna razon button no aplica a todos los botones... idk */
-  height: fit-content;
-  height: 30px;
-  width: 350px;
-  border-radius: 10px;
-  background-color: #9b9b9b;
-  
-  
-}
-.login{
-  margin-top: 4%;
-  height: fit-content;
-  width: 100px;
-  height: 35px;
-  border-radius: 10px;
-  background-color: #0c7489;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  color: #040404;
-  
+.form-group {
+  text-align: left;
 }
 
-
-
-.texto {
-  text-align: 'center';
-  padding-top: '10px';
-
-  
-
-}
-
-
-.registro, .irmenu{
-  margin-top: 1%;
-  height: fit-content;
-  width: 100px;
-  height: 25px;
-  border-radius: 10px;
-  background-color: #9cd7e3;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  color: #040404;
-  margin-bottom: 3%;
-  
-}
-
-.codigo img {
-  aspect-ratio: 1 / 1;
-  width: 295px;
-  text-align: 'center';
+input {
+  width: 100%;
+  padding: 0.8rem;
+  margin-top: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
 }
 
 .input-error {
-  border: 2px solid red;
+  border-color: red;
 }
 
-.mensaje-error{
+.mensaje-error {
   color: red;
-  font-size: 12px;
-  margin-top: 5px;
+  font-size: 0.8rem;
+}
+
+.btn-login, .btn-menu, .btn-register {
+  background-color: #007bff;
+  color: white;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.btn-login:hover, .btn-menu:hover, .btn-register:hover {
+  background-color: #0056b3;
+}
+
+.codigo {
+  margin-top: 1rem;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .login-box {
+    padding: 1.5rem;
+  }
+
+  input, .btn-login, .btn-menu, .btn-register {
+    font-size: 0.9rem;
+  }
 }
