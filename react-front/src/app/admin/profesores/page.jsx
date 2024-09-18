@@ -30,7 +30,7 @@ const CrudProfesores = () => {
       console.log('datos de los profesores', data);
       setProfesores(data);
     })
-    .catch((error) => console.error('error de profesores', erorr))
+    .catch((error) => console.error('error de profesores', error))
     },[])
 
   // Manejadores de formulario

@@ -4,6 +4,7 @@ import "./login.css";
 import QRCodeComponent from './codigo';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
 
 function Login() {
   const [correo, setCorreo] = useState('');
@@ -37,9 +38,13 @@ function Login() {
     setErrors(errors);
 
     if (Object.keys(errors).length === 0) {
-      handleLogin(); // Llama a handleLogin para enviar los datos cuando hay 0 errores
+      await handleLogin(); // Llama a handleLogin para enviar los datos cuando hay 0 errores
     }
   }
+
+  const handleMenuNavigation = () => {
+    Router.push('/dashboard', undefined, { shallow: true });
+  };
 
   const handleLogin = async () => {
     try {
@@ -56,12 +61,14 @@ function Login() {
       if (!response.ok) {
         throw new Error(data.message || 'Failed to login');
       }
-      localStorage.setItem('token',data.token)
+
+      localStorage.setItem('token', data.token);
 
       console.log(data.qrToken);
-      setCodigo(<QRCodeComponent data={data.qrToken} /> );
-      Router.push('/dashboard');
-      
+      setCodigo(<QRCodeComponent data={data.qrToken} />);
+      //Router.push('/dashboard');
+
+
     } catch (error) {
       setMessage('El login falló: ' + error.message);
     }
@@ -80,7 +87,7 @@ function Login() {
       setErrors((prevErrors) => ({ ...prevErrors, password: '' }));
     }
   }
-  
+
 
   return (
     <div className='Todo'>
@@ -117,7 +124,10 @@ function Login() {
       <div className='codigo'>
         {codigo}
       </div>
-      <button className='irmenu' onClick={() => Router.push('/dashboard')}>Ir al Menú</button>
+      <button className='irmenu' onClick={handleMenuNavigation}>Ir al Menú</button>
+      {/* <Link href="/dashboard">
+        <button className='irmenu'>Ir al Menú</button>
+      </Link> */}
       <label>
         <p>¿No tienes cuenta?</p>
       </label>
