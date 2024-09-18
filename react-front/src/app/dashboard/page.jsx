@@ -15,7 +15,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import DonutChart from './donutchart';
 import { useRouter } from 'next/navigation';
 
-const URI_MATERIAS = 'https://backend-asistencia-qr.vercel.app/profesor/';
+const URI_MATERIAS = 'https://backend-asistencia-qr.vercel.app/api/profesores/';
 const URI_ASISTENCIAS = 'https://backend-asistencia-qr.vercel.app/api/login/contarasistencias/';
 
 function Admin() {
@@ -28,6 +28,8 @@ function Admin() {
 
     useEffect(() => {
         const profesorID = 20;
+        console.log(`${URI_ASISTENCIAS}${profesorID}`);
+        console.log(`${URI_MATERIAS}${profesorID}`);
 
         if (!profesorID) {
             Router.push('/login');
@@ -36,20 +38,32 @@ function Admin() {
 
         const fetchData = async () => {
             try {
-                // Fetch para asistencias y materias al mismo tiempo
+                const profesorID = 20;
                 const [asistenciasRes, materiasRes] = await Promise.all([
-                    fetch(`${URI_ASISTENCIAS}${profesorID}`),
-                    fetch(`${URI_MATERIAS}${profesorID}`)
+                    fetch(`${URI_ASISTENCIAS}${profesorID}`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }),
+                    fetch(`${URI_MATERIAS}${profesorID}`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    })
                 ]);
-
+        
                 if (!asistenciasRes.ok || !materiasRes.ok) {
                     throw new Error('Error en la respuesta del servidor');
                 }
-
+        
                 const asistenciasData = await asistenciasRes.json();
                 const materiasData = await materiasRes.json();
-
-                setData(asistenciasData);
+        
+                // Asegúrate de acceder correctamente a los campos asistencias e inasistencias
+                setData({
+                    asistencias: asistenciasData.asistencias,
+                    inasistencias: asistenciasData.inasistencias,
+                });
                 setMaterias(materiasData);
                 setLoading(false);
             } catch (error) {
@@ -58,6 +72,7 @@ function Admin() {
                 setLoading(false);
             }
         };
+        
 
         fetchData();
     }, [Router]);
