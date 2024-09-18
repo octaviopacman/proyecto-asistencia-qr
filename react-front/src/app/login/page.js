@@ -90,48 +90,48 @@ function Login() {
 
 
   return (
-    <div className='Todo'>
-      <img src='appicon.png' />
+    <div className='login-container'>
+      <div className = 'login-box'>
+      <img src='appicon.png' className='login-icon' />
       <h1>Asistencia QR</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>
-            <h4>Correo: </h4>
-          </label>
+      <form onSubmit={handleSubmit} className='login-form'>
+        <div className='form-group'>
+          <label>Correo</label>
           <input
             type="text"
             value={correo}
             onChange={handleCorreoChange}
             className={errors.correo ? 'input-error' : ''}
+            placeholder='Ingrese su correo electronico'
           />
           {errors.correo && <div className='mensaje-error'>{errors.correo}</div>}
         </div>
-        <div>
-          <label>
-            <h4>Password:</h4>
-          </label>
+        <div className='form-group'>
+          <label>Contraseña</label>
           <input
             type="password"
             value={password}
             onChange={handlePasswordChange}
             className={errors.password ? 'input-error' : ''}
+            placeholder='Ingrese una contraseña'
           />
           {errors.password && <div className="mensaje-error">{errors.password}</div>}
         </div>
-        <button className='login' type="submit">Login</button>
+        <button className='btn-login' type="submit">Login</button>
       </form>
       {message && <p className='mensaje-error'>{message}</p>}
       <div className='codigo'>
         {codigo}
       </div>
-      <button className='irmenu' onClick={handleMenuNavigation}>Ir al Menú</button>
+      <button className='btn-menu' onClick={handleMenuNavigation}>Ir al Menú</button>
       {/* <Link href="/dashboard">
         <button className='irmenu'>Ir al Menú</button>
       </Link> */}
       <label>
         <p>¿No tienes cuenta?</p>
       </label>
-      <button className='registro' onClick={() => Router.push('/registro')}>Registro</button>
+      <button className='btn-registro' onClick={() => Router.push('/registro')}>Registro</button>
+      </div>
     </div>
   );
 }
