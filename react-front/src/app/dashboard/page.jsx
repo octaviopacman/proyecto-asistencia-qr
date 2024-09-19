@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useState, useEffect } from 'react';
 import {
     Nav,
@@ -10,7 +10,7 @@ import {
     Button,
 } from 'react-bootstrap';
 import QRCodeComponent from '../login/codigo';
-import "./page.css";
+import styles from './page.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DonutChart from './donutchart';
 import { useRouter } from 'next/navigation';
@@ -38,42 +38,29 @@ function Admin() {
 
         const fetchData = async () => {
             try {
-                const profesorID = 20;
                 const [asistenciasRes, materiasRes] = await Promise.all([
-                    fetch(`${URI_ASISTENCIAS}${profesorID}`, {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }),
-                    fetch(`${URI_MATERIAS}${profesorID}`, {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    })
+                    fetch(`${URI_ASISTENCIAS}${profesorID}`),
+                    fetch(`${URI_MATERIAS}${profesorID}`)
                 ]);
-        
+
                 if (!asistenciasRes.ok || !materiasRes.ok) {
-                    throw new Error('Error en la respuesta del servidor');
+                    throw new Error('Failed to fetch data');
                 }
-        
+
                 const asistenciasData = await asistenciasRes.json();
                 const materiasData = await materiasRes.json();
-        
-                // Asegúrate de acceder correctamente a los campos asistencias e inasistencias
-                setData({
-                    asistencias: asistenciasData.asistencias,
-                    inasistencias: asistenciasData.inasistencias,
-                });
+
+                setData(asistenciasData);
+                console.log(asistenciasData.asistencias);
+                console.log(asistenciasData.inasistencias);
                 setMaterias(materiasData);
                 setLoading(false);
             } catch (error) {
-                console.error('Error fetching data:', error);
-                setError('Hubo un error al obtener los datos');
+                setError(error);
                 setLoading(false);
             }
         };
         
-
         fetchData();
     }, [Router]);
 
@@ -82,76 +69,82 @@ function Admin() {
     }
 
     if (error) {
-        return <div>Error: {error}</div>;
+        return <div>Error: {error.message}</div>;
     }
 
     return (
-        <div className='todo'>
+        <div>
             <Navbar bg="dark" data-bs-theme="dark">
-                <Container>
-                    <Nav.Link><img src="appicon.png" className='icono' alt='App Icon' /></Nav.Link>
-                    <Navbar.Brand href="#home">Menú de Asistencias</Navbar.Brand>
-                    <Nav className="me-auto">
-                        <Nav.Link href='/dashboard/asistencias'>Asistencias</Nav.Link>
-                        <Nav.Link href="/dashboard/materias">Materias</Nav.Link>
-                        <Nav.Link href="/dashboard/preceptores">Preceptores</Nav.Link>
-                    </Nav>
-                </Container>
+
+            <Nav.Link><img src="appicon.png" className='icono' alt='App Icon' height={100} /></Nav.Link>
+            <Navbar.Brand href="#home">Menú de Asistencias</Navbar.Brand>
+            <Nav className="me-auto">
+                <Nav.Link href='/dashboard/asistencias'>Asistencias</Nav.Link>
+                <Nav.Link href="/dashboard/materias">Materias</Nav.Link>
+                <Nav.Link href="/dashboard/preceptores">Preceptores</Nav.Link>
+            </Nav>
             </Navbar>
-            <Container className='mt-4'>
-                <Row>
-                    <Col md={4} className='mb-4'>
-                        <Card className='tarjeta'>
-                            <Card.Body>
-                                <Card.Title>Asistencias</Card.Title>
-                                <DonutChart attendance={data.asistencias} absence={data.inasistencias} />
-                                <Button href='/dashboard/asistencias'>Ver más</Button>
-                            </Card.Body>
-                        </Card>
-                    </Col>
 
-                    <Col md={8} className='mb-4'>
-                        <Card className='tarjeta'>
-                            <Card.Body>
-                                <Card.Title>Materias</Card.Title>
-                                {materias.length > 0 ? (
-                                    materias.map(materia => (
-                                        <Card.Text key={materia.MateriaID}>
-                                            {materia.NombreMateria} - {materia.horario}
-                                        </Card.Text>
-                                    ))
-                                ) : (
-                                    <Card.Text>No tienes Materias designadas</Card.Text>
-                                )}
-                                <Button href='/dashboard/materias'>Ver más</Button>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col md={8} className='mb-4'>
-                        <Card className='tarjeta'>
-                            <Card.Body>
-                                <Card.Title>Clases</Card.Title>
-                                <Card.Text>Materia1 - 15:00</Card.Text>
-                                <Card.Text>Materia1 - 13:00</Card.Text>
-                                <Card.Text>Materia1</Card.Text>
-                                <Card.Text>Materia1</Card.Text>
-                                <Button href='/dashboard/materias'>Ver más</Button>
-                            </Card.Body>
-                        </Card>
-                    </Col>
 
-                    <Col md={4} className='mb-4'>
-                        <Card className='tarjeta-QR'>
-                            <Card.Body>
-                                <Card.Title>Tu Código QR</Card.Title>
-                                <QRCodeComponent data={'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsInRpbWUiOiIyMDI0LTA2LTI1VDE4OjU4OjM2LjE1NloiLCJpYXQiOjE3MTkzNDE5MTYsImV4cCI6MTcxOTM0MjUxNn0.uWtxqG_1rpc6G0M2vI6QpOW4yU84cjmEh2cEH-i6QzI'} />
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                </Row>
-            </Container>
+            {/* Main content */}
+            <div className={styles.tarjetas}>
+                <Container>
+                    <Row>
+                        <Col md={8} className="mb-4">
+                            <Card className={styles.tarjeta}>
+                                <Card.Body>
+                                    <Card.Title>Asistencias</Card.Title>
+                                    {data ? (
+                                        <DonutChart attendance={data.asistencias} absence={data.inasistencias} />
+                                    ) : (
+                                        <Card.Text>No tienes asistencias registradas</Card.Text>
+                                    )}
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                        <Col md={4} className="mb-4">
+                            <Card className={styles.tarjeta}>
+                                <Card.Body>
+                                    <Card.Title>Materias</Card.Title>
+                                    {materias.length > 0 ? (
+                                        materias.map(materia => (
+                                            <Card.Text key={materia.MateriaID}>
+                                                {materia.NombreMateria} - {materia.horario}
+                                            </Card.Text>
+                                        ))
+                                    ) : (
+                                        <Card.Text>No tienes Materias designadas</Card.Text>
+                                    )}
+                                    <Button href='/dashboard/materias'>Ver más</Button>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={8} className="mb-4">
+                            <Card className={styles.tarjeta}>
+                                <Card.Body>
+                                    <Card.Title>Clases</Card.Title>
+                                    <Card.Text>Materia1 - 15:00</Card.Text>
+                                    <Card.Text>Materia1 - 13:00</Card.Text>
+                                    <Card.Text>Materia1</Card.Text>
+                                    <Card.Text>Materia1</Card.Text>
+                                    <Button href='/dashboard/materias'>Ver más</Button>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+
+                        <Col md={4} className="mb-4">
+                            <Card className={styles['tarjeta-QR']}>
+                                <Card.Body>
+                                    <Card.Title>Tu Código QR</Card.Title>
+                                    <QRCodeComponent data={'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsInRpbWUiOiIyMDI0LTA2LTI1VDE4OjU4OjM2LjE1NloiLCJpYXQiOjE3MTkzNDE5MTYsImV4cCI6MTcxOTM0MjUxNn0.uWtxqG_1rpc6G0M2vI6QpOW4yU84cjmEh2cEH-i6QzI'} />
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
         </div>
     );
 }

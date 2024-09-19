@@ -1,33 +1,27 @@
-'use client'
+'use client';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 
-import "./registro.css"
+// Importar el módulo CSS
+import styles from './registro.module.css';
 
 function Registro() {
   const Router = useRouter();
-
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-
   const onSubmit = (data) => {
-
     console.log(data);
-
     console.log(JSON.stringify(data));
     postData(data);
-
   };
 
   const style = {
     error: {
-      color: "red",
+      color: 'red',
       fontSize: '11px'
     },
-
   };
-
 
   const postData = async (data) => {
     try {
@@ -45,15 +39,13 @@ function Registro() {
 
       const responseData = await response.json();
       console.log('Success:', responseData);
-      // Here you could redirect the user or clear the form
     } catch (error) {
       console.error('Error:', error);
-      // Here you could inform the user of the error
     }
-  }
+  };
 
   return (
-    <div>
+    <div className={styles.containerDiv}> {/* Aplicando el estilo desde el módulo CSS */}
       <h1>Registro</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="Nombre">
@@ -78,12 +70,7 @@ function Registro() {
               }
             })}
           />
-          {
-            errors.nombre && <p>{errors.nombre.message}</p>
-          }
-
-
-
+          {errors.nombre && <p style={style.error}>{errors.nombre.message}</p>}
         </label>
         <br />
 
@@ -107,11 +94,8 @@ function Registro() {
                 }
               }
             })}
-
           />
-          {
-            errors.Apellido && <p>{errors.Apellido.message}</p>
-          }
+          {errors.Apellido && <p style={style.error}>{errors.Apellido.message}</p>}
         </label>
         <br />
 
@@ -133,14 +117,9 @@ function Registro() {
             })}
             placeholder="ej: 1123456789"
           />
-          {
-            errors.Telefono && <p>{errors.Telefono.message}</p>
-          }
-
+          {errors.Telefono && <p style={style.error}>{errors.Telefono.message}</p>}
         </label>
         <br />
-
-
 
         <label htmlFor="Correo">
           <h4>CORREO:</h4>
@@ -148,16 +127,14 @@ function Registro() {
             type="email"
             id="Correo"
             {...register("Correo", {
-              requiered: 'Completa este campo',
+              required: 'Completa este campo',
               pattern: {
                 value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                 message: 'Ingrese un correo valido',
               }
             })}
           />
-          {
-            errors.Correo && <p>{errors.Correo.message}</p>
-          }
+          {errors.Correo && <p style={style.error}>{errors.Correo.message}</p>}
         </label>
         <br />
 
@@ -167,7 +144,7 @@ function Registro() {
             type="text"
             id="DNI"
             {...register("DNI", {
-              requiered: 'Complete este campo',
+              required: 'Complete este campo',
               minLength: {
                 value: 8,
                 message: 'El DNI debe tener como minimo 8 caracteres',
@@ -181,14 +158,10 @@ function Registro() {
                 message: 'Ingrese solo numeros'
               }
             })}
-
           />
-          {
-            errors.DNI && <p>{errors.DNI.message}</p>
-          }
+          {errors.DNI && <p style={style.error}>{errors.DNI.message}</p>}
         </label>
         <br />
-
 
         <label htmlFor="Contrasena">
           <h4>CONTRASEÑA:</h4>
@@ -203,17 +176,15 @@ function Registro() {
               },
             })}
           />
-          {
-            errors.ConstrasenaHash && <p>{errors.ConstrasenaHash.message}</p>
-          }
+          {errors.ContrasenaHash && <p style={style.error}>{errors.ContrasenaHash.message}</p>}
         </label>
         <br />
 
         <input type="submit" />
       </form>
-      <button className='boton' onClick={() => Router.push('/login')}>Volver al Inicio de Sesión</button>
-
+      <button className={styles.boton} onClick={() => Router.push('/login')}>Volver al Inicio de Sesión</button>
     </div>
   );
 }
+
 export default Registro;

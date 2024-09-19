@@ -1,11 +1,5 @@
-/* Global styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
+/* No más selectores globales */
+.body {
   font-family: 'Arial', sans-serif;
   display: flex;
   justify-content: center;
@@ -14,7 +8,8 @@ body {
   background-color: #f0f0f0;
 }
 
-.login-container {
+/* Ahora las clases son locales */
+.loginContainer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,7 +18,7 @@ body {
   background-color: #f0f0f0;
 }
 
-.login-box {
+.loginBox {
   background-color: white;
   padding: 2rem;
   border-radius: 8px;
@@ -33,22 +28,23 @@ body {
   max-width: 400px;
 }
 
-.login-icon {
+.loginIcon {
   width: 80px;
   margin-bottom: 1rem;
 }
 
-.login-form {
+/* Otros estilos locales */
+.loginForm {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.form-group {
+.formGroup {
   text-align: left;
 }
 
-input {
+.input {
   width: 100%;
   padding: 0.8rem;
   margin-top: 0.5rem;
@@ -57,16 +53,16 @@ input {
   font-size: 1rem;
 }
 
-.input-error {
+.inputError {
   border-color: red;
 }
 
-.mensaje-error {
+.mensajeError {
   color: red;
   font-size: 0.8rem;
 }
 
-.btn-login, .btn-menu, .btn-register {
+.btnLogin, .btnMenu, .btnRegister {
   background-color: #007bff;
   color: white;
   padding: 0.8rem;
@@ -78,7 +74,7 @@ input {
   margin-top: 1rem;
 }
 
-.btn-login:hover, .btn-menu:hover, .btn-register:hover {
+.btnLogin:hover, .btnMenu:hover, .btnRegister:hover {
   background-color: #0056b3;
 }
 
@@ -86,13 +82,12 @@ input {
   margin-top: 1rem;
 }
 
-/* Responsiveness */
 @media (max-width: 768px) {
-  .login-box {
+  .loginBox {
     padding: 1.5rem;
   }
 
-  input, .btn-login, .btn-menu, .btn-register {
+  .input, .btnLogin, .btnMenu, .btnRegister {
     font-size: 0.9rem;
   }
 }

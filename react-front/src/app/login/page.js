@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react';
-import "./login.css";
+import styles from './login.module.css';
 import QRCodeComponent from './codigo';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -25,7 +25,7 @@ function Login() {
     }
     if (!password) {
       errors.password = 'La contraseña es requerida';
-    } else if (password.length < 3) {
+    } else if (password.length < 8) {
       errors.password = 'La contraseña debe tener 8 caracteres como mínimo';
     }
     return errors;
@@ -66,8 +66,6 @@ function Login() {
 
       console.log(data.qrToken);
       setCodigo(<QRCodeComponent data={data.qrToken} />);
-      //Router.push('/dashboard');
-
 
     } catch (error) {
       setMessage('El login falló: ' + error.message);
@@ -88,49 +86,45 @@ function Login() {
     }
   }
 
-
   return (
-    <div className='login-container'>
-      <div className = 'login-box'>
-      <img src='appicon.png' className='login-icon' />
-      <h1>Asistencia QR</h1>
-      <form onSubmit={handleSubmit} className='login-form'>
-        <div className='form-group'>
-          <label>Correo</label>
-          <input
-            type="text"
-            value={correo}
-            onChange={handleCorreoChange}
-            className={errors.correo ? 'input-error' : ''}
-            placeholder='Ingrese su correo electronico'
-          />
-          {errors.correo && <div className='mensaje-error'>{errors.correo}</div>}
+    <div className={styles.loginContainer}>
+      <div className={styles.loginBox}>
+        <img src='appicon.png' className={styles.loginIcon} />
+        <h1>Asistencia QR</h1>
+        <form onSubmit={handleSubmit} className={styles.loginForm}>
+          <div className={styles.formGroup}>
+            <label>Correo</label>
+            <input
+              type="text"
+              value={correo}
+              onChange={handleCorreoChange}
+              className={errors.correo ? styles.inputError : styles.input}
+              placeholder='Ingrese su correo electrónico'
+            />
+            {errors.correo && <div className={styles.mensajeError}>{errors.correo}</div>}
+          </div>
+          <div className={styles.formGroup}>
+            <label>Contraseña</label>
+            <input
+              type="password"
+              value={password}
+              onChange={handlePasswordChange}
+              className={errors.password ? styles.inputError : styles.input}
+              placeholder='Ingrese una contraseña'
+            />
+            {errors.password && <div className={styles.mensajeError}>{errors.password}</div>}
+          </div>
+          <button className={styles.btnLogin} type="submit">Login</button>
+        </form>
+        {message && <p className={styles.mensajeError}>{message}</p>}
+        <div className={styles.codigo}>
+          {codigo}
         </div>
-        <div className='form-group'>
-          <label>Contraseña</label>
-          <input
-            type="password"
-            value={password}
-            onChange={handlePasswordChange}
-            className={errors.password ? 'input-error' : ''}
-            placeholder='Ingrese una contraseña'
-          />
-          {errors.password && <div className="mensaje-error">{errors.password}</div>}
-        </div>
-        <button className='btn-login' type="submit">Login</button>
-      </form>
-      {message && <p className='mensaje-error'>{message}</p>}
-      <div className='codigo'>
-        {codigo}
-      </div>
-      <button className='btn-menu' onClick={handleMenuNavigation}>Ir al Menú</button>
-      {/* <Link href="/dashboard">
-        <button className='irmenu'>Ir al Menú</button>
-      </Link> */}
-      <label>
-        <p>¿No tienes cuenta?</p>
-      </label>
-      <button className='btn-registro' onClick={() => Router.push('/registro')}>Registro</button>
+        <button className={styles.btnMenu} onClick={handleMenuNavigation}>Ir al Menú</button>
+        <label>
+          <p>¿No tienes cuenta?</p>
+        </label>
+        <button className={styles.btnRegister} onClick={() => Router.push('/registro')}>Registro</button>
       </div>
     </div>
   );
