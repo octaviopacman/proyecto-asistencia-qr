@@ -25,7 +25,7 @@ function Login() {
     }
     if (!password) {
       errors.password = 'La contraseña es requerida';
-    } else if (password.length < 8) {
+    } else if (password.length < 3) {
       errors.password = 'La contraseña debe tener 8 caracteres como mínimo';
     }
     return errors;
@@ -54,18 +54,13 @@ function Login() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ correo, password }),
+        credentials:'include',
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to login');
-      }
-
-      localStorage.setItem('token', data.token);
-
-      console.log(data.qrToken);
+      const data = await response.json(); 
       setCodigo(<QRCodeComponent data={data.qrToken} />);
+
+      handleMenuNavigation();
 
     } catch (error) {
       setMessage('El login falló: ' + error.message);

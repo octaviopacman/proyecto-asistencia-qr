@@ -17,52 +17,66 @@ import { useRouter } from 'next/navigation';
 
 const URI_MATERIAS = 'https://backend-asistencia-qr.vercel.app/api/profesores/';
 const URI_ASISTENCIAS = 'https://backend-asistencia-qr.vercel.app/api/login/contarasistencias/';
+const URI_HORARIOS = 'https://backend-asistencia-qr.vercel.app/api/insertar/horarios';
 
 function Admin() {
     const [data, setData] = useState(null);
     const [materias, setMaterias] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [horarios, setHorarios] = useState([]);
     const [error, setError] = useState(null);
     const Router = useRouter();
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjAsInRpbWUiOiIyMDI0LTA5LTE4VDIyOjI2OjUyLjYxMVoiLCJpYXQiOjE3MjY2OTg0MTIsImV4cCI6MTcyNjY5OTAxMn0.o7o6s18zKfoc5TWT1kitJVoyX8zKeJmIgLLOXsE10W8';
 
     useEffect(() => {
-        const profesorID = 20;
-        console.log(`${URI_ASISTENCIAS}${profesorID}`);
-        console.log(`${URI_MATERIAS}${profesorID}`);
+        // Verificar si el token existe en las cookies
+        const checkAuth = async () => {
+            const response = await fetch('THIAGO HACE LA RUTA', {
+                method: 'GET',
+                credentials: 'include', // Incluir cookies en la solicitud
+            });
 
-        if (!profesorID) {
-            Router.push('/login');
-            return;
-        }
-
-        const fetchData = async () => {
-            try {
-                const [asistenciasRes, materiasRes] = await Promise.all([
-                    fetch(`${URI_ASISTENCIAS}${profesorID}`),
-                    fetch(`${URI_MATERIAS}${profesorID}`)
-                ]);
-
-                if (!asistenciasRes.ok || !materiasRes.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-
-                const asistenciasData = await asistenciasRes.json();
-                const materiasData = await materiasRes.json();
-
-                setData(asistenciasData);
-                console.log(asistenciasData.asistencias);
-                console.log(asistenciasData.inasistencias);
-                setMaterias(materiasData);
-                setLoading(false);
-            } catch (error) {
-                setError(error);
-                setLoading(false);
+            if (!response.ok) {
+                // Si el token no es válido o no existe, redirigir a login
+                Router.push('/login');
+            } else {
+                fetchData(); // Cargar los datos si está autenticado
             }
         };
-        
-        fetchData();
+
+        checkAuth();
     }, [Router]);
+
+    const fetchData = async () => {
+        const profesorID = 20;
+
+        const [asistenciasRes, materiasRes, horariosRes] = await Promise.all([
+            fetch(`${URI_ASISTENCIAS}${profesorID}`, {
+                method: 'GET',
+                credentials: 'include',
+            }),
+            fetch(`${URI_MATERIAS}${profesorID}`, {
+                method: 'GET',
+                credentials: 'include',
+            }),
+            fetch(`${URI_HORARIOS}${profesorID}`, {
+                method: 'GET',
+                credentials: 'include',
+            }),
+        ]);
+
+        if (!asistenciasRes.ok || !materiasRes.ok || !horariosRes.ok) {
+            throw new Error('Failed to fetch data');
+        }
+
+        const asistenciasData = await asistenciasRes.json();
+        const materiasData = await materiasRes.json();
+        const horariosData = await horariosRes.json();
+
+        setData(asistenciasData);
+        setMaterias(materiasData);
+        setHorarios(horariosData);
+        setLoading(false);
+    };
 
     if (loading) {
         return <div>Loading...</div>;
@@ -75,18 +89,15 @@ function Admin() {
     return (
         <div>
             <Navbar bg="dark" data-bs-theme="dark">
-
-            <Nav.Link><img src="appicon.png" className='icono' alt='App Icon' height={100} /></Nav.Link>
-            <Navbar.Brand href="#home">Menú de Asistencias</Navbar.Brand>
-            <Nav className="me-auto">
-                <Nav.Link href='/dashboard/asistencias'>Asistencias</Nav.Link>
-                <Nav.Link href="/dashboard/materias">Materias</Nav.Link>
-                <Nav.Link href="/dashboard/preceptores">Preceptores</Nav.Link>
-            </Nav>
+                <Nav.Link><img src="appicon.png" className='icono' alt='App Icon' height={100} /></Nav.Link>
+                <Navbar.Brand href="#home">Menú de Asistencias</Navbar.Brand>
+                <Nav className="me-auto">
+                    <Nav.Link href='/dashboard/asistencias'>Asistencias</Nav.Link>
+                    <Nav.Link href="/dashboard/materias">Materias</Nav.Link>
+                    <Nav.Link href="/dashboard/preceptores">Preceptores</Nav.Link>
+                </Nav>
             </Navbar>
 
-
-            {/* Main content */}
             <div className={styles.tarjetas}>
                 <Container>
                     <Row>
@@ -125,10 +136,15 @@ function Admin() {
                             <Card className={styles.tarjeta}>
                                 <Card.Body>
                                     <Card.Title>Clases</Card.Title>
-                                    <Card.Text>Materia1 - 15:00</Card.Text>
-                                    <Card.Text>Materia1 - 13:00</Card.Text>
-                                    <Card.Text>Materia1</Card.Text>
-                                    <Card.Text>Materia1</Card.Text>
+                                    {horarios.length > 0 ? (
+                                        horarios.map(horario => (
+                                            <Card.Text key={horario.HorarioID}>
+                                                {horario.MateriaNombre} -{horario.horaInicio} a {horario.horaFinal}({horario.Dia})
+                                            </Card.Text>
+                                        ))
+                                    ) : (
+                                        <Card.Text>No tienes Clases Pendientes.</Card.Text>
+                                    )}
                                     <Button href='/dashboard/materias'>Ver más</Button>
                                 </Card.Body>
                             </Card>
