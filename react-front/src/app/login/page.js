@@ -3,8 +3,6 @@ import React, { useState } from 'react';
 import styles from './login.module.css';
 import QRCodeComponent from './codigo';
 import { useRouter } from 'next/navigation';
-import { useSession } from '../assets/session';
-
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -15,9 +13,6 @@ function Login() {
   const [codigo, setCodigo] = useState('');
   const [errors, setErrors] = useState({});
   const Router = useRouter();
-  const { user, login, logout } = useSession();
-
-
 
   const Validacion = () => {
     const errors = {};
@@ -64,10 +59,8 @@ function Login() {
 
       const data = await response.json(); 
       setCodigo(<QRCodeComponent data={data.qrToken} />);
-      login(data);
-      console.log(user);
 
-      
+      handleMenuNavigation();
 
     } catch (error) {
       setMessage('El login falló: ' + error.message);

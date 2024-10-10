@@ -14,8 +14,6 @@ import styles from './page.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DonutChart from './donutchart';
 import { useRouter } from 'next/navigation';
-import { useSession } from '../assets/session';
-
 
 const URI_MATERIAS = 'https://backend-asistencia-qr.vercel.app/api/profesores/';
 const URI_ASISTENCIAS = 'https://backend-asistencia-qr.vercel.app/api/login/contarasistencias/';
@@ -28,13 +26,11 @@ function Admin() {
     const [horarios, setHorarios] = useState([]);
     const [error, setError] = useState(null);
     const Router = useRouter();
-    const {user, login, logout} = useSession();
-    console.log(user);
 
     useEffect(() => {
         // Verificar si el token existe en las cookies
         const checkAuth = async () => {
-            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/dashboard', {
+            const response = await fetch('THIAGO HACE LA RUTA', {
                 method: 'GET',
                 credentials: 'include', // Incluir cookies en la solicitud
             });
