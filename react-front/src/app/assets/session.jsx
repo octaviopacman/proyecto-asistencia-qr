@@ -1,4 +1,5 @@
 // context/SessionContext.js
+"use client"
 import { createContext, useState, useEffect, useContext } from "react";
 import Cookies from "js-cookie";
 
