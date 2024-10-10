@@ -60,7 +60,7 @@ function Login() {
       const data = await response.json(); 
       setCodigo(<QRCodeComponent data={data.qrToken} />);
 
-      handleMenuNavigation();
+      
 
     } catch (error) {
       setMessage('El login falló: ' + error.message);
