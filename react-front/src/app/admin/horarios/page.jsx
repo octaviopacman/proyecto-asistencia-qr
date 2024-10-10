@@ -19,10 +19,10 @@ const CrudHorarios = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentId, setCurrentId] = useState(null);
 
-  const apiUrlHorarios = 'http://localhost:8000/api/insertar/horarios'; // URL de la API para los horarios
-  const apiUrlProfesores = 'http://localhost:8000/api/profesores';
-  const apiUrlMaterias = 'http://localhost:8000/api/listado/materias';
-  const apiUrlCursos = 'http://localhost:8000/api/listado/cursos';
+  const apiUrlHorarios = 'https://backend-asistencia-qr.vercel.app/api/insertar/horarios'; // URL de la API para los horarios
+  const apiUrlProfesores = 'https://backend-asistencia-qr.vercel.app/api/profesores';
+  const apiUrlMaterias = 'https://backend-asistencia-qr.vercel.app/api/listado/materias';
+  const apiUrlCursos = 'https://backend-asistencia-qr.vercel.app/api/listado/cursos';
   // Obtener todos los horarios del backend cuando el componente se monta
   useEffect(() => {
     fetch(apiUrlHorarios)

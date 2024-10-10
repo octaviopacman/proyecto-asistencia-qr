@@ -25,7 +25,7 @@ function Registro() {
 
   const postData = async (data) => {
     try {
-      const response = await fetch('http://localhost:8000/profesores', {
+      const response = await fetch('https://backend-asistencia-qr.vercel.app/profesores', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

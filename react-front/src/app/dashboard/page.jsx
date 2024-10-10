@@ -28,7 +28,7 @@ function Admin() {
     const [horarios, setHorarios] = useState([]);
     const [error, setError] = useState(null);
     const Router = useRouter();
-    const {user, login, logout} = useSession();
+    const {user, logout} = useSession();
     console.log(user);
 
     useEffect(() => {

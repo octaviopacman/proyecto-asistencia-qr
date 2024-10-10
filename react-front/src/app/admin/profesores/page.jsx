@@ -15,7 +15,7 @@ const CrudProfesores = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentId, setCurrentId] = useState(null);
 
-  const apiUrl = 'http://localhost:8000/profesores'; // URL de la API
+  const apiUrl = 'https://backend-asistencia-qr.vercel.app/api/profesores'; // URL de la API
 
   // Obtener todos los profesores del backend cuando el componente se monta
   useEffect(() => {

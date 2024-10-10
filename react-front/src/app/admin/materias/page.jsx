@@ -10,7 +10,7 @@ const CrudMaterias = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentId, setCurrentId] = useState(null);
 
-  const apiUrl = 'http://localhost:8000/materias'; // URL de la API para las materias
+  const apiUrl = 'https://backend-asistencia-qr.vercel.app/api/materias'; // URL de la API para las materias
 
   // Obtener todas las materias del backend cuando el componente se monta
   useEffect(() => {
