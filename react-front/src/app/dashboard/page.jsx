@@ -26,7 +26,7 @@ function Admin() {
     const [horarios, setHorarios] = useState([]);
     const [error, setError] = useState(null);
     const Router = useRouter();
-
+/*
     useEffect(() => {
         // Verificar si el token existe en las cookies
         const checkAuth = async () => {
@@ -45,7 +45,7 @@ function Admin() {
 
         checkAuth();
     }, [Router]);
-
+*/
     const fetchData = async () => {
         const profesorID = 20;
 
