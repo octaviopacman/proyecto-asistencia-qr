@@ -118,17 +118,17 @@ function Registro() {
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="ContrasenaHash">CONTRASEÑA:</label>
+            <label htmlFor="password">CONTRASEÑA:</label>
             <input
               type="password"
-              id="ContrasenaHash"
-              {...register("ContrasenaHash", {
+              id="password"
+              {...register("password", {
                 required: 'Completa este campo',
                 minLength: { value: 8, message: 'La contraseña debe tener 8 caracteres como minimos' },
               })}
               className={styles.input}
             />
-            {errors.ContrasenaHash && <p className={styles.mensajeError}>{errors.ContrasenaHash.message}</p>}
+            {errors.password && <p className={styles.mensajeError}>{errors.password.message}</p>}
           </div>
 
           <button type="submit" className={styles.btnSubmit}>Registrar</button>
