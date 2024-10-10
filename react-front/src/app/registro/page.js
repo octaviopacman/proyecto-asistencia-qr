@@ -20,7 +20,15 @@ function Registro() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          nombre: data.nombre,
+          apellido: data.Apellido,
+          dni: data.DNI,
+          telefono: data.Telefono,
+          correo: data.Correo,
+          password: data.password,
+         
+        }),
       });
 
       if (!response.ok) {
