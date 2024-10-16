@@ -59,6 +59,7 @@ function Login() {
 
       const data = await response.json(); 
       setCodigo(<QRCodeComponent data={data.qrToken} />);
+      console.log(data.qrToken);
 
       /*handleMenuNavigation();*/
 
