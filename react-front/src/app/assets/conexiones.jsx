@@ -4,7 +4,7 @@ export class Dashboard {
     }
     async contarAsistencias(){
         try {
-            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/login/contarasistencias', {
+            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/login/contarasistencias/', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
