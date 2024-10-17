@@ -86,14 +86,14 @@ const CrudProfesores = () => {
       }
 
       // Limpiar formulario
-      setForm({
+      /* setForm({
         nombre: '',
         apellido: '',
         dni: '',
         telefono: '',
         correo: '',
         password: '',
-      });
+      }); */
     } catch (error) {
       console.error('Error al guardar profesor:', error);
     }
