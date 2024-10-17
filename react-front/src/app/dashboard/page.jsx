@@ -40,7 +40,7 @@ function Admin() {
     const dashboard = new Dashboard(user.token);
     (async () => {
         let resultado = await dashboard.contarAsistencias();
-        console.log(resultado);
+        setData(resultado);
     })();
 
 
