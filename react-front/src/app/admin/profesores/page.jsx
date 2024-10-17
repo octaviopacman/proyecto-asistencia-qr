@@ -113,10 +113,20 @@ const CrudProfesores = () => {
   // Función para editar un profesor
   const handleEdit = (id) => {
     const profesorToEdit = profesores.find((profesor) => profesor.id === id);
-    setForm(profesorToEdit);
-    setCurrentId(id);
+    console.log('profesor seleccionado para editar',profesorToEdit)
+    if (profesorToEdit) {
+      setForm(profesorToEdit);
+      console.log('antes de la edicion',form)
+
+      setCurrentId(id);
     setIsEditing(true);
-    console.log(form)
+    console.log('despues de la edicion',form)
+    } else {
+      console.log('no hay profe',id)
+    }
+   
+  
+    
   };
 
   return (
