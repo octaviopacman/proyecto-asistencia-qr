@@ -40,6 +40,45 @@ export class Dashboard {
             throw new Error('Error al obtener materias');
         }
     }
+    async mostrarHorarioProfesor(){
+        console.log(this.token);
+        try {
+            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/listado/horario/profesor', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'autorizacion': `Bearer ${this.token}`,
+                },
+                credentials: 'include'
+            });
+            const data = await response.json();
+            return data;
+            console.log(data);
+        } catch (error) {
+            console.error(error);
+            throw new Error('Error al obtener cursos de profesores');
+        }
+    }
+    async mostrarHorarioCurso(){
+        console.log(this.token);
+        try {
+            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/listado/horario/curso', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'autorizacion': `Bearer ${this.token}`,
+                },
+                credentials: 'include'
+            });
+            const data = await response.json();
+            return data;
+            console.log(data);
+        } catch (error) {
+            console.error(error);
+            throw new Error('Error al obtener cursos');
+        }
+    }
+
 }
 
 

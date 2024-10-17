@@ -175,7 +175,7 @@ function Admin() {
                             <Card className={styles['tarjeta-QR']}>
                                 <Card.Body>
                                     <Card.Title>Tu Código QR</Card.Title>
-                                    <QRCodeComponent data={'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsInRpbWUiOiIyMDI0LTA2LTI1VDE4OjU4OjM2LjE1NloiLCJpYXQiOjE3MTkzNDE5MTYsImV4cCI6MTcxOTM0MjUxNn0.uWtxqG_1rpc6G0M2vI6QpOW4yU84cjmEh2cEH-i6QzI'} />
+                                    <QRCodeComponent data={user.token} />
                                 </Card.Body>
                             </Card>
                         </Col>
