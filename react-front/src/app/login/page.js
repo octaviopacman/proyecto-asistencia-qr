@@ -60,7 +60,7 @@ function Login() {
       });
 
       const data = await response.json(); 
-      setCodigo(<QRCodeComponent data={data.qrToken} />);
+      setCodigo(<QRCodeComponent data={user.token} />);
       console.log(data.qrToken);
       login(data);
       
