@@ -110,7 +110,7 @@ function Admin() {
     return (
         <div>
             <Navbar bg="dark" data-bs-theme="dark">
-                <Nav.Link><img src="appicon.png" className='icono' alt='App Icon' height={100} /></Nav.Link>
+                <Nav.Link><img src="appicon.png" className={styles.icono} alt='App Icon' height={100} /></Nav.Link>
                 <Navbar.Brand href="#home">Menú de Asistencias</Navbar.Brand>
                 <Nav className="me-auto">
                     <Nav.Link href='/dashboard/asistencias'>Asistencias</Nav.Link>
