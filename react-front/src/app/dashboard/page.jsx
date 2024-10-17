@@ -16,6 +16,8 @@ import DonutChart from './donutchart';
 import { useRouter } from 'next/navigation';
 import { Dashboard } from '../assets/conexiones';
 import {useSession} from "../assets/session";
+import { Dropdown } from 'react-bootstrap';
+import AdminPage from "../admin/page"
 
 const URI_MATERIAS = 'https://backend-asistencia-qr.vercel.app/api/profesores/';
 const URI_ASISTENCIAS = 'https://backend-asistencia-qr.vercel.app/api/login/contarasistencias/';
@@ -111,11 +113,21 @@ function Admin() {
         <div>
             <Navbar bg="dark" data-bs-theme="dark">
                 <Nav.Link><img src="appicon.png" className={styles.icono} alt='App Icon' height={100} /></Nav.Link>
-                <Navbar.Brand href="#home">Menú de Asistencias</Navbar.Brand>
+                <Navbar.Brand href="/dashboard">Menú de Asistencias</Navbar.Brand>
                 <Nav className="me-auto">
                     <Nav.Link href='/dashboard/asistencias'>Asistencias</Nav.Link>
                     <Nav.Link href="/dashboard/materias">Materias</Nav.Link>
                     <Nav.Link href="/dashboard/preceptores">Preceptores</Nav.Link>
+                </Nav>
+                <Nav>
+                    <Dropdown drop='start'>
+                        <Dropdown.Toggle>
+                            Administración
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <AdminPage></AdminPage>
+                        </Dropdown.Menu>
+                    </Dropdown>
                 </Nav>
             </Navbar>
 

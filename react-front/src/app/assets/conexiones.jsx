@@ -81,6 +81,29 @@ export class Dashboard {
 
 }
 
+export class Login {
+    async iniciarSesion(correo, password){
+        try {
+            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    Correo: correo,
+                    Password: password,
+                }),
+                credentials: 'include'
+            });
+            const data = await response.json();
+            return data;
+            console.log(data);
+        } catch (error) {
+            console.error(error);
+            throw new Error('Error al iniciar sesión');
+        }
+    }
+}
 
 
 

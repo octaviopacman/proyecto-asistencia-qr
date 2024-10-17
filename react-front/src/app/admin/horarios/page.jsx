@@ -1,5 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react';
+import { Navbar, Nav, Dropdown } from 'react-bootstrap';
+import AdminPage from '../page';
 
 const CrudHorarios = () => {
   const [horarios, setHorarios] = useState([]);
@@ -136,6 +138,25 @@ const CrudHorarios = () => {
 
   return (
     <div className="container">
+      <Navbar bg="dark" data-bs-theme="dark">
+                <Nav.Link><img src="appicon.png"  alt='App Icon' height={100} /></Nav.Link>
+                <Navbar.Brand href="/dashboard">Menú de Asistencias</Navbar.Brand>
+                <Nav className="me-auto">
+                    <Nav.Link href='/dashboard/asistencias'>Asistencias</Nav.Link>
+                    <Nav.Link href="/dashboard/materias">Materias</Nav.Link>
+                    <Nav.Link href="/dashboard/preceptores">Preceptores</Nav.Link>
+                </Nav>
+                <Nav>
+                    <Dropdown drop='start'>
+                        <Dropdown.Toggle>
+                            Administración
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <AdminPage></AdminPage>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </Nav>
+            </Navbar>
       <h1 className="my-4">Gestión de Horarios</h1>
 
       {/* Formulario */}
