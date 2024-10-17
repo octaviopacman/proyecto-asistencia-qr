@@ -58,16 +58,20 @@ function Login() {
         body: JSON.stringify({ correo, password }),
         credentials:'include',
       });
-
-      const data = await response.json(); 
-      setCodigo(<QRCodeComponent data={data.qrToken} />);
-      console.log(data.qrToken);
+      if (response.ok) {
+        const data = await response.json()
+        setCodigo(<QRCodeComponent data={data.qrToken} />);
+        console.log(data.qrToken);
       login(data);
-      
-      
-
+      setMessage('')
+      } else if(response.ok = 404) {
+        setMessage('El correo no esta registrado.')
+      } else if(response.ok = 401) {
+        setMessage('El correo o la contraseña no es correcto')
+      } else {
+        setMessage('Ocurrio un error al intentar iniciar sesion.Intentalo de nuevo')
+      }
       /*handleMenuNavigation();*/
-
     } catch (error) {
       setMessage('El login falló: ' + error.message);
     }
