@@ -9,7 +9,7 @@ const CrudProfesores = () => {
     dni: '',
     telefono: '',
     correo: '',
-    password: '', // Ajuste para usar 'password' en lugar de 'contraseña'
+    password: '', 
   });
   const [isEditing, setIsEditing] = useState(false);
   const [currentId, setCurrentId] = useState(null);
@@ -18,7 +18,6 @@ const CrudProfesores = () => {
 
   // Obtener todos los profesores del backend cuando el componente se monta
   useEffect(() => {
-    console.log('formulario editado',form)
     const fetchProfesores = async () => {
       try {
         const response = await fetch(apiUrl);
@@ -41,7 +40,7 @@ const CrudProfesores = () => {
   // Validación básica de formulario
   const validateForm = () => {
     const { nombre, apellido, dni, telefono, correo, password } = form;
-    if (!nombre || !apellido || !dni || !telefono || !correo || !password) {
+    if (!nombre || !apellido || !dni || !telefono || !correo || (!isEditing && !password)) {
       alert('Por favor, completa todos los campos');
       return false;
     }
@@ -59,14 +58,13 @@ const CrudProfesores = () => {
   // Enviar el formulario (agregar o editar profesor)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('formulario antes de enviar', form)
+    console.log('formulario antes de enviar', form);
     if (!validateForm()) return;
 
     try {
       const options = {
         method: isEditing ? 'PUT' : 'POST',
-        headers: { 'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       };
 
@@ -86,7 +84,7 @@ const CrudProfesores = () => {
       }
 
       // Limpiar formulario
-       setForm({
+      setForm({
         nombre: '',
         apellido: '',
         dni: '',
@@ -114,24 +112,21 @@ const CrudProfesores = () => {
   // Función para editar un profesor
   const handleEdit = (id) => {
     const profesorToEdit = profesores.find((profesor) => profesor.id === id);
-   if (profesorToEdit) {
-    console.log('editando el profesor',profesorToEdit)
-    setForm({
-      nombre: profesorToEdit.nombre || '',
-      apellido: profesorToEdit.apellido || '',
-      dni: profesorToEdit.dni || '',
-      telefono: profesorToEdit.telefono || '',
-      correo: profesorToEdit.correo || '',
-      password: profesorToEdit.password || '',
-    })
-    setCurrentId(id);
-    setIsEditing(true);
-   } else {
-    console.error('No se encontró el profesor para editar',id);
-   }
-   
-  
-    
+    if (profesorToEdit) {
+      console.log('editando el profesor', profesorToEdit);
+      setForm({
+        nombre: profesorToEdit.nombre || '',
+        apellido: profesorToEdit.apellido || '',
+        dni: profesorToEdit.dni || '',
+        telefono: profesorToEdit.telefono || '',
+        correo: profesorToEdit.correo || '',
+        password: '', // Solo si es necesario
+      });
+      setCurrentId(id);
+      setIsEditing(true);
+    } else {
+      console.error('No se encontró el profesor para editar', id);
+    }
   };
 
   return (
@@ -210,7 +205,7 @@ const CrudProfesores = () => {
               className="form-control"
               value={form.password}
               onChange={handleChange}
-              required
+              required={!isEditing} // Solo requerimos contraseña cuando estamos agregando un profesor
             />
           </div>
         </div>
@@ -246,13 +241,13 @@ const CrudProfesores = () => {
                 <td>{profesor.correo}</td>
                 <td>
                   <button
-                    className="btn btn-warning me-2"
+                    className="btn btn-warning btn-sm me-2"
                     onClick={() => handleEdit(profesor.id)}
                   >
                     Editar
                   </button>
                   <button
-                    className="btn btn-danger"
+                    className="btn btn-danger btn-sm"
                     onClick={() => handleDelete(profesor.id)}
                   >
                     Eliminar
