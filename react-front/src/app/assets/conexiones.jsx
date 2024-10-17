@@ -3,6 +3,7 @@ export class Dashboard {
         this.token = token;
     }
     async contarAsistencias(){
+        console.log(this.token);
         try {
             const response = await fetch('https://backend-asistencia-qr.vercel.app/api/login/contarasistencias/', {
                 method: 'GET',
@@ -10,6 +11,7 @@ export class Dashboard {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.token}`,
                 },
+                credentials: 'include'
             });
             const data = await response.json();
             return data;
