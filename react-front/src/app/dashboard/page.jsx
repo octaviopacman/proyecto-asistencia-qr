@@ -37,7 +37,7 @@ function Admin() {
     const token = user.qrToken;
     const dashboard = new Dashboard(token);
     (async () => {
-        let resultado = await dashboard.contarAsistencias(token);
+        let resultado = await dashboard.contarAsistencias();
         console.log(resultado);
     })();
 
