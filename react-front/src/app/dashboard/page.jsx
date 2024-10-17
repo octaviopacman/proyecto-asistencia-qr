@@ -127,7 +127,7 @@ function Admin() {
                                 <Card.Body>
                                     <Card.Title>Asistencias</Card.Title>
                                     {data ? (
-                                        <DonutChart attendance={data.asistencias} absence={data.inasistencias} />
+                                        <DonutChart className={styles.donutchart} attendance={data.asistencias} absence={data.inasistencias} />
                                     ) : (
                                         <Card.Text>No tienes asistencias registradas</Card.Text>
                                     )}
