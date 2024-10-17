@@ -36,7 +36,7 @@ function Admin() {
     
     
 
-    const token = "";
+    const token = user.token;
     const dashboard = new Dashboard(token);
     (async () => {
         let resultado = await dashboard.contarAsistencias();
