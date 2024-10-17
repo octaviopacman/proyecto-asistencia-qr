@@ -64,7 +64,8 @@ const CrudProfesores = () => {
     try {
       const options = {
         method: isEditing ? 'PUT' : 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json',
+        },
         body: JSON.stringify(form),
       };
 
@@ -115,6 +116,7 @@ const CrudProfesores = () => {
     setForm(profesorToEdit);
     setCurrentId(id);
     setIsEditing(true);
+    console.log(form)
   };
 
   return (
