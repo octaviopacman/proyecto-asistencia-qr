@@ -127,10 +127,10 @@ function Login() {
           {codigo}
         </div>
         <button className={styles.btnMenu} onClick={handleMenuNavigation}>Ir al Menú</button>
-        <label>
+        {/* <label>
           <p>¿No tienes cuenta?</p>
         </label>
-        <button className={styles.btnRegister} onClick={() => Router.push('/registro')}>Registro</button>
+        <button className={styles.btnRegister} onClick={() => Router.push('/registro')}>Registro</button> */}
       </div>
     </div>
   );

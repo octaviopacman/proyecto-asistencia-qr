@@ -20,6 +20,7 @@
 
 .tarjeta {
     height: 100% !important;
+    max-width: 300px;
     
 }
 
@@ -34,6 +35,3 @@
     height: 100%;
 }
 
-.donutchart {
-    max-width: 300px;
-}
