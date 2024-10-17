@@ -30,7 +30,7 @@ const CrudProfesores = () => {
     };
 
     fetchProfesores();
-  }, []);
+  }, [form]);
 
   // Manejadores de formulario
   const handleChange = (e) => {
