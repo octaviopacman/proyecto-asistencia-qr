@@ -31,7 +31,7 @@ const CrudProfesores = () => {
     };
 
     fetchProfesores();
-  }, [form]);
+  }, []);
 
   // Manejadores de formulario
   const handleChange = (e) => {
@@ -86,14 +86,14 @@ const CrudProfesores = () => {
       }
 
       // Limpiar formulario
-      /* setForm({
+       setForm({
         nombre: '',
         apellido: '',
         dni: '',
         telefono: '',
         correo: '',
         password: '',
-      }); */
+      });
     } catch (error) {
       console.error('Error al guardar profesor:', error);
     }
@@ -115,6 +115,7 @@ const CrudProfesores = () => {
   const handleEdit = (id) => {
     const profesorToEdit = profesores.find((profesor) => profesor.id === id);
    if (profesorToEdit) {
+    console.log('editando el profesor',profesorToEdit)
     setForm({
       nombre: profesorToEdit.nombre || '',
       apellido: profesorToEdit.apellido || '',
