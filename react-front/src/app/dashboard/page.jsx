@@ -27,14 +27,14 @@ function Admin() {
     const [loading, setLoading] = useState(true);
     const [horarios, setHorarios] = useState([]);
     const [error, setError] = useState(null);
-    const { user, login, logout} = useSession();
+    const { user, login, logout } = useSession();
 
     const Router = useRouter();
 
     console.log(user);
-    console.log(user.qrToken);
+    
 
-    const token = user.qrToken;
+    const token = "";
     const dashboard = new Dashboard(token);
     (async () => {
         let resultado = await dashboard.contarAsistencias();
@@ -65,7 +65,7 @@ function Admin() {
             checkAuth();
         }, [Router]);
     */
-    const fetchData = async () => {
+    /* const fetchData = async () => {
         const profesorID = 20;
 
         const [asistenciasRes, materiasRes, horariosRes] = await Promise.all([
@@ -95,7 +95,7 @@ function Admin() {
         setMaterias(materiasData);
         setHorarios(horariosData);
         setLoading(false);
-    };
+    }; */
 
     /* if (loading) {
         return <div>Loading...</div>;

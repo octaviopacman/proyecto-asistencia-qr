@@ -63,7 +63,7 @@ function Login() {
       setCodigo(<QRCodeComponent data={data.qrToken} />);
       console.log(data.qrToken);
       login(data);
-      console.log(user);
+      
       
 
       /*handleMenuNavigation();*/
