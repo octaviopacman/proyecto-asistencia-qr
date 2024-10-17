@@ -32,7 +32,7 @@ function Admin() {
     const Router = useRouter();
 
     console.log(user);
-    console.log(user.token);
+    console.log(user.data);
     
 
     const token = "";
