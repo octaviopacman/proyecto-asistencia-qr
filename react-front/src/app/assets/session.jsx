@@ -5,7 +5,10 @@ import Cookies from "js-cookie";
 const SessionContext = createContext();
 
 export const SessionProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({
+    message: '',
+    token: '',
+  });
 
   useEffect(() => {
     // Al cargar la página, intenta recuperar el usuario de las cookies
