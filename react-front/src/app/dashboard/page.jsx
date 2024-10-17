@@ -14,6 +14,7 @@ import styles from './page.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DonutChart from './donutchart';
 import { useRouter } from 'next/navigation';
+import { Dashboard } from '../assets/conexiones';
 
 const URI_MATERIAS = 'https://backend-asistencia-qr.vercel.app/api/profesores/';
 const URI_ASISTENCIAS = 'https://backend-asistencia-qr.vercel.app/api/login/contarasistencias/';
@@ -25,27 +26,41 @@ function Admin() {
     const [loading, setLoading] = useState(true);
     const [horarios, setHorarios] = useState([]);
     const [error, setError] = useState(null);
+
     const Router = useRouter();
-/*
-    useEffect(() => {
-        // Verificar si el token existe en las cookies
-        const checkAuth = async () => {
-            const response = await fetch('THIAGO HACE LA RUTA', {
-                method: 'GET',
-                credentials: 'include', // Incluir cookies en la solicitud
-            });
 
-            if (!response.ok) {
-                // Si el token no es válido o no existe, redirigir a login
-                Router.push('/login');
-            } else {
-                fetchData(); // Cargar los datos si está autenticado
-            }
-        };
 
-        checkAuth();
-    }, [Router]);
-*/
+    const token = '';
+    const dashboard = new Dashboard(token);
+    (async () => {
+        let resultado = await dashboard.contarAsistencias(token);
+        console.log(resultado);
+    })();
+
+
+
+
+
+    /*
+        useEffect(() => {
+            // Verificar si el token existe en las cookies
+            const checkAuth = async () => {
+                const response = await fetch('THIAGO HACE LA RUTA', {
+                    method: 'GET',
+                    credentials: 'include', // Incluir cookies en la solicitud
+                });
+    
+                if (!response.ok) {
+                    // Si el token no es válido o no existe, redirigir a login
+                    Router.push('/login');
+                } else {
+                    fetchData(); // Cargar los datos si está autenticado
+                }
+            };
+    
+            checkAuth();
+        }, [Router]);
+    */
     const fetchData = async () => {
         const profesorID = 20;
 

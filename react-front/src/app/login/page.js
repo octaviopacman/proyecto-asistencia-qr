@@ -4,6 +4,7 @@ import styles from './login.module.css';
 import QRCodeComponent from './codigo';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { useSession } from '../assets/session';
 import Link from 'next/link';
 
 function Login() {
@@ -13,6 +14,7 @@ function Login() {
   const [codigo, setCodigo] = useState('');
   const [errors, setErrors] = useState({});
   const Router = useRouter();
+  const { user, login, logout } = useSession();
 
   const Validacion = () => {
     const errors = {};
@@ -60,6 +62,9 @@ function Login() {
       const data = await response.json(); 
       setCodigo(<QRCodeComponent data={data.qrToken} />);
       console.log(data.qrToken);
+      login(data);
+      console.log(user);
+      
 
       /*handleMenuNavigation();*/
 
