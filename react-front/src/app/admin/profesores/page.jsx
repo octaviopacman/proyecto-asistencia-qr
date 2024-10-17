@@ -59,7 +59,7 @@ const CrudProfesores = () => {
   // Enviar el formulario (agregar o editar profesor)
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log('formulario antes de enviar', form)
     if (!validateForm()) return;
 
     try {
@@ -114,17 +114,20 @@ const CrudProfesores = () => {
   // Función para editar un profesor
   const handleEdit = (id) => {
     const profesorToEdit = profesores.find((profesor) => profesor.id === id);
-    console.log('profesor seleccionado para editar',profesorToEdit)
-    if (profesorToEdit) {
-      setForm(profesorToEdit);
-      console.log('antes de la edicion',form)
-
-      setCurrentId(id);
+   if (profesorToEdit) {
+    setForm({
+      nombre: profesorToEdit.nombre || '',
+      apellido: profesorToEdit.apellido || '',
+      dni: profesorToEdit.dni || '',
+      telefono: profesorToEdit.telefono || '',
+      correo: profesorToEdit.correo || '',
+      password: profesorToEdit.password || '',
+    })
+    setCurrentId(id);
     setIsEditing(true);
-    console.log('despues de la edicion',form)
-    } else {
-      console.log('no hay profe',id)
-    }
+   } else {
+    console.error('No se encontró el profesor para editar',id);
+   }
    
   
     
