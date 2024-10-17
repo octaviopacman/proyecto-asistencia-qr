@@ -18,6 +18,7 @@ const CrudProfesores = () => {
 
   // Obtener todos los profesores del backend cuando el componente se monta
   useEffect(() => {
+    console.log('formulario editado',form)
     const fetchProfesores = async () => {
       try {
         const response = await fetch(apiUrl);
