@@ -1,6 +1,5 @@
 'use client'
-/* import { Console } from 'console';
- */import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const CrudProfesores = () => {
   const [profesores, setProfesores] = useState([]);
@@ -10,95 +9,104 @@ const CrudProfesores = () => {
     dni: '',
     telefono: '',
     correo: '',
-    password: '',  // Ajuste para usar 'password' en lugar de 'contraseña'
+    password: '', // Ajuste para usar 'password' en lugar de 'contraseña'
   });
   const [isEditing, setIsEditing] = useState(false);
   const [currentId, setCurrentId] = useState(null);
 
   const apiUrl = 'https://backend-asistencia-qr.vercel.app/api/profesores'; // URL de la API
-  console.log(form)
 
   // Obtener todos los profesores del backend cuando el componente se monta
   useEffect(() => {
-    fetch(apiUrl)
-      .then((response) => {
-        if(!response.ok){
-          throw new error ('error al obtener los datos');
-        }
-        return response.json();
-      })
-    .then((data)=> {
-      console.log('datos de los profesores', data);
-      setProfesores(data);
-    })
-    .catch((error) => console.error('error de profesores', error))
-    },[])
+    const fetchProfesores = async () => {
+      try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error('Error al obtener los datos');
+        const data = await response.json();
+        setProfesores(data);
+      } catch (error) {
+        console.error('Error al obtener profesores:', error);
+      }
+    };
+
+    fetchProfesores();
+  }, []);
 
   // Manejadores de formulario
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // Validación básica de formulario
+  const validateForm = () => {
+    const { nombre, apellido, dni, telefono, correo, password } = form;
+    if (!nombre || !apellido || !dni || !telefono || !correo || !password) {
+      alert('Por favor, completa todos los campos');
+      return false;
+    }
+    if (!/\S+@\S+\.\S+/.test(correo)) {
+      alert('Correo electrónico no válido');
+      return false;
+    }
+    if (!/^\d+$/.test(dni)) {
+      alert('DNI debe ser un número válido');
+      return false;
+    }
+    return true;
+  };
+
   // Enviar el formulario (agregar o editar profesor)
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (isEditing) {
-      // Actualizar un profesor existente
-      fetch(`${apiUrl}/${currentId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(form),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          // Actualizar la lista de profesores en el frontend
-          setProfesores((prev) =>
-            prev.map((profesor) => (profesor.id === currentId ? data : profesor))
-          );
-          setIsEditing(false);
-          setCurrentId(null);
-        })
-        .catch((error) => console.error('Error al actualizar profesor:', error));
-    } else {
-      // Agregar un nuevo profesor
-      fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(form),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setProfesores([...profesores, data]);
-        })
-        .catch((error) => console.error('Error al agregar profesor:', error));
-    }
+    if (!validateForm()) return;
 
-    // Limpiar formulario
-    setForm({
-      nombre: '',
-      apellido: '',
-      dni: '',
-      telefono: '',
-      correo: '',
-      password: '',  // Ajuste para usar 'password' en lugar de 'contraseña'
-    });
+    try {
+      const options = {
+        method: isEditing ? 'PUT' : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      };
+
+      const response = await fetch(isEditing ? `${apiUrl}/${currentId}` : apiUrl, options);
+      const data = await response.json();
+
+      if (isEditing) {
+        // Actualizar profesor existente
+        setProfesores((prev) =>
+          prev.map((profesor) => (profesor.id === currentId ? data : profesor))
+        );
+        setIsEditing(false);
+        setCurrentId(null);
+      } else {
+        // Agregar nuevo profesor
+        setProfesores((prev) => [...prev, data]);
+      }
+
+      // Limpiar formulario
+      setForm({
+        nombre: '',
+        apellido: '',
+        dni: '',
+        telefono: '',
+        correo: '',
+        password: '',
+      });
+    } catch (error) {
+      console.error('Error al guardar profesor:', error);
+    }
   };
 
   // Función para eliminar un profesor
-  const handleDelete = (id) => {
-    fetch(`${apiUrl}/${id}`, {
-      method: 'DELETE',
-    })
-      .then(() => {
-        // Actualizar la lista de profesores en el frontend
-        setProfesores(profesores.filter((profesor) => profesor.id !== id));
-      })
-      .catch((error) => console.error('Error al eliminar profesor:', error));
+  const handleDelete = async (id) => {
+    if (!window.confirm('¿Estás seguro de eliminar este profesor?')) return;
+
+    try {
+      await fetch(`${apiUrl}/${id}`, { method: 'DELETE' });
+      setProfesores((prev) => prev.filter((profesor) => profesor.id !== id));
+    } catch (error) {
+      console.error('Error al eliminar profesor:', error);
+    }
   };
 
   // Función para editar un profesor
@@ -181,7 +189,7 @@ const CrudProfesores = () => {
             <label>Contraseña</label>
             <input
               type="password"
-              name="password"  // Cambio a 'password'
+              name="password"
               className="form-control"
               value={form.password}
               onChange={handleChange}
