@@ -58,10 +58,11 @@ function Login() {
         body: JSON.stringify({ correo, password }),
         credentials:'include',
       });
+
+      const data = await response.json(); 
       if (response.ok) {
-        const data = await response.json()
-        setCodigo(<QRCodeComponent data={data.qrToken} />);
-        console.log(data.qrToken);
+      setCodigo(<QRCodeComponent data={user.token} />);
+      console.log(data.qrToken);
       login(data);
       setMessage('')
       } else if(response.ok = 404) {
