@@ -32,7 +32,8 @@ function Admin() {
     const Router = useRouter();
 
     console.log(user);
-    console.log(user.data);
+    console.log(user.token);
+    
     
 
     const token = "";
