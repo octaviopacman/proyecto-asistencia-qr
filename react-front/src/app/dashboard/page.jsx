@@ -15,6 +15,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import DonutChart from './donutchart';
 import { useRouter } from 'next/navigation';
 import { Dashboard } from '../assets/conexiones';
+import {useSession} from "../assets/session";
 
 const URI_MATERIAS = 'https://backend-asistencia-qr.vercel.app/api/profesores/';
 const URI_ASISTENCIAS = 'https://backend-asistencia-qr.vercel.app/api/login/contarasistencias/';
@@ -26,11 +27,14 @@ function Admin() {
     const [loading, setLoading] = useState(true);
     const [horarios, setHorarios] = useState([]);
     const [error, setError] = useState(null);
+    const { user, login, logout} = useSession();
 
     const Router = useRouter();
 
+    console.log(user);
+    console.log(user.qrToken);
 
-    const token = '';
+    const token = user.qrToken;
     const dashboard = new Dashboard(token);
     (async () => {
         let resultado = await dashboard.contarAsistencias(token);
