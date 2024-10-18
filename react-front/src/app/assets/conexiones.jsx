@@ -1,4 +1,4 @@
-import { useSession } from "./session";
+
 export class Dashboard {
     constructor(token){
         this.token = token;
@@ -88,6 +88,7 @@ export class Sesion {
     }
 
     async iniciarSesion(correo, password) {
+        console.log(this.session);  // Verifica que la sesión esté inicializada
         try {
             const response = await fetch('https://backend-asistencia-qr.vercel.app/api/login', {
                 method: 'POST',
