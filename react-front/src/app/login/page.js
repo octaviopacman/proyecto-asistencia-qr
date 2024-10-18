@@ -51,7 +51,7 @@ function Login() {
 
   const handleLogin = async () => {
     let credenciales = new Sesion(useSession);
-    let usuario = credenciales.iniciarSesion(correo, password);
+    let usuario = await credenciales.iniciarSesion(correo, password);
     login(usuario)
     setCodigo(<QRCodeComponent data={user.token}/>);
     console.log(user);
