@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useSession } from '../assets/session';
 import Link from 'next/link';
+import { Sesion } from '../assets/conexiones';
 
 function Login() {
   const [correo, setCorreo] = useState('');
@@ -49,33 +50,10 @@ function Login() {
   };
 
   const handleLogin = async () => {
-    try {
-      const response = await fetch('https://backend-asistencia-qr.vercel.app/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ correo, password }),
-        credentials:'include',
-      });
-
-      const data = await response.json(); 
-      if (response.ok) {
-      setCodigo(<QRCodeComponent data={user.token} />);
-      console.log(data.qrToken);
-      login(data);
-      setMessage('')
-      } else if(response.status === 404) {
-        setMessage('El correo no esta registrado.')
-      } else if(response.status === 401) {
-        setMessage('El correo o la contraseña no es correcto')
-      } else {
-        setMessage('Ocurrio un error al intentar iniciar sesion.Intentalo de nuevo')
-      }
-      /*handleMenuNavigation();*/
-    } catch (error) {
-      setMessage('El login falló: ' + error.message);
-    }
+    let credenciales = new Sesion(useSession);
+    let sesion = credenciales.iniciarSesion(correo, password);
+    setCodigo(<QRCodeComponent data={user.token}/>);
+    console.log(user);
   };
 
   const handleCorreoChange = (e) => {

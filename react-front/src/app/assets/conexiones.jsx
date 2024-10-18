@@ -1,3 +1,4 @@
+import { useSession } from "./session";
 export class Dashboard {
     constructor(token){
         this.token = token;
@@ -81,8 +82,12 @@ export class Dashboard {
 
 }
 
-export class Login {
-    async iniciarSesion(correo, password){
+export class Sesion {
+    constructor(session) {
+        this.session = session;
+    }
+
+    async iniciarSesion(correo, password) {
         try {
             const response = await fetch('https://backend-asistencia-qr.vercel.app/api/login', {
                 method: 'POST',
@@ -96,7 +101,7 @@ export class Login {
                 credentials: 'include'
             });
             const data = await response.json();
-            return data;
+            this.session.login(data);  // Usa el login de la sesión pasada al constructor
             console.log(data);
         } catch (error) {
             console.error(error);
@@ -104,7 +109,6 @@ export class Login {
         }
     }
 }
-
 
 
 
