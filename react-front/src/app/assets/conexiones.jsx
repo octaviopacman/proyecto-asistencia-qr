@@ -83,9 +83,6 @@ export class Dashboard {
 }
 
 export class Sesion {
-    constructor(session) {
-        this.session = session;
-    }
 
     async iniciarSesion(correo, password) {
         console.log(this.session);  // Verifica que la sesión esté inicializada
@@ -102,7 +99,7 @@ export class Sesion {
                 credentials: 'include'
             });
             const data = await response.json();
-            this.session.login(data);  // Usa el login de la sesión pasada al constructor
+            return data
             console.log(data);
         } catch (error) {
             console.error(error);
