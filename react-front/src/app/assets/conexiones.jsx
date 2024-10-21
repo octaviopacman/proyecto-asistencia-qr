@@ -10,7 +10,7 @@ export class Dashboard {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'autorizacion': `Bearer ${this.token}`,
+                    'Authorization': `Bearer ${this.token}`,
                 },
                 credentials: 'include'
             });
@@ -29,7 +29,7 @@ export class Dashboard {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'autorizacion': `Bearer ${this.token}`,
+                    'Authorization': `Bearer ${this.token}`,
                 },
                 credentials: 'include'
             });
