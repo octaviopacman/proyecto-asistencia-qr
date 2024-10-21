@@ -93,8 +93,8 @@ export class Sesion {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    Correo: correo,
-                    Password: password,
+                    correo: correo,
+                    password: password,
                 }),
                 credentials: 'include'
             });
