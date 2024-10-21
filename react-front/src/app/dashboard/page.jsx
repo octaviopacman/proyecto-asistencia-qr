@@ -49,65 +49,7 @@ function Admin() {
 
 
 
-    /*
-        useEffect(() => {
-            // Verificar si el token existe en las cookies
-            const checkAuth = async () => {
-                const response = await fetch('THIAGO HACE LA RUTA', {
-                    method: 'GET',
-                    credentials: 'include', // Incluir cookies en la solicitud
-                });
-    
-                if (!response.ok) {
-                    // Si el token no es válido o no existe, redirigir a login
-                    Router.push('/login');
-                } else {
-                    fetchData(); // Cargar los datos si está autenticado
-                }
-            };
-    
-            checkAuth();
-        }, [Router]);
-    */
-    /* const fetchData = async () => {
-        const profesorID = 20;
-
-        const [asistenciasRes, materiasRes, horariosRes] = await Promise.all([
-            fetch(`${URI_ASISTENCIAS}${profesorID}`, {
-                method: 'GET',
-                credentials: 'include',
-            }),
-            fetch(`${URI_MATERIAS}${profesorID}`, {
-                method: 'GET',
-                credentials: 'include',
-            }),
-            fetch(`${URI_HORARIOS}${profesorID}`, {
-                method: 'GET',
-                credentials: 'include',
-            }),
-        ]);
-
-        if (!asistenciasRes.ok || !materiasRes.ok || !horariosRes.ok) {
-            throw new Error('Failed to fetch data');
-        }
-
-        const asistenciasData = await asistenciasRes.json();
-        const materiasData = await materiasRes.json();
-        const horariosData = await horariosRes.json();
-
-        setData(asistenciasData);
-        setMaterias(materiasData);
-        setHorarios(horariosData);
-        setLoading(false);
-    }; */
-
-    /* if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error: {error.message}</div>;
-    } */
+   
 
     return (
         <div>
