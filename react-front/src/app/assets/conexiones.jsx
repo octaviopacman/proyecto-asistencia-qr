@@ -86,6 +86,8 @@ export class Sesion {
 
     async iniciarSesion(correo, password) {
         console.log(this.session);  // Verifica que la sesión esté inicializada
+        console.log(correo);
+        console.log(password);
         try {
             const response = await fetch('https://backend-asistencia-qr.vercel.app/api/login', {
                 method: 'POST',
