@@ -40,10 +40,15 @@ function Admin() {
 
     
     const dashboard = new Dashboard(user.token);
-    (async () => {
-        let resultado = await dashboard.contarAsistencias();
-        setData(resultado);
-    })();
+    useEffect(() => {
+        // Función asíncrona dentro de useEffect
+        const fetchData = async () => {
+            let resultado = await dashboard.contarAsistencias();
+            setData(resultado);
+        };
+
+        fetchData();
+    }, []);
 
 
 
