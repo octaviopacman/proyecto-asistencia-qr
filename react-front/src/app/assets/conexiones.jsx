@@ -117,7 +117,7 @@ export class Dashboard {
         }
     }
 
-    async listarHorarios() {
+    async insertarHorarios() {
         console.log(this.token);
         try {
             const response = await fetch('https://backend-asistencia-qr.vercel.app/api/insertar/horarios', {
