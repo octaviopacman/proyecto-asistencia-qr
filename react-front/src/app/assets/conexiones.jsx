@@ -1,9 +1,9 @@
-
 export class Dashboard {
-    constructor(token){
+    constructor(token) {
         this.token = token;
     }
-    async contarAsistencias(){
+
+    async contarAsistencias() {
         console.log(this.token);
         try {
             const response = await fetch('https://backend-asistencia-qr.vercel.app/api/login/contarasistencias', {
@@ -16,71 +16,108 @@ export class Dashboard {
             });
             const data = await response.json();
             return data;
-            console.log(data);
         } catch (error) {
             console.error(error);
             throw new Error('Error al obtener asistencias');
         }
     }
-    async obtenerMaterias(){
+
+    async obtenerMaterias() {
         console.log(this.token);
         try {
             const response = await fetch('https://backend-asistencia-qr.vercel.app/api/listado/materias', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization ': `Bearer ${this.token}`,
+                    'Authorization': `Bearer ${this.token}`,
                 },
                 credentials: 'include'
             });
             const data = await response.json();
             return data;
-            console.log(data);
         } catch (error) {
             console.error(error);
             throw new Error('Error al obtener materias');
         }
     }
-    async mostrarHorarioProfesor(){
+
+    async mostrarHorarioProfesor() {
         console.log(this.token);
         try {
             const response = await fetch('https://backend-asistencia-qr.vercel.app/api/listado/horario/profesor', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'autorizacion': `Bearer ${this.token}`,
+                    'Authorization': `Bearer ${this.token}`,
                 },
                 credentials: 'include'
             });
             const data = await response.json();
             return data;
-            console.log(data);
         } catch (error) {
             console.error(error);
-            throw new Error('Error al obtener cursos de profesores');
+            throw new Error('Error al obtener horarios de profesores');
         }
     }
-    async mostrarHorarioCurso(){
+
+    async mostrarHorarioCurso() {
         console.log(this.token);
         try {
             const response = await fetch('https://backend-asistencia-qr.vercel.app/api/listado/horario/curso', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'autorizacion': `Bearer ${this.token}`,
+                    'Authorization': `Bearer ${this.token}`,
                 },
                 credentials: 'include'
             });
             const data = await response.json();
             return data;
-            console.log(data);
+        } catch (error) {
+            console.error(error);
+            throw new Error('Error al obtener horarios de cursos');
+        }
+    }
+
+    async obtenerProfesores() {
+        console.log(this.token);
+        try {
+            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/profesores', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.token}`,
+                },
+                credentials: 'include'
+            });
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error(error);
+            throw new Error('Error al obtener profesores');
+        }
+    }
+
+    async listarCursos() {
+        console.log(this.token);
+        try {
+            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/listado/cursos', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.token}`,
+                },
+                credentials: 'include'
+            });
+            const data = await response.json();
+            return data;
         } catch (error) {
             console.error(error);
             throw new Error('Error al obtener cursos');
         }
     }
-
 }
+
 
 export class Sesion {
 
