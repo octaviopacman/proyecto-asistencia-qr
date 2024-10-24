@@ -117,16 +117,17 @@ export class Dashboard {
         }
     }
 
-    async insertarHorarios() {
+    async insertarHorarios(data) {
         console.log(this.token);
         try {
             const response = await fetch('https://backend-asistencia-qr.vercel.app/api/insertar/horarios', {
-                method: 'GET',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.token}`,
                 },
-                credentials: 'include'
+                credentials: 'include',
+                body: JSON.stringify(data),
             });
             const data = await response.json();
             return data;
