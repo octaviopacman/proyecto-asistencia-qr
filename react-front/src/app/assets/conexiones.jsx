@@ -116,6 +116,25 @@ export class Dashboard {
             throw new Error("Error al obtener cursos");
         }
     }
+
+    async listarHorarios() {
+        console.log(this.token);
+        try {
+            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/insertar/horarios', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.token}`,
+                },
+                credentials: 'include'
+            });
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error(error);
+            throw new Error('Error al obtener horarios');
+        }
+    }
 }
 
 

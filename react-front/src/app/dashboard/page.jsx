@@ -52,6 +52,7 @@ function Admin() {
                 const horarioCurso = await dashboard.mostrarHorarioCurso();
                 const cursos = await dashboard.listarCursos(); // Obtener los cursos
                 const profesores = await dashboard.obtenerProfesores(); // Obtener los profesores
+                const horarios = await dashboard.listarHorarios();
 
                 // Combinar todos los datos en un solo objeto
                 const resultados = {
@@ -60,7 +61,8 @@ function Admin() {
                     horarioProfesor,
                     horarioCurso,
                     cursos,
-                    profesores
+                    profesores,
+                    horarios
                 };
 
                 // Establecer los datos combinados
