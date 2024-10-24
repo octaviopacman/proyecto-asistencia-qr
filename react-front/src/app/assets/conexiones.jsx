@@ -113,7 +113,7 @@ export class Dashboard {
             return data;
         } catch (error) {
             console.error(error);
-            throw new Error('Error al obtener cursos');
+            throw new Error("Error al obtener cursos");
         }
     }
 }
