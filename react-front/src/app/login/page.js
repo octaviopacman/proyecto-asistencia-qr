@@ -55,6 +55,8 @@ function Login() {
     if (usuario.error) {
       setMessage(usuario.error)
     } else {
+      setMessage('')
+      setErrors({})
       login(usuario)
       setCodigo(<QRCodeComponent data={user.token}/>);
       console.log(user);
@@ -67,6 +69,7 @@ function Login() {
     if (errors.correo) {
       setErrors((prevErrors) => ({ ...prevErrors, correo: '' }));
     }
+    setMessage('')
   };
 
   const handlePasswordChange = (e) => {
@@ -74,6 +77,7 @@ function Login() {
     if (errors.password) {
       setErrors((prevErrors) => ({ ...prevErrors, password: '' }));
     }
+    setMessage('')
   }
 
   return (
