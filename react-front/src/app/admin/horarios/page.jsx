@@ -21,6 +21,13 @@ const CrudHorarios = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentId, setCurrentId] = useState(null);
 
+  /*
+   listadoMaterias = dashboard.obtenerMaterias();
+   listadoProfesores = dashboard.obtenerProfesores();
+   listadoCursos = dashboard.listarCursos();
+   listadoHorarios = 
+  */
+
   const apiUrlHorarios = 'https://backend-asistencia-qr.vercel.app/api/insertar/horarios'; // URL de la API para los horarios
   const apiUrlProfesores = 'https://backend-asistencia-qr.vercel.app/api/profesores';
   const apiUrlMaterias = 'https://backend-asistencia-qr.vercel.app/api/listado/materias';
