@@ -15,7 +15,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import DonutChart from './donutchart';
 import { useRouter } from 'next/navigation';
 import { Dashboard } from '../assets/conexiones';
-import {useSession} from "../assets/session";
+import { useSession } from "../assets/session";
 import { Dropdown } from 'react-bootstrap';
 import AdminPage from "../admin/page"
 
@@ -35,26 +35,48 @@ function Admin() {
 
     console.log(user);
     console.log(user.token);
-    
-    
 
-    
+
+
+
     const dashboard = new Dashboard(user.token);
+
     useEffect(() => {
         // Función asíncrona dentro de useEffect
         const fetchData = async () => {
-            let resultado = await dashboard.contarAsistencias();
-            setData(resultado);
+            try {
+                // Obtener todos los datos del dashboard
+                const asistencias = await dashboard.contarAsistencias();
+                const materias = await dashboard.obtenerMaterias();
+                const horarioProfesor = await dashboard.mostrarHorarioProfesor();
+                const horarioCurso = await dashboard.mostrarHorarioCurso();
+
+                // Combinar todos los datos en un solo objeto
+                const resultados = {
+                    asistencias,
+                    materias,
+                    horarioProfesor,
+                    horarioCurso
+                };
+
+                // Establecer los datos combinados
+                setData(resultados);
+            } catch (error) {
+                console.error("Error al obtener los datos del dashboard:", error);
+                // Manejar el error según sea necesario
+            }
         };
 
         fetchData();
     }, []);
 
+    console.log(data);
 
 
 
 
-   
+
+
 
     return (
         <div>
@@ -86,7 +108,7 @@ function Admin() {
                                 <Card.Body>
                                     <Card.Title>Asistencias</Card.Title>
                                     {data ? (
-                                        <DonutChart attendance={data.asistencias} absence={data.inasistencias} />
+                                        <DonutChart attendance={data.asistencias.asistencias} absence={data.asistencias.inasistencias} />
                                     ) : (
                                         <Card.Text>No tienes asistencias registradas</Card.Text>
                                     )}
