@@ -51,31 +51,15 @@ function Login() {
 
   const handleLogin = async () => {
     let credenciales = new Sesion(useSession);
-    credenciales.iniciarSesion(correo, password)
-    .then(response => {
-      if (response.status === 401) {
-        setMessage('Correo y contraseña no coinciden');
-      } else if (response.status === 404) {
-        setMessage('El correo no existe');
-      } else if (response.status === 200) {
-        return response.json(); // Si la respuesta es exitosa, parsea el JSON.
-      } else {
-        setMessage('Ocurrió un error al iniciar sesión');
-      }
-    })
-    .then(usuario => {
-      if (usuario) {
-        login(usuario); // Si el login es exitoso
-        setCodigo(<QRCodeComponent data={usuario.token} />); // Mostrar el QR después del login exitoso
-        console.log(usuario);
-      }
-    })
-    .catch(() => {
-      setMessage('Ocurrió un error al conectarse con el servidor');
-    });
-    login(usuario)
-    setCodigo(<QRCodeComponent data={user.token}/>);
-    console.log(user);
+    let usuario = await credenciales.iniciarSesion(correo, password);
+    if (usuario.error) {
+      setMessage(usuario.error)
+    } else {
+      login(usuario)
+      setCodigo(<QRCodeComponent data={user.token}/>);
+      console.log(user);
+    }
+   
   };
 
   const handleCorreoChange = (e) => {
