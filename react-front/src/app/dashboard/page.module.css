@@ -3,9 +3,20 @@
     flex-wrap: wrap;
     justify-content: center;
     padding-top: 30px;
-    gap: 10px;
+    gap:15px;
     filter: drop-shadow(10px);
 }
+.donut-chart {
+    width: 150px; /* Tamaño del gráfico más pequeño */
+    height: 150px;
+    margin: 0 auto; /* Centra el gráfico dentro de la tarjeta */
+}
+.tarjeta-asistencias {
+    max-width: 300px; 
+    height: auto; 
+    margin: 0 auto; 
+}
+
 
 .icono {
     height: 70px;
@@ -20,7 +31,8 @@
 
 .tarjeta {
     height: 100% !important;
-    max-width: 300px;
+    max-width: 100%;
+    margin: 0;
     
 }
 
@@ -32,6 +44,30 @@
 
 .tarjeta-QR img{
     width: 100%;
-    height: 100%;
+    height: 100% ;
+}
+
+@media (max-width: 768px) {
+    .tarjetas {
+        flex-direction: column; 
+        align-items: center; 
+    }
+
+    .tarjeta, .tarjeta-QR {
+        max-width: 90%;
+        margin-bottom: 20px;
+    }
+
+    .icono {
+        height: 50px;
+    }
+    .tarjeta-asistencias {
+        max-width: 90%; /* Ajusta el tamaño en móviles */
+    }
+
+    .donut-chart {
+        width: 150px; /* Tamaño más pequeño del gráfico en móviles */
+        height: 150px;
+    }
 }
 

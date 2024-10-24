@@ -19,7 +19,7 @@ const DonutChart = ({ attendance, absence }) => {
 
   
 
-  return <Doughnut style={{width: '250'}} data={data} />;
+  return <Doughnut style={{width: '200', height:'200'}} data={data} />;
 };
 
 export default DonutChart;

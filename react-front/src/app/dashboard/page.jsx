@@ -109,11 +109,11 @@ function Admin() {
                 <Container>
                     <Row>
                         <Col md={8} className="mb-4">
-                            <Card className={styles.tarjeta}>
+                            <Card className={`${styles.tarjeta} ${styles['tarjeta-asistencias']}`}>
                                 <Card.Body>
                                     <Card.Title>Asistencias</Card.Title>
                                     {data ? (
-                                        <DonutChart attendance={data.asistencias.asistencias} absence={data.asistencias.inasistencias} />
+                                        <DonutChart attendance={data.asistencias.asistencias} absence={data.asistencias.inasistencias} width={150} height={150} className={styles['donut-chart']} />
                                     ) : (
                                         <Card.Text>No tienes asistencias registradas</Card.Text>
                                     )}
