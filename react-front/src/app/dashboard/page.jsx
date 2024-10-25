@@ -24,7 +24,7 @@ const URI_ASISTENCIAS = 'https://backend-asistencia-qr.vercel.app/api/login/cont
 const URI_HORARIOS = 'https://backend-asistencia-qr.vercel.app/api/insertar/horarios';
 
 function Admin() {
-    const [data, setData] = useState(null);
+    const [data, setData] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { user, login, logout } = useSession();
