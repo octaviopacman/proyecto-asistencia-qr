@@ -50,7 +50,7 @@ function Admin() {
                 const horarioCurso = await dashboard.mostrarHorarioCurso();
                 const cursos = await dashboard.listarCursos(); // Obtener los cursos
                 const profesores = await dashboard.obtenerProfesores(); // Obtener los profesores
-                //const horarios = await dashboard.insertarHorarios();
+                
 
                 // Combinar todos los datos en un solo objeto
                 const resultados = {
@@ -142,7 +142,7 @@ function Admin() {
                             <Card className={styles.tarjeta}>
                                 <Card.Body>
                                     <Card.Title>Cursos</Card.Title>
-                                    {data.horarios.length > 0 ? (
+                                    {data.cursos.length > 0 ? (
                                         data.cursos.map(curso => (
                                             <Card.Text key={curso.cursoid}>
                                                 {curso.anio} -{curso.division}
