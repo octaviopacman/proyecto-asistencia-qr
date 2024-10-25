@@ -130,8 +130,8 @@ function Admin() {
                                     <Card.Title>Materias</Card.Title>
                                     {materias.length > 0 ? (
                                         materias.map(materia => (
-                                            <Card.Text key={materia.MateriaID}>
-                                                {materia.NombreMateria} - {materia.horario}
+                                            <Card.Text key={materia.materiaid}>
+                                                {materia.NombreMateria}
                                             </Card.Text>
                                         ))
                                     ) : (
