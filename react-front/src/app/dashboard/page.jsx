@@ -54,12 +54,12 @@ function Admin() {
 
                 // Combinar todos los datos en un solo objeto
                 const resultados = {
-                    asistencias: asistencias || [], // Valor predeterminado vacío si es undefined
-                    materias: materias || [],
+                    asistencias: asistencias || {}, // Valor predeterminado vacío si es undefined
+                    materias: materias || {},
                     horarioProfesor: horarioProfesor || {},
                     horarioCurso: horarioCurso || {},
-                    cursos: cursos || [],
-                    profesores: profesores || [],
+                    cursos: cursos || {},
+                    profesores: profesores || {},
                 };
 
                 // Establecer los datos combinados
