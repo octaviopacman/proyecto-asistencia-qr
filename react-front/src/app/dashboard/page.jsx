@@ -58,10 +58,7 @@ function Admin() {
                 // Combinar todos los datos en un solo objeto
                 const resultados = {
                     asistencias,
-                    materias: {
-                        materiaid: null,
-                        nombremateria: null,
-                    },
+                    materias,
                     horarioProfesor,
                     horarioCurso,
                     cursos,
