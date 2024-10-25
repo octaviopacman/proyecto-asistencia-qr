@@ -26,6 +26,7 @@ const URI_HORARIOS = 'https://backend-asistencia-qr.vercel.app/api/insertar/hora
 function Admin() {
     const [data, setData] = useState(null);
     const [materias, setMaterias] = useState([]);
+    const [cursos, setCursos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [horarios, setHorarios] = useState([]);
     const [error, setError] = useState(null);
@@ -76,7 +77,8 @@ function Admin() {
         fetchData();
     }, []);
 
-
+    setMaterias(data.materias);
+    setCursos(data.cursos);
     console.log(data);
 
 
@@ -144,11 +146,11 @@ function Admin() {
                         <Col md={8} className="mb-4">
                             <Card className={styles.tarjeta}>
                                 <Card.Body>
-                                    <Card.Title>Clases</Card.Title>
+                                    <Card.Title>Cursos</Card.Title>
                                     {horarios.length > 0 ? (
-                                        horarios.map(horario => (
-                                            <Card.Text key={horario.HorarioID}>
-                                                {horario.MateriaNombre} -{horario.horaInicio} a {horario.horaFinal}({horario.Dia})
+                                        cursos.map(curso => (
+                                            <Card.Text key={curso.cursoid}>
+                                                {curso.anio} -{curso.division}
                                             </Card.Text>
                                         ))
                                     ) : (
