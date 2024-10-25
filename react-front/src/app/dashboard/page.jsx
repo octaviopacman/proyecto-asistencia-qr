@@ -80,8 +80,7 @@ function Admin() {
         fetchData();
     }, []);
 
-    setMaterias(data.materias);
-    setCursos(data.cursos);
+    
     console.log(data);
 
 
@@ -132,7 +131,7 @@ function Admin() {
                                 <Card.Body>
                                     <Card.Title>Materias</Card.Title>
                                     {materias.length > 0 ? (
-                                        materias.map(materia => (
+                                        data.materias.map(materia => (
                                             <Card.Text key={materia.materiaid}>
                                                 {materia.NombreMateria}
                                             </Card.Text>
@@ -151,7 +150,7 @@ function Admin() {
                                 <Card.Body>
                                     <Card.Title>Cursos</Card.Title>
                                     {horarios.length > 0 ? (
-                                        cursos.map(curso => (
+                                        data.cursos.map(curso => (
                                             <Card.Text key={curso.cursoid}>
                                                 {curso.anio} -{curso.division}
                                             </Card.Text>
