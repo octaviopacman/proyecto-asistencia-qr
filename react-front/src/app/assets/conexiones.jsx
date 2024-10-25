@@ -4,7 +4,7 @@ export class Dashboard {
     }
 
     async contarAsistencias() {
-        console.log(this.token);
+         
         try {
             const response = await fetch('https://backend-asistencia-qr.vercel.app/api/login/contarasistencias', {
                 method: 'GET',
@@ -23,7 +23,7 @@ export class Dashboard {
     }
 
     async obtenerMaterias() {
-        console.log(this.token);
+         
         try {
             const response = await fetch('https://backend-asistencia-qr.vercel.app/api/listado/materias', {
                 method: 'GET',
@@ -42,7 +42,7 @@ export class Dashboard {
     }
 
     async mostrarHorarioProfesor() {
-        console.log(this.token);
+         
         try {
             const response = await fetch('https://backend-asistencia-qr.vercel.app/api/listado/horario/profesor', {
                 method: 'GET',
@@ -61,7 +61,7 @@ export class Dashboard {
     }
 
     async mostrarHorarioCurso() {
-        console.log(this.token);
+         
         try {
             const response = await fetch('https://backend-asistencia-qr.vercel.app/api/listado/horario/curso', {
                 method: 'GET',
@@ -80,7 +80,7 @@ export class Dashboard {
     }
 
     async obtenerProfesores() {
-        console.log(this.token);
+         
         try {
             const response = await fetch('https://backend-asistencia-qr.vercel.app/api/profesores', {
                 method: 'GET',
@@ -99,7 +99,7 @@ export class Dashboard {
     }
 
     async listarCursos() {
-        console.log(this.token);
+         
         try {
             const response = await fetch('https://backend-asistencia-qr.vercel.app/api/listado/cursos', {
                 method: 'GET',
@@ -118,7 +118,7 @@ export class Dashboard {
     }
 
     async insertarHorarios(data) {
-        console.log(this.token);
+         
         try {
             const response = await fetch('https://backend-asistencia-qr.vercel.app/api/insertar/horarios', {
                 method: 'POST',
