@@ -127,7 +127,7 @@ function Admin() {
                             <Card className={styles.tarjeta}>
                                 <Card.Body>
                                     <Card.Title>Materias</Card.Title>
-                                    {materias.length > 0 ? (
+                                    {data.materias.length > 0 ? (
                                         data.materias.map(materia => (
                                             <Card.Text key={materia.materiaid}>
                                                 {materia.NombreMateria}
@@ -146,7 +146,7 @@ function Admin() {
                             <Card className={styles.tarjeta}>
                                 <Card.Body>
                                     <Card.Title>Cursos</Card.Title>
-                                    {horarios.length > 0 ? (
+                                    {data.horarios.length > 0 ? (
                                         data.cursos.map(curso => (
                                             <Card.Text key={curso.cursoid}>
                                                 {curso.anio} -{curso.division}
