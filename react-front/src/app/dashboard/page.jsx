@@ -24,7 +24,14 @@ const URI_ASISTENCIAS = 'https://backend-asistencia-qr.vercel.app/api/login/cont
 const URI_HORARIOS = 'https://backend-asistencia-qr.vercel.app/api/insertar/horarios';
 
 function Admin() {
-    const [data, setData] = useState({});
+    const [data, setData] = useState({
+        asistencias: { asistencias: 0, inasistencias: 0 },
+        materias: {},
+        horarioProfesor: {},
+        horarioCurso: {},
+        cursos: {},
+        profesores: {}
+      });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { user, login, logout } = useSession();
