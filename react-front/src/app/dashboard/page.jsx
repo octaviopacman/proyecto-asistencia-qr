@@ -152,7 +152,7 @@ function Admin() {
                                     {data.cursos.length > 0 ? (
                                         data.cursos.map(curso => (
                                             <Card.Text key={curso.cursoid}>
-                                                {curso.anio} -{curso.division}
+                                                {curso.anio}°{curso.division}
                                             </Card.Text>
                                         ))
                                     ) : (
