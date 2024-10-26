@@ -5,7 +5,7 @@ export class Dashboard {
 
     async contarAsistencias() {
         try {
-            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/login/contarasistencias', {
+            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/profesor/login/contarasistencias', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -23,7 +23,7 @@ export class Dashboard {
 
     async obtenerMaterias() {
         try {
-            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/listado/materias', {
+            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/profesor/listado/materias', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ export class Dashboard {
 
     async mostrarHorarioProfesor() {
         try {
-            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/listado/horario/profesor', {
+            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/profesor/listado/horario/profesor', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ export class Dashboard {
 
     async mostrarHorarioCurso() {
         try {
-            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/listado/horario/curso', {
+            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/profesor/listado/horario/curso', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -122,7 +122,7 @@ export class Admin {
 
     // Obtener todos los profesores
     async getAllProfesores() {
-        const response = await fetch('/profesores', {
+        const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/profesores', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${this.token}`
@@ -133,7 +133,7 @@ export class Admin {
 
     // Obtener un profesor por ID
     async getProfesor(id) {
-        const response = await fetch(`/profesores/${id}`, {
+        const response = await fetch(`https://backend-asistencia-qr.vercel.app/api/admin/profesores/${id}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${this.token}`
@@ -144,7 +144,7 @@ export class Admin {
 
     // Crear un nuevo profesor
     async createProfesor(profesorData) {
-        const response = await fetch('/profesores', {
+        const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/profesores', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -157,7 +157,7 @@ export class Admin {
 
     // Actualizar un profesor por ID
     async updateProfesor(id, profesorData) {
-        const response = await fetch(`/profesores/${id}`, {
+        const response = await fetch(`https://backend-asistencia-qr.vercel.app/api/admin/profesores/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -170,7 +170,7 @@ export class Admin {
 
     // Eliminar un profesor por ID
     async deleteProfesor(id) {
-        const response = await fetch(`/profesores/${id}`, {
+        const response = await fetch(`https://backend-asistencia-qr.vercel.app/api/admin/profesores/${id}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${this.token}`
@@ -181,7 +181,7 @@ export class Admin {
 
     // Insertar un horario
     async insertarHorario(horarioData) {
-        const response = await fetch('/insertar/horario', {
+        const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/insertar/horario', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -194,7 +194,7 @@ export class Admin {
 
     // Crear un nuevo curso
     async crearCurso(cursoData) {
-        const response = await fetch('/crear/curso', {
+        const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/crear/curso', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -207,7 +207,7 @@ export class Admin {
 
     // Obtener listado de cursos
     async ListadoCursos() {
-        const response = await fetch('listado/cursos', {
+        const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/listado/cursos', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${this.token}`
@@ -218,7 +218,7 @@ export class Admin {
 
     // Insertar una materia
     async insertarMateria(materiaData) {
-        const response = await fetch('/insertar/materias', {
+        const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/insertar/materias', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
