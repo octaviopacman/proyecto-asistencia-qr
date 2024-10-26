@@ -21,7 +21,7 @@ export class Dashboard {
         }
     }
 
-    async obtenerMaterias() {
+    /* async obtenerMaterias() {
         try {
             const response = await fetch('https://backend-asistencia-qr.vercel.app/api/profesor/listado/materias', {
                 method: 'GET',
@@ -37,7 +37,7 @@ export class Dashboard {
             console.error(error);
             throw new Error('Error al obtener materias');
         }
-    }
+    } */
 
     async mostrarHorarioProfesor() {
         try {

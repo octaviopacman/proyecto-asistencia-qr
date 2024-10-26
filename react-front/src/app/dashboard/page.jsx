@@ -52,7 +52,7 @@ function Admin() {
             try {
                 // Obtener todos los datos del dashboard
                 const asistencias = await dashboard.contarAsistencias();
-                const materias = await dashboard.obtenerMaterias();
+                /* const materias = await dashboard.obtenerMaterias(); */
                 const horarioProfesor = await dashboard.mostrarHorarioProfesor();
                 const horarioCurso = await dashboard.mostrarHorarioCurso();
                 
@@ -61,7 +61,7 @@ function Admin() {
                 // Combinar todos los datos en un solo objeto
                 const resultados = {
                     asistencias: asistencias || {}, // Valor predeterminado vacío si es undefined
-                    materias: materias || {},
+                    /* materias: materias || {}, */
                     horarioProfesor: horarioProfesor || {},
                     horarioCurso: horarioCurso || {},
                 };
