@@ -11,7 +11,7 @@ export class Dashboard {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.token}`,
                 },
-                credentials: 'include'
+                /* credentials: 'include' */
             });
             const data = await response.json();
             return data;
