@@ -57,7 +57,7 @@ export class Dashboard {
         }
     }
 
-    async mostrarHorarioCurso() {
+    /* async mostrarHorarioCurso() {
         try {
             const response = await fetch('https://backend-asistencia-qr.vercel.app/api/profesor/listado/horario/curso', {
                 method: 'GET',
@@ -73,7 +73,7 @@ export class Dashboard {
             console.error(error);
             throw new Error('Error al obtener horarios de cursos');
         }
-    }
+    } */
 }
 
 
