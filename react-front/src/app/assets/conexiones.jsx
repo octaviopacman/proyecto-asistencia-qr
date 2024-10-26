@@ -47,6 +47,7 @@ export class Dashboard {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.token}`,
                 },
+                body: JSON.stringify({profesorId: "20"}),
                 credentials: 'include'
             });
             const data = await response.json();
