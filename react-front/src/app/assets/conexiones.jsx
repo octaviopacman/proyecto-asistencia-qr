@@ -4,7 +4,6 @@ export class Dashboard {
     }
 
     async contarAsistencias() {
-         
         try {
             const response = await fetch('https://backend-asistencia-qr.vercel.app/api/login/contarasistencias', {
                 method: 'GET',
@@ -23,7 +22,6 @@ export class Dashboard {
     }
 
     async obtenerMaterias() {
-         
         try {
             const response = await fetch('https://backend-asistencia-qr.vercel.app/api/listado/materias', {
                 method: 'GET',
@@ -42,7 +40,6 @@ export class Dashboard {
     }
 
     async mostrarHorarioProfesor() {
-         
         try {
             const response = await fetch('https://backend-asistencia-qr.vercel.app/api/listado/horario/profesor', {
                 method: 'GET',
@@ -61,7 +58,6 @@ export class Dashboard {
     }
 
     async mostrarHorarioCurso() {
-         
         try {
             const response = await fetch('https://backend-asistencia-qr.vercel.app/api/listado/horario/curso', {
                 method: 'GET',
@@ -78,65 +74,8 @@ export class Dashboard {
             throw new Error('Error al obtener horarios de cursos');
         }
     }
-
-    async obtenerProfesores() {
-         
-        try {
-            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/profesores', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.token}`,
-                },
-                credentials: 'include'
-            });
-            const data = await response.json();
-            return data;
-        } catch (error) {
-            console.error(error);
-            throw new Error('Error al obtener profesores');
-        }
-    }
-
-    async listarCursos() {
-         
-        try {
-            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/listado/cursos', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.token}`,
-                },
-                credentials: 'include'
-            });
-            const data = await response.json();
-            return data;
-        } catch (error) {
-            console.error(error);
-            throw new Error("Error al obtener cursos");
-        }
-    }
-
-    async insertarHorarios(data) {
-         
-        try {
-            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/insertar/horarios', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.token}`,
-                },
-                credentials: 'include',
-                body: JSON.stringify(data),
-            });
-            const data = await response.json();
-            return data;
-        } catch (error) {
-            console.error(error);
-            throw new Error('Error al obtener horarios');
-        }
-    }
 }
+
 
 
 export class Sesion {
@@ -176,5 +115,117 @@ export class Sesion {
     }
 }
 
+export class Admin {
+    constructor(token) {
+        this.token = token;
+    }
 
+    // Obtener todos los profesores
+    async getAllProfesores() {
+        const response = await fetch('/profesores', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            }
+        });
+        return await response.json();
+    }
 
+    // Obtener un profesor por ID
+    async getProfesor(id) {
+        const response = await fetch(`/profesores/${id}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            }
+        });
+        return await response.json();
+    }
+
+    // Crear un nuevo profesor
+    async createProfesor(profesorData) {
+        const response = await fetch('/profesores', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            },
+            body: JSON.stringify(profesorData)
+        });
+        return await response.json();
+    }
+
+    // Actualizar un profesor por ID
+    async updateProfesor(id, profesorData) {
+        const response = await fetch(`/profesores/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            },
+            body: JSON.stringify(profesorData)
+        });
+        return await response.json();
+    }
+
+    // Eliminar un profesor por ID
+    async deleteProfesor(id) {
+        const response = await fetch(`/profesores/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            }
+        });
+        return await response.json();
+    }
+
+    // Insertar un horario
+    async insertarHorario(horarioData) {
+        const response = await fetch('/insertar/horario', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            },
+            body: JSON.stringify(horarioData)
+        });
+        return await response.json();
+    }
+
+    // Crear un nuevo curso
+    async crearCurso(cursoData) {
+        const response = await fetch('/crear/curso', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            },
+            body: JSON.stringify(cursoData)
+        });
+        return await response.json();
+    }
+
+    // Obtener listado de cursos
+    async ListadoCursos() {
+        const response = await fetch('listado/cursos', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            }
+        });
+        return await response.json();
+    }
+
+    // Insertar una materia
+    async insertarMateria(materiaData) {
+        const response = await fetch('/insertar/materias', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            },
+            body: JSON.stringify(materiaData)
+        });
+        return await response.json();
+    }
+}
