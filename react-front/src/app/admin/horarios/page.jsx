@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Navbar, Nav, Dropdown } from 'react-bootstrap';
 import AdminPage from '../page';
-import Admin from '../path/to/admin'; // Importa la clase Admin (ajusta la ruta según corresponda)
+import Admin from '../../assets/conexiones'; // Importa la clase Admin (ajusta la ruta según corresponda)
 
 const CrudHorarios = () => {
   const [horarios, setHorarios] = useState([]);
