@@ -138,7 +138,7 @@ function Admin() {
                                     {data.horarioProfesor.length > 0 ? (
                                         data.horarioProfesor.map(curso => (
                                             <Card.Text key={curso.cursoid}>
-                                                {curso}
+                                                {toString(curso)}
                                             </Card.Text>
                                         ))
                                     ) : (
