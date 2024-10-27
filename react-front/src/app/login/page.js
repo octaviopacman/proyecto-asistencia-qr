@@ -14,6 +14,7 @@ function Login() {
   const [message, setMessage] = useState('');
   const [codigo, setCodigo] = useState('');
   const [errors, setErrors] = useState({});
+  const [rol, setRol] = useState(''); // Nueva variable de estado para el rol
   const Router = useRouter();
   const { user, login, logout } = useSession();
 
@@ -28,7 +29,7 @@ function Login() {
     }
     if (!password) {
       errors.password = 'La contraseña es requerida';
-    } else if (password.length < 3) {
+    } else if (password.length < 8) {
       errors.password = 'La contraseña debe tener 8 caracteres como mínimo';
     }
     return errors;
@@ -46,22 +47,26 @@ function Login() {
   }
 
   const handleMenuNavigation = () => {
-    Router.push('/dashboard', undefined, { shallow: true });
+    if (rol === 'profesor') {
+      Router.push('/dashboard', undefined, { shallow: true });
+    } else if (rol === 'admin') {
+      Router.push('/admin', undefined, { shallow: true });
+    }
   };
 
   const handleLogin = async () => {
     let credenciales = new Sesion(useSession);
     let usuario = await credenciales.iniciarSesion(correo, password);
     if (usuario.error) {
-      setMessage(usuario.error)
+      setMessage(usuario.error);
     } else {
-      setMessage('')
-      setErrors({})
-      login(usuario)
-      setCodigo(<QRCodeComponent data={user.token}/>);
-      console.log(user);
+      setMessage('');
+      setErrors({});
+      login(usuario);
+      setRol(usuario.rol); // Establece el rol devuelto por la API
+      setCodigo(<QRCodeComponent data={usuario.token} />);
+      console.log(usuario);
     }
-   
   };
 
   const handleCorreoChange = (e) => {
@@ -69,7 +74,7 @@ function Login() {
     if (errors.correo) {
       setErrors((prevErrors) => ({ ...prevErrors, correo: '' }));
     }
-    setMessage('')
+    setMessage('');
   };
 
   const handlePasswordChange = (e) => {
@@ -77,7 +82,7 @@ function Login() {
     if (errors.password) {
       setErrors((prevErrors) => ({ ...prevErrors, password: '' }));
     }
-    setMessage('')
+    setMessage('');
   }
 
   return (
@@ -115,10 +120,6 @@ function Login() {
           {codigo}
         </div>
         <button className={styles.btnMenu} onClick={handleMenuNavigation}>Ir al Menú</button>
-        {/* <label>
-          <p>¿No tienes cuenta?</p>
-        </label>
-        <button className={styles.btnRegister} onClick={() => Router.push('/registro')}>Registro</button> */}
       </div>
     </div>
   );
