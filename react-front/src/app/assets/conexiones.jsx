@@ -206,7 +206,7 @@ export class Admin {
     }
 
     // Obtener listado de cursos
-    async ListadoCursos() {
+    async listadoCursos() {
         const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/listado/cursos', {
             method: 'GET',
             headers: {

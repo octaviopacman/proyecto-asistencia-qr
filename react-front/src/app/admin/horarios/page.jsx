@@ -2,9 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import { Navbar, Nav, Dropdown } from 'react-bootstrap';
 import AdminPage from '../page';
-import Admin from '../../assets/conexiones'; // Importa la clase Admin (ajusta la ruta según corresponda)
+import { useSession } from '@/app/assets/session';
+import {Admin} from '../../assets/conexiones'; // Importa la clase Admin (ajusta la ruta según corresponda)
 
 const CrudHorarios = () => {
+  const { user } = useSession();
   const [horarios, setHorarios] = useState([]);
   const [profesores, setProfesores] = useState([]);
   const [materias, setMaterias] = useState([]);
@@ -23,27 +25,11 @@ const CrudHorarios = () => {
   const [currentId, setCurrentId] = useState(null);
 
   // Instanciar la clase Admin
-  const admin = new Admin();
+  const admin = new Admin(user.token);
 
   // Obtener datos cuando el componente se monta
-  useEffect(() => {
-    // Obtener Horarios, Profesores, Materias y Cursos desde Admin
-    admin.obtenerHorarios()
-      .then((data) => setHorarios(data))
-      .catch((error) => console.error('Error al obtener horarios:', error));
-
-    admin.obtenerProfesores()
-      .then((data) => setProfesores(data))
-      .catch((error) => console.error('Error al obtener Profesores:', error));
-
-    admin.obtenerMaterias()
-      .then((data) => setMaterias(data))
-      .catch((error) => console.error('Error al obtener Materias:', error));
-
-    admin.listarCursos()
-      .then((data) => setCursos(data))
-      .catch((error) => console.error('Error al obtener Cursos:', error));
-  }, []);
+  
+ /* ESTO ES UN QUILOMBO */
 
   // Manejadores de formulario
   const handleChange = (e) => {
