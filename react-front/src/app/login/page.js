@@ -29,7 +29,7 @@ function Login() {
     }
     if (!password) {
       errors.password = 'La contraseña es requerida';
-    } else if (password.length < 8) {
+    } else if (password.length < 2) {
       errors.password = 'La contraseña debe tener 8 caracteres como mínimo';
     }
     return errors;
