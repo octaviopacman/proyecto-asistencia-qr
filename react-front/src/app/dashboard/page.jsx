@@ -19,9 +19,6 @@ import { useSession } from "../assets/session";
 import { Dropdown } from 'react-bootstrap';
 import AdminPage from "../admin/page"
 
-const URI_MATERIAS = 'https://backend-asistencia-qr.vercel.app/api/profesores/';
-const URI_ASISTENCIAS = 'https://backend-asistencia-qr.vercel.app/api/login/contarasistencias/';
-const URI_HORARIOS = 'https://backend-asistencia-qr.vercel.app/api/insertar/horarios';
 
 function Admin() {
     const [data, setData] = useState({
@@ -127,15 +124,7 @@ function Admin() {
                             <Card className={styles.tarjeta}>
                                 <Card.Body>
                                     <Card.Title>Materias</Card.Title>
-                                    {data.materias.length > 0 ? (
-                                        data.materias.map(materia => (
-                                            <Card.Text key={materia.materiaid}>
-                                                {materia.NombreMateria}
-                                            </Card.Text>
-                                        ))
-                                    ) : (
                                         <Card.Text>No tienes Materias designadas</Card.Text>
-                                    )}
                                     <Button href='/dashboard/materias'>Ver más</Button>
                                 </Card.Body>
                             </Card>
@@ -146,10 +135,10 @@ function Admin() {
                             <Card className={styles.tarjeta}>
                                 <Card.Body>
                                     <Card.Title>Cursos</Card.Title>
-                                    {data.cursos.length > 0 ? (
-                                        data.cursos.map(curso => (
+                                    {data.horarioProfesor.length > 0 ? (
+                                        data.horarioProfesor.map(curso => (
                                             <Card.Text key={curso.cursoid}>
-                                                {curso.anio}°{curso.division}
+                                                {curso}
                                             </Card.Text>
                                         ))
                                     ) : (
