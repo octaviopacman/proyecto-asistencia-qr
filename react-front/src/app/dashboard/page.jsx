@@ -28,7 +28,7 @@ function Admin() {
         horarioCurso: {},
         cursos: {},
         profesores: {}
-      });
+    });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { user, login, logout } = useSession();
@@ -52,8 +52,8 @@ function Admin() {
                 /* const materias = await dashboard.obtenerMaterias(); */
                 const horarioProfesor = await dashboard.mostrarHorarioProfesor();
                 //const horarioCurso = await dashboard.mostrarHorarioCurso();
-                
-                
+
+
 
                 // Combinar todos los datos en un solo objeto
                 const resultados = {
@@ -74,7 +74,7 @@ function Admin() {
         fetchData();
     }, []);
 
-    
+
     console.log(data);
 
 
@@ -124,7 +124,7 @@ function Admin() {
                             <Card className={styles.tarjeta}>
                                 <Card.Body>
                                     <Card.Title>Materias</Card.Title>
-                                        <Card.Text>No tienes Materias designadas</Card.Text>
+                                    <Card.Text>No tienes Materias designadas</Card.Text>
                                     <Button href='/dashboard/materias'>Ver más</Button>
                                 </Card.Body>
                             </Card>
@@ -138,7 +138,11 @@ function Admin() {
                                     {data.horarioProfesor.length > 0 ? (
                                         data.horarioProfesor.map(curso => (
                                             <Card.Text key={curso.cursoid}>
-                                                {toString(curso)}
+                                                {Object.keys(curso).map(key => (
+                                                    <div key={key}>
+                                                        <strong>{key}:</strong> {curso[key]}
+                                                    </div>
+                                                ))}
                                             </Card.Text>
                                         ))
                                     ) : (
