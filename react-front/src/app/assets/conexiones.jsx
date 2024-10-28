@@ -152,6 +152,13 @@ export class Admin {
             },
             body: JSON.stringify(profesorData)
         });
+
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            console.error('Error en la solicitud:', errorMessage); // Verifica el mensaje de error
+            throw new Error(`Error ${response.status}: ${errorMessage}`);
+          }
+        
         return await response.json();
     }
 

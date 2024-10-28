@@ -57,24 +57,25 @@ const CrudProfesores = () => {
     return true;
   };
 
-  // Enviar el formulario (agregar o editar profesor)
  // Enviar el formulario (agregar o editar profesor)
-const handleSubmit = async (e) => {
+ const handleSubmit = async (e) => {
   e.preventDefault();
   if (!validateForm()) return;
-  
+
+  const dataToSend = {
+    nombre: form.nombre,
+    apellido: form.apellido,
+    dni: form.dni,
+    telefono: form.telefono,
+    correo: form.correo,
+    password: form.password,
+  };
+
+  console.log('Enviando datos al backend:', dataToSend);
+
   try {
-    const dataToSend = {
-      nombre: form.nombre,
-      apellido: form.apellido,
-      dni: form.dni,
-      telefono: form.telefono,
-      correo: form.correo,
-      password: form.password,
-    };
-    
     if (isEditing) {
-      delete dataToSend.password; // Si editas, omite `password`
+      delete dataToSend.password; // Omitimos `password` si estamos editando
       const data = await panelAdmin.updateProfesor(currentId, dataToSend);
       setProfesores((prev) =>
         prev.map((profesor) => (profesor.ProfesorID === currentId ? data : profesor))
@@ -86,7 +87,6 @@ const handleSubmit = async (e) => {
       setProfesores((prev) => [...prev, data]);
     }
 
-    // Limpiar el formulario
     setForm({
       nombre: '',
       apellido: '',
@@ -99,6 +99,7 @@ const handleSubmit = async (e) => {
     console.error('Error al guardar profesor:', error);
   }
 };
+
 
 
   // Eliminar profesor
