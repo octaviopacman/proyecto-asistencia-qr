@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, Form, Button, Container, Row, Col,ListGroup, Alert, Modal } from 'react-bootstrap';
 import AdminPage from '../page';
 import { Admin } from '../../assets/conexiones';
 import { useSession } from '../../assets/session';
@@ -134,36 +134,70 @@ const CrudProfesores = () => {
   };
 
   return (
-    <div className="container">
-      <Navbar bg="dark" variant="dark">
-        <Navbar.Brand>Panel de Administración</Navbar.Brand>
-        <Nav className="me-auto">
-          <Nav.Link href="#home">Inicio</Nav.Link>
-        </Nav>
+    <Container>
+      <Navbar bg="dark" variant="dark" className="mb-4">
+        <Container>
+          <Navbar.Brand>Panel de Administración</Navbar.Brand>
+          <Nav className="me-auto">
+            <Nav.Link href="#home">Inicio</Nav.Link>
+          </Nav>
+        </Container>
       </Navbar>
 
-      <form onSubmit={handleSubmit}>
-        {/* Campos del formulario */}
-        <input name="nombre" placeholder="Nombre" value={form.nombre} onChange={handleChange} />
-        <input name="apellido" placeholder="Apellido" value={form.apellido} onChange={handleChange} />
-        <input name="dni" placeholder="DNI" value={form.dni} onChange={handleChange} />
-        <input name="telefono" placeholder="Teléfono" value={form.telefono} onChange={handleChange} />
-        <input name="correo" placeholder="Correo" value={form.correo} onChange={handleChange} />
-        <input name="password" placeholder="Contraseña" type="password" value={form.password} onChange={handleChange} />
-        <button type="submit">{isEditing ? 'Actualizar' : 'Agregar'} Profesor</button>
-      </form>
+      <Row>
+        <Col md={6} className="mx-auto">
+          <h2 className="text-center mb-4">{isEditing ? 'Editar Profesor' : 'Agregar Profesor'}</h2>
+          {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+          {successMessage && <Alert variant="success">{successMessage}</Alert>}
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3">
+              <Form.Label>Nombre</Form.Label>
+              <Form.Control type="text" name="nombre" value={form.nombre} onChange={handleChange} placeholder="Ingrese el nombre" />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Apellido</Form.Label>
+              <Form.Control type="text" name="apellido" value={form.apellido} onChange={handleChange} placeholder="Ingrese el apellido" />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>DNI</Form.Label>
+              <Form.Control type="text" name="dni" value={form.dni} onChange={handleChange} placeholder="Ingrese el DNI" />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Teléfono</Form.Label>
+              <Form.Control type="text" name="telefono" value={form.telefono} onChange={handleChange} placeholder="Ingrese el teléfono" />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Correo</Form.Label>
+              <Form.Control type="email" name="correo" value={form.correo} onChange={handleChange} placeholder="Ingrese el correo" />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Contraseña</Form.Label>
+              <Form.Control type="password" name="password" value={form.password} onChange={handleChange} placeholder="Ingrese la contraseña" />
+            </Form.Group>
+            <Button variant="primary" type="submit" className="w-100">{isEditing ? 'Actualizar Profesor' : 'Agregar Profesor'}</Button>
+          </Form>
+        </Col>
+      </Row>
 
-      <ul>
-  {profesores.map((profesor) => (
-    <li key={profesor.ProfesorID}>
-      {profesor.nombre} {profesor.apellido} - {profesor.correo}
-      <button onClick={() => handleEdit(profesor.ProfesorID)}>Editar</button>
-      <button onClick={() => handleDelete(profesor.ProfesorID)}>Eliminar</button>
-    </li>
-  ))}
-</ul>
-
-    </div>
+      <Row className="mt-5">
+        <Col md={8} className="mx-auto">
+          <h2 className="text-center">Listado de Profesores</h2>
+          <ListGroup variant="flush">
+            {profesores.map((profesor) => (
+              <ListGroup.Item key={profesor.ProfesorID} className="d-flex justify-content-between align-items-center">
+                <div>
+                  {profesor.nombre} {profesor.apellido} - {profesor.correo}
+                </div>
+                <div>
+                  <Button variant="outline-primary" size="sm" className="me-2" onClick={() => handleEdit(profesor.ProfesorID)}>Editar</Button>
+                  <Button variant="outline-danger" size="sm" onClick={() => handleDelete(profesor.ProfesorID)}>Eliminar</Button>
+                </div>
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
