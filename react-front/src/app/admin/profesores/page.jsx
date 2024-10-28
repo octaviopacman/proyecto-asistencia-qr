@@ -18,10 +18,11 @@ const CrudProfesores = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentId, setCurrentId] = useState(null);
   const { user } = useSession();
-  const panelAdmin = new Admin(user.token);
+  const panelAdmin = user ? new Admin(user.token) : null;
 
   // Obtener todos los profesores cuando el componente se monta
   useEffect(() => {
+    if(!panelAdmin) return
     const fetchProfesores = async () => {
       try {
         const datos = await panelAdmin.getAllProfesores();
@@ -60,7 +61,7 @@ const CrudProfesores = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-
+    console.log('datos del formulario antes de enviar:', form)
     try {
       if (isEditing) {
         const data = await panelAdmin.updateProfesor(currentId, form);
@@ -140,11 +141,12 @@ const CrudProfesores = () => {
 
       <ul>
         {profesores.map((profesor) => (
-          <li key={profesor.id}>
-            {profesor.nombre} {profesor.apellido} - {profesor.correo}
-            <button onClick={() => handleEdit(profesor.id)}>Editar</button>
-            <button onClick={() => handleDelete(profesor.id)}>Eliminar</button>
-          </li>
+          <li key={profesor.ProfesorID}>
+          {profesor.nombre} {profesor.apellido} - {profesor.correo}
+          <button onClick={() => handleEdit(profesor.ProfesorID)}>Editar</button>
+          <button onClick={() => handleDelete(profesor.ProfesorID)}>Eliminar</button>
+        </li>
+        
         ))}
       </ul>
     </div>
