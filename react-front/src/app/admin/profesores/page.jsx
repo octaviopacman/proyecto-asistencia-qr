@@ -1,7 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import { Navbar, Nav, Form, Button, Container, Row, Col,ListGroup, Alert, Modal } from 'react-bootstrap';
-import AdminPage from '../page';
+import { Navbar, Nav, Form, Button, Container, Row, Col, ListGroup, Alert } from 'react-bootstrap';
 import { Admin } from '../../assets/conexiones';
 import { useSession } from '../../assets/session';
 
@@ -20,9 +19,8 @@ const CrudProfesores = () => {
   const { user } = useSession();
   const panelAdmin = user ? new Admin(user.token) : null;
 
-  // Obtener todos los profesores cuando el componente se monta
   useEffect(() => {
-    if(!panelAdmin) return
+    if (!panelAdmin) return;
     const fetchProfesores = async () => {
       try {
         const datos = await panelAdmin.getAllProfesores();
@@ -34,12 +32,10 @@ const CrudProfesores = () => {
     fetchProfesores();
   }, [panelAdmin]);
 
-  // Manejador de cambio en el formulario
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // Validación básica de formulario
   const validateForm = () => {
     const { nombre, apellido, dni, telefono, correo, password } = form;
     if (!nombre || !apellido || !dni || !telefono || !correo || (!isEditing && !password)) {
@@ -57,29 +53,15 @@ const CrudProfesores = () => {
     return true;
   };
 
- // Enviar el formulario (agregar o editar profesor)
- const handleSubmit = async (e) => {
-  e.preventDefault();
-  if (!validateForm()) return;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
 
-  const dataToSend = {
-    nombre: form.nombre,
-    apellido: form.apellido,
-    dni: form.dni,
-    telefono: form.telefono,
-    correo: form.correo,
-    password: form.password,
-  };
-
-  console.log('Enviando datos al backend:', dataToSend);
-
-  try {
+    const dataToSend = { ...form };
     if (isEditing) {
-      delete dataToSend.password; // Omitimos `password` si estamos editando
+      delete dataToSend.password;
       const data = await panelAdmin.updateProfesor(currentId, dataToSend);
-      setProfesores((prev) =>
-        prev.map((profesor) => (profesor.ProfesorID === currentId ? data : profesor))
-      );
+      setProfesores((prev) => prev.map((profesor) => (profesor.ProfesorID === currentId ? data : profesor)));
       setIsEditing(false);
       setCurrentId(null);
     } else {
@@ -87,36 +69,22 @@ const CrudProfesores = () => {
       setProfesores((prev) => [...prev, data]);
     }
 
-    setForm({
-      nombre: '',
-      apellido: '',
-      dni: '',
-      telefono: '',
-      correo: '',
-      password: '',
-    });
-  } catch (error) {
-    console.error('Error al guardar profesor:', error);
-  }
-};
+    setForm({ nombre: '', apellido: '', dni: '', telefono: '', correo: '', password: '' });
+  };
 
-
-
-  // Eliminar profesor
   const handleDelete = async (id) => {
     if (!window.confirm('¿Estás seguro de eliminar este profesor?')) return;
 
     try {
       await panelAdmin.deleteProfesor(id);
-      setProfesores((prev) => prev.filter((profesor) => profesor.id !== id));
+      setProfesores((prev) => prev.filter((profesor) => profesor.ProfesorID !== id));
     } catch (error) {
       console.error('Error al eliminar profesor:', error);
     }
   };
 
-  // Editar profesor
   const handleEdit = (id) => {
-    const profesorToEdit = profesores.find((profesor) => profesor.id === id);
+    const profesorToEdit = profesores.find((profesor) => profesor.ProfesorID === id);
     if (profesorToEdit) {
       setForm({
         nombre: profesorToEdit.nombre || '',
@@ -145,49 +113,46 @@ const CrudProfesores = () => {
       </Navbar>
 
       <Row>
-        <Col md={6} className="mx-auto">
-          <h2 className="text-center mb-4">{isEditing ? 'Editar Profesor' : 'Agregar Profesor'}</h2>
-          {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-          {successMessage && <Alert variant="success">{successMessage}</Alert>}
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3">
+        <Col md={12} className="mb-4">
+          <Form onSubmit={handleSubmit} className="d-flex flex-wrap gap-3">
+            <Form.Group controlId="formNombre">
               <Form.Label>Nombre</Form.Label>
-              <Form.Control type="text" name="nombre" value={form.nombre} onChange={handleChange} placeholder="Ingrese el nombre" />
+              <Form.Control type="text" name="nombre" value={form.nombre} onChange={handleChange} />
             </Form.Group>
-            <Form.Group className="mb-3">
+            <Form.Group controlId="formApellido">
               <Form.Label>Apellido</Form.Label>
-              <Form.Control type="text" name="apellido" value={form.apellido} onChange={handleChange} placeholder="Ingrese el apellido" />
+              <Form.Control type="text" name="apellido" value={form.apellido} onChange={handleChange} />
             </Form.Group>
-            <Form.Group className="mb-3">
+            <Form.Group controlId="formDNI">
               <Form.Label>DNI</Form.Label>
-              <Form.Control type="text" name="dni" value={form.dni} onChange={handleChange} placeholder="Ingrese el DNI" />
+              <Form.Control type="text" name="dni" value={form.dni} onChange={handleChange} />
             </Form.Group>
-            <Form.Group className="mb-3">
+            <Form.Group controlId="formTelefono">
               <Form.Label>Teléfono</Form.Label>
-              <Form.Control type="text" name="telefono" value={form.telefono} onChange={handleChange} placeholder="Ingrese el teléfono" />
+              <Form.Control type="text" name="telefono" value={form.telefono} onChange={handleChange} />
             </Form.Group>
-            <Form.Group className="mb-3">
+            <Form.Group controlId="formCorreo">
               <Form.Label>Correo</Form.Label>
-              <Form.Control type="email" name="correo" value={form.correo} onChange={handleChange} placeholder="Ingrese el correo" />
+              <Form.Control type="email" name="correo" value={form.correo} onChange={handleChange} />
             </Form.Group>
-            <Form.Group className="mb-3">
+            <Form.Group controlId="formPassword">
               <Form.Label>Contraseña</Form.Label>
-              <Form.Control type="password" name="password" value={form.password} onChange={handleChange} placeholder="Ingrese la contraseña" />
+              <Form.Control type="password" name="password" value={form.password} onChange={handleChange} />
             </Form.Group>
-            <Button variant="primary" type="submit" className="w-100">{isEditing ? 'Actualizar Profesor' : 'Agregar Profesor'}</Button>
+            <Button variant="primary" type="submit" className="align-self-end mt-2">
+              {isEditing ? 'Actualizar' : 'Agregar'} Profesor
+            </Button>
           </Form>
         </Col>
       </Row>
 
-      <Row className="mt-5">
-        <Col md={8} className="mx-auto">
-          <h2 className="text-center">Listado de Profesores</h2>
-          <ListGroup variant="flush">
+      <Row>
+        <Col md={10} className="mx-auto">
+          <h4 className="text-center">Listado de Profesores</h4>
+          <ListGroup className="mt-3">
             {profesores.map((profesor) => (
               <ListGroup.Item key={profesor.ProfesorID} className="d-flex justify-content-between align-items-center">
-                <div>
-                  {profesor.nombre} {profesor.apellido} - {profesor.correo}
-                </div>
+                <span>{profesor.nombre} {profesor.apellido} - {profesor.correo}</span>
                 <div>
                   <Button variant="outline-primary" size="sm" className="me-2" onClick={() => handleEdit(profesor.ProfesorID)}>Editar</Button>
                   <Button variant="outline-danger" size="sm" onClick={() => handleDelete(profesor.ProfesorID)}>Eliminar</Button>
