@@ -58,35 +58,48 @@ const CrudProfesores = () => {
   };
 
   // Enviar el formulario (agregar o editar profesor)
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
-    console.log('datos del formulario antes de enviar:', form)
-    try {
-      if (isEditing) {
-        const data = await panelAdmin.updateProfesor(currentId, form);
-        setProfesores((prev) =>
-          prev.map((profesor) => (profesor.id === currentId ? data : profesor))
-        );
-        setIsEditing(false);
-        setCurrentId(null);
-      } else {
-        const data = await panelAdmin.createProfesor(form);
-        setProfesores((prev) => [...prev, data]);
-      }
-
-      setForm({
-        nombre: '',
-        apellido: '',
-        dni: '',
-        telefono: '',
-        correo: '',
-        password: '',
-      });
-    } catch (error) {
-      console.error('Error al guardar profesor:', error);
+ // Enviar el formulario (agregar o editar profesor)
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!validateForm()) return;
+  
+  try {
+    const dataToSend = {
+      nombre: form.nombre,
+      apellido: form.apellido,
+      dni: form.dni,
+      telefono: form.telefono,
+      correo: form.correo,
+      password: form.password,
+    };
+    
+    if (isEditing) {
+      delete dataToSend.password; // Si editas, omite `password`
+      const data = await panelAdmin.updateProfesor(currentId, dataToSend);
+      setProfesores((prev) =>
+        prev.map((profesor) => (profesor.ProfesorID === currentId ? data : profesor))
+      );
+      setIsEditing(false);
+      setCurrentId(null);
+    } else {
+      const data = await panelAdmin.createProfesor(dataToSend);
+      setProfesores((prev) => [...prev, data]);
     }
-  };
+
+    // Limpiar el formulario
+    setForm({
+      nombre: '',
+      apellido: '',
+      dni: '',
+      telefono: '',
+      correo: '',
+      password: '',
+    });
+  } catch (error) {
+    console.error('Error al guardar profesor:', error);
+  }
+};
+
 
   // Eliminar profesor
   const handleDelete = async (id) => {
@@ -140,15 +153,15 @@ const CrudProfesores = () => {
       </form>
 
       <ul>
-        {profesores.map((profesor) => (
-          <li key={profesor.ProfesorID}>
-          {profesor.nombre} {profesor.apellido} - {profesor.correo}
-          <button onClick={() => handleEdit(profesor.ProfesorID)}>Editar</button>
-          <button onClick={() => handleDelete(profesor.ProfesorID)}>Eliminar</button>
-        </li>
-        
-        ))}
-      </ul>
+  {profesores.map((profesor) => (
+    <li key={profesor.ProfesorID}>
+      {profesor.nombre} {profesor.apellido} - {profesor.correo}
+      <button onClick={() => handleEdit(profesor.ProfesorID)}>Editar</button>
+      <button onClick={() => handleDelete(profesor.ProfesorID)}>Eliminar</button>
+    </li>
+  ))}
+</ul>
+
     </div>
   );
 };
