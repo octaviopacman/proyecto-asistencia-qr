@@ -24,6 +24,7 @@ const CrudProfesores = () => {
     const fetchProfesores = async () => {
       try {
         const datos = await panelAdmin.getAllProfesores();
+        console.log('datos de los profesores', datos)
         setProfesores(datos);
       } catch (error) {
         console.error("Error al obtener los profesores:", error);
@@ -85,6 +86,7 @@ const CrudProfesores = () => {
 
   const handleEdit = (id) => {
     console.log('editando el profesor', id)
+    console.log('profesor map:',profesor)
     const profesorToEdit = profesores.find((profesor) => profesor.ProfesorID === id);
     if (profesorToEdit) {
       setForm({
