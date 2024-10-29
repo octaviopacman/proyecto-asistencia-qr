@@ -92,7 +92,7 @@ const CrudProfesores = () => {
         dni: profesorToEdit.dni || '',
         telefono: profesorToEdit.telefono || '',
         correo: profesorToEdit.correo || '',
-        password: profesorToEdit.password || '',
+        password: '',
       });
       setCurrentId(id);
       setIsEditing(true);
