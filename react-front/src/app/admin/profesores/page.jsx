@@ -92,7 +92,7 @@ const CrudProfesores = () => {
         dni: profesorToEdit.dni || '',
         telefono: profesorToEdit.telefono || '',
         correo: profesorToEdit.correo || '',
-        
+        password: profesorToEdit.password || '',
       });
       setCurrentId(id);
       setIsEditing(true);
@@ -134,6 +134,10 @@ const CrudProfesores = () => {
             <Form.Group controlId="formCorreo">
               <Form.Label>Correo</Form.Label>
               <Form.Control type="email" name="correo" value={form.correo} onChange={handleChange} />
+            </Form.Group>
+            <Form.Group controlId="formPassword">
+              <Form.Label>Contraseña</Form.Label>
+              <Form.Control type="password" name="password" value={form.password} onChange={handleChange} />
             </Form.Group>
             <Button variant="primary" type="submit" className="align-self-end mt-2">
               {isEditing ? 'Actualizar' : 'Agregar'} Profesor
