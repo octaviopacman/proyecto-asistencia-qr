@@ -85,8 +85,9 @@ const CrudProfesores = () => {
   };
 
   const handleEdit = (id) => {
-    console.log('editando el profesor', id)
-    const profesorToEdit = profesores.find((profesor) => profesor.ProfesorID === id);
+    const numericId = Number(id); 
+    console.log('editando el profesor', numericId)
+    const profesorToEdit = profesores.find((profesor) => profesor.ProfesorID === numericId);
     console.log('profesor to edit', profesorToEdit)
     if (profesorToEdit) {
       setForm({
@@ -97,10 +98,10 @@ const CrudProfesores = () => {
         correo: profesorToEdit.correo || '',
         password: '',
       });
-      setCurrentId(id);
+      setCurrentId(numericId);
       setIsEditing(true);
     } else {
-      console.error('No se encontró el profesor para editar', id);
+      console.error('No se encontró el profesor para editar', numericId);
     }
   };
 
@@ -157,7 +158,7 @@ const CrudProfesores = () => {
               <ListGroup.Item key={profesor.ProfesorID} className="d-flex justify-content-between align-items-center">
                 <span>{profesor.nombre} {profesor.apellido} - {profesor.correo}</span>
                 <div>
-                  <Button variant="outline-primary" size="sm" className="me-2" onClick={() => handleEdit(profesor.id)}>Editar</Button>
+                  <Button variant="outline-primary" size="sm" className="me-2" onClick={() => handleEdit(profesor.ProfesorID)}>Editar</Button>
                   <Button variant="outline-danger" size="sm" onClick={() => handleDelete(profesor.ProfesorID)}>Eliminar</Button>
                 </div>
               </ListGroup.Item>
