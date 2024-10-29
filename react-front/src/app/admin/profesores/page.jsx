@@ -61,7 +61,7 @@ const CrudProfesores = () => {
     if (isEditing) {
       delete dataToSend.password;
       const data = await panelAdmin.updateProfesor(currentId, dataToSend);
-      setProfesores((prev) => prev.map((profesor) => (profesor.ProfesorID === currentId ? data : profesor)));
+      setProfesores((prev) => prev.map((profesor) => (profesor.id === currentId ? data : profesor)));
       setIsEditing(false);
       setCurrentId(null);
     } else {
@@ -156,7 +156,7 @@ const CrudProfesores = () => {
               <ListGroup.Item key={profesor.ProfesorID} className="d-flex justify-content-between align-items-center">
                 <span>{profesor.nombre} {profesor.apellido} - {profesor.correo}</span>
                 <div>
-                  <Button variant="outline-primary" size="sm" className="me-2" onClick={() => handleEdit(profesor.ProfesorID)}>Editar</Button>
+                  <Button variant="outline-primary" size="sm" className="me-2" onClick={() => handleEdit(profesor.id)}>Editar</Button>
                   <Button variant="outline-danger" size="sm" onClick={() => handleDelete(profesor.ProfesorID)}>Eliminar</Button>
                 </div>
               </ListGroup.Item>
