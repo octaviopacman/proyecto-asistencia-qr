@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import { Navbar, Nav, Form, Button, Container, Row, Col, ListGroup, Alert } from 'react-bootstrap';
+import { Navbar, Nav, Form, Button, Container, Row, Col, ListGroup, Alert, FormControl } from 'react-bootstrap';
 import { Admin } from '../../assets/conexiones';
 import { useSession } from '../../assets/session';
 
@@ -142,7 +142,11 @@ const CrudProfesores = () => {
             </Form.Group>
             <Form.Group controlId="formPassword">
               <Form.Label>Contraseña</Form.Label>
-              <Form.Control type="password" name="password" value={form.password} onChange={handleChange} />
+              { isEditing ?(
+              <FormControl type='text' value='********' readOnly/>
+              ) : (
+                <Form.Control type="password" name="password" value={form.password} onChange={handleChange} />
+            )}
             </Form.Group>
             <Button variant="primary" type="submit" className="align-self-end mt-2">
               {isEditing ? 'Actualizar' : 'Agregar'} Profesor
