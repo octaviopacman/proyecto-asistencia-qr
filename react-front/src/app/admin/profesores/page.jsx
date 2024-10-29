@@ -87,7 +87,7 @@ const CrudProfesores = () => {
   const handleEdit = (id) => {
     const numericId = Number(id); 
     console.log('editando el profesor', numericId)
-    const profesorToEdit = profesores.find((profesor) => profesor.ProfesorID === numericId);
+    const profesorToEdit = profesores.find((profesor) => Number(profesor.ProfesorID) === numericId);
     console.log('profesor to edit', profesorToEdit)
     if (profesorToEdit) {
       setForm({
