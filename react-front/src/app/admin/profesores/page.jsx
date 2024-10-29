@@ -160,7 +160,7 @@ const CrudProfesores = () => {
                 <span>{profesor.nombre} {profesor.apellido} - {profesor.correo}</span>
                 <div>
                   <Button variant="outline-primary" size="sm" className="me-2" onClick={() => handleEdit(profesor.id)}>Editar</Button>
-                  <Button variant="outline-danger" size="sm" onClick={() => handleDelete(profesor.ProfesorID)}>Eliminar</Button>
+                  <Button variant="outline-danger" size="sm" onClick={() => handleDelete(profesor.id)}>Eliminar</Button>
                 </div>
               </ListGroup.Item>
             ))}
