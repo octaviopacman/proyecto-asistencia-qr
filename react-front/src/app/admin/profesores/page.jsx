@@ -18,6 +18,7 @@ const CrudProfesores = () => {
   const [currentId, setCurrentId] = useState(null);
   const { user } = useSession();
   const panelAdmin = user ? new Admin(user.token) : null;
+  const [errors, setErrors] = useState([])
 
   useEffect(() => {
     if (!panelAdmin) return;
@@ -39,18 +40,23 @@ const CrudProfesores = () => {
 
   const validateForm = () => {
     const { nombre, apellido, dni, telefono, correo, password } = form;
-    if (!nombre || !apellido || !dni || !telefono || !correo || (!isEditing && !password)) {
-      alert('Por favor, completa todos los campos');
+    const newErrors = [];
+
+    if (!nombre) newErrors.push('El nombre es requerido.');
+    if (!apellido) newErrors.push('El apellido es requerido.');
+    if (!dni) newErrors.push('El DNI es requerido.');
+    if (!telefono) newErrors.push('El teléfono es requerido.');
+    if (!correo) newErrors.push('El correo es requerido.');
+    if (!isEditing && !password) newErrors.push('La contraseña es requerida.');
+    if (correo && !/\S+@\S+\.\S+/.test(correo)) newErrors.push('Correo electrónico no válido.');
+    if (dni && !/^\d+$/.test(dni)) newErrors.push('DNI debe ser un número válido.');
+
+     if (newErrors.length > 0) {
+      setErrors(newErrors); // Actualiza el estado de errores
       return false;
     }
-    if (!/\S+@\S+\.\S+/.test(correo)) {
-      alert('Correo electrónico no válido');
-      return false;
-    }
-    if (!/^\d+$/.test(dni)) {
-      alert('DNI debe ser un número válido');
-      return false;
-    }
+
+    setErrors([]); // Limpia errores si todo es válido
     return true;
   };
 
@@ -119,6 +125,15 @@ const CrudProfesores = () => {
 
       <Row>
         <Col md={12} className="mb-4">
+          {errors.length > 0 && (
+            <Alert variant="danger">
+              <ul>
+                {errors.map((error, index) => (
+                  <li key={index}>{error}</li>
+                ))}
+              </ul>
+            </Alert>
+          )}
           <Form onSubmit={handleSubmit} className="d-flex flex-wrap gap-3">
             <Form.Group controlId="formNombre">
               <Form.Label>Nombre</Form.Label>
