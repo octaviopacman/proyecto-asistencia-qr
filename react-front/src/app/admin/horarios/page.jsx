@@ -116,17 +116,50 @@ const CrudHorarios = () => {
       </Navbar>
       <h1 className="my-4">Gestión de Horarios</h1>
 
-      {/* Formulario */}
-      <form onSubmit={handleSubmit}>
-        {/* ... Campos del formulario aquí ... */}
-        <button type="submit" className="btn btn-primary">
-          {isEditing ? 'Actualizar Horario' : 'Agregar Horario'}
-        </button>
-      </form>
+      {/* Formulario de Horarios */}
+<div className="mb-4">
+  <label>Profesor</label>
+  <select name="ProfesorID" onChange={handleChange} value={form.ProfesorID}>
+    {profesores.map((profesor) => (
+      <option key={profesor.ProfesorID} value={profesor.ProfesorID}>
+        {profesor.Nombre}
+      </option>
+    ))}
+  </select>
+</div>
+// Repetir estructura similar para Materias, Cursos, Días y Horarios
 
-      {/* Lista de Horarios */}
-      <h2 className="my-4">Lista de Horarios</h2>
-      {/* ... Tabla de horarios aquí ... */}
+{/* Tabla de Horarios */}
+<table className="table">
+  <thead>
+    <tr>
+      <th>Profesor</th>
+      <th>Materia</th>
+      <th>Curso</th>
+      <th>Día</th>
+      <th>Hora Inicio</th>
+      <th>Hora Fin</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {horarios.map((horario) => (
+      <tr key={horario.HorarioID}>
+        <td>{horario.ProfesorNombre}</td>
+        <td>{horario.MateriaNombre}</td>
+        <td>{`${horario.Anio} - ${horario.Division}`}</td>
+        <td>{horario.Dia}</td>
+        <td>{horario.horaInicio}</td>
+        <td>{horario.horaFinal}</td>
+        <td>
+          <button onClick={() => handleEdit(horario.HorarioID)}>Editar</button>
+          <button onClick={() => handleDelete(horario.HorarioID)}>Eliminar</button>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
     </div>
   );
 };
