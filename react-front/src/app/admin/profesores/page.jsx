@@ -74,6 +74,7 @@ const CrudProfesores = () => {
   };
 
   const handleDelete = async (id) => {
+    console.log('id a eliminar', id)
     if (!window.confirm('¿Estás seguro de eliminar este profesor?')) return;
 
     try {
