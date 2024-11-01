@@ -9,7 +9,7 @@ import { Admin } from '../../assets/conexiones';
 const SelectField = ({ label, name, value, options, onChange }) => (
   <div className="mb-4">
     <label>{label}</label>
-    <select name={name} onChange={onChange} value={value}>
+    <select name={name} onChange={onChange} value={value} required>
       <option value="">Seleccione {label}</option>
       {options.map((option) => (
         <option key={option.id} value={option.id}>
@@ -36,24 +36,17 @@ const CrudHorarios = () => {
     horaFinal: '',
   });
 
-  // Instanciar la clase Admin
   const admin = new Admin(user.token);
 
-  // Obtener datos cuando el componente se monta
   useEffect(() => {
     const fetchDatos = async () => {
       try {
         const [horariosData, profesoresData, materiasData, cursosData] = await Promise.all([
-          admin.getAllHorarios(),
+          admin.mostrarTodosLosHorarios(),
           admin.getAllProfesores(),
-          admin.getAllMaterias(),
-          admin.listadoCursos(),
+          admin.ListadoMaterias(),
+          admin.ListadoCursos(),
         ]);
-
-        console.log('Horarios:', horariosData);
-        console.log('Profesores:', profesoresData);
-        console.log('Materias:', materiasData);
-        console.log('Cursos:', cursosData);
 
         setHorarios(horariosData);
         setProfesores(profesoresData);
@@ -66,7 +59,6 @@ const CrudHorarios = () => {
     fetchDatos();
   }, [admin]);
 
-  // Manejadores de formulario
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -76,7 +68,6 @@ const CrudHorarios = () => {
     if (campo === 'division') setDivision(e.target.value);
   };
 
-  // Enviar el formulario para agregar horario
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = {
@@ -88,7 +79,6 @@ const CrudHorarios = () => {
       const newHorario = await admin.insertarHorario(formData);
       setHorarios([...horarios, newHorario]);
       
-      // Limpiar formulario
       setForm({
         ProfesorID: '',
         MateriaID: '',
@@ -103,10 +93,9 @@ const CrudHorarios = () => {
     }
   };
 
-  // Función para eliminar un horario
   const handleDelete = async (id) => {
     try {
-      await admin.deleteHorario(id);
+      await admin.eliminarHorario(id);
       setHorarios(horarios.filter((horario) => horario.HorarioID !== id));
     } catch (error) {
       console.error('Error al eliminar horario:', error);
@@ -139,7 +128,6 @@ const CrudHorarios = () => {
 
       <h1 className="my-4">Gestión de Horarios</h1>
 
-      {/* Formulario de Horarios */}
       <form onSubmit={handleSubmit}>
         <SelectField
           label="Profesor"
@@ -157,31 +145,32 @@ const CrudHorarios = () => {
         />
         <div className="mb-4">
           <label>Año</label>
-          <select value={anio} onChange={(e) => handleCursoChange(e, 'anio')}>
-            {cursos.map((curso) => (
-              <option key={curso.CursoID} value={curso.Anio}>{curso.Anio}</option>
+          <select value={anio} onChange={(e) => handleCursoChange(e, 'anio')} required>
+            <option value="">Seleccione Año</option>
+            {[...new Set(cursos.map((curso) => curso.Anio))].map((anio) => (
+              <option key={anio} value={anio}>{anio}</option>
             ))}
           </select>
           <label>División</label>
-          <select value={division} onChange={(e) => handleCursoChange(e, 'division')}>
-            {cursos.map((curso) => (
-              <option key={curso.CursoID} value={curso.Division}>{curso.Division}</option>
+          <select value={division} onChange={(e) => handleCursoChange(e, 'division')} required>
+            <option value="">Seleccione División</option>
+            {[...new Set(cursos.map((curso) => curso.Division))].map((division) => (
+              <option key={division} value={division}>{division}</option>
             ))}
           </select>
         </div>
 
         <div className="mb-4">
           <label>Día</label>
-          <input type="text" name="Dia" value={form.Dia} onChange={handleChange} />
+          <input type="text" name="Dia" value={form.Dia} onChange={handleChange} required />
           <label>Hora Inicio</label>
-          <input type="time" name="horaInicio" value={form.horaInicio} onChange={handleChange} />
+          <input type="time" name="horaInicio" value={form.horaInicio} onChange={handleChange} required />
           <label>Hora Final</label>
-          <input type="time" name="horaFinal" value={form.horaFinal} onChange={handleChange} />
+          <input type="time" name="horaFinal" value={form.horaFinal} onChange={handleChange} required />
         </div>
         <button type="submit">Agregar Horario</button>
       </form>
 
-      {/* Tabla de Horarios */}
       <table className="table">
         <thead>
           <tr>
