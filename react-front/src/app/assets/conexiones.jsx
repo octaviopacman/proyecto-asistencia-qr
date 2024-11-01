@@ -99,65 +99,126 @@ export class Admin {
     }
 
     async getAllProfesores() {
-        const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/profesores', {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${this.token}`
+        try {
+            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/profesores', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${this.token}`
+                }
+            });
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Error en getAllProfesores:', response.status, errorText);
+                throw new Error(`Error ${response.status}: ${errorText}`);
             }
-        });
-        return await response.json();
+            return await response.json();
+        } catch (error) {
+            console.error('Error en getAllProfesores:', error);
+            throw error;
+        }
     }
 
     async getAllHorarios() {
-        const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/horarios', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`
+        try {
+            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/horarios', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.token}`
+                }
+            });
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Error en getAllHorarios:', response.status, errorText);
+                throw new Error(`Error ${response.status}: ${errorText}`);
             }
-        });
-        return await response.json();
+            return await response.json();
+        } catch (error) {
+            console.error('Error en getAllHorarios:', error);
+            throw error;
+        }
     }
 
     async getAllMaterias() {
-        const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/materias', {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${this.token}`
+        try {
+            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/materias', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${this.token}`
+                }
+            });
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Error en getAllMaterias:', response.status, errorText);
+                throw new Error(`Error ${response.status}: ${errorText}`);
             }
-        });
-        return await response.json();
+            return await response.json();
+        } catch (error) {
+            console.error('Error en getAllMaterias:', error);
+            throw error;
+        }
     }
 
     async listadoCursos() {
-        const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/listado/cursos', {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${this.token}`
+        try {
+            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/listado/cursos', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${this.token}`
+                }
+            });
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Error en listadoCursos:', response.status, errorText);
+                throw new Error(`Error ${response.status}: ${errorText}`);
             }
-        });
-        return await response.json();
+            return await response.json();
+        } catch (error) {
+            console.error('Error en listadoCursos:', error);
+            throw error;
+        }
     }
 
     async insertarHorario(horarioData) {
-        const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/insertar/horario', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`
-            },
-            body: JSON.stringify(horarioData)
-        });
-        return await response.json();
+        try {
+            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/insertar/horario', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.token}`
+                },
+                body: JSON.stringify(horarioData)
+            });
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Error en insertarHorario:', response.status, errorText);
+                throw new Error(`Error ${response.status}: ${errorText}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Error en insertarHorario:', error);
+            throw error;
+        }
     }
 
     async deleteHorario(horarioId) {
-        const response = await fetch(`https://backend-asistencia-qr.vercel.app/api/admin/horarios/${horarioId}`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${this.token}`
+        try {
+            const response = await fetch(`https://backend-asistencia-qr.vercel.app/api/admin/horarios/${horarioId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${this.token}`
+                }
+            });
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Error en deleteHorario:', response.status, errorText);
+                throw new Error(`Error ${response.status}: ${errorText}`);
             }
-        });
-        return await response.json();
+            return await response.json();
+        } catch (error) {
+            console.error('Error en deleteHorario:', error);
+            throw error;
+        }
     }
 }
+
