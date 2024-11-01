@@ -39,41 +39,19 @@ export class Dashboard {
         }
     } */
 
-    async mostrarHorarioProfesor() {
-        try {
-            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/profesor/listado/horario/profesor', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.token}`,
-                },
-                credentials: 'include'
-            });
-            const data = await response.json();
-            return data;
-        } catch (error) {
-            console.error(error);
-            throw new Error('Error al obtener horarios de profesores');
-        }
+    //Mostrar todos los horarios
+    async mostrarHorarioProfesor(horarioData) {
+        const response = await fetch(`https://backend-asistencia-qr.vercel.app/api/admin/horarios/profesor/${profesorId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            },
+            body: JSON  .stringify(horarioData)
+        });
+        return await response.json();
     }
 
-    /* async mostrarHorarioCurso() {
-        try {
-            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/profesor/listado/horario/curso', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.token}`,
-                },
-                credentials: 'include'
-            });
-            const data = await response.json();
-            return data;
-        } catch (error) {
-            console.error(error);
-            throw new Error('Error al obtener horarios de cursos');
-        }
-    } */
 }
 
 
@@ -186,6 +164,19 @@ export class Admin {
         return await response.json();
     }
 
+    //Mostrar todos los horarios
+    async getAllHorarios(horarioData) {
+        const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/horarios', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            },
+            body: JSON.stringify(horarioData)
+        });
+        return await response.json();
+    }
+
     // Insertar un horario
     async insertarHorario(horarioData) {
         const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/insertar/horario', {
@@ -198,6 +189,46 @@ export class Admin {
         });
         return await response.json();
     }
+    //Eliminar un horario
+    async deleteHorario(horarioData) {
+        const response = await fetch(`https://backend-asistencia-qr.vercel.app/api/admin/horarios/${horarioId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            },
+            body: JSON.stringify(horarioData)
+        });
+        return await response.json();
+    }
+
+
+    // Mostrar todas las materias
+    async getAllMaterias(cursoData) {
+        const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/listado/materias', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            },
+            body: JSON.stringify(cursoData)
+        });
+        return await response.json();
+    }
+
+    // Mostrar Horario por curso
+    async mostrarHorarioCurso(cursoData) {
+        const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/crear/curso', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            },
+            body: JSON.stringify(cursoData)
+        });
+        return await response.json();
+    }
+
 
     // Crear un nuevo curso
     async crearCurso(cursoData) {

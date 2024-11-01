@@ -35,8 +35,6 @@ const CrudHorarios = () => {
     horaInicio: '',
     horaFinal: '',
   });
-  const [isEditing, setIsEditing] = useState(false);
-  const [currentId, setCurrentId] = useState(null);
 
   // Instanciar la clase Admin
   const admin = new Admin(user.token);
@@ -70,7 +68,7 @@ const CrudHorarios = () => {
     if (campo === 'division') setDivision(e.target.value);
   };
 
-  // Enviar el formulario (agregar o editar horario)
+  // Enviar el formulario para agregar horario
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = {
@@ -79,15 +77,9 @@ const CrudHorarios = () => {
     };
 
     try {
-      if (isEditing) {
-        const updatedHorario = await admin.actualizarHorario(currentId, formData);
-        setHorarios((prev) => prev.map((horario) => (horario.HorarioID === currentId ? updatedHorario : horario)));
-        setIsEditing(false);
-        setCurrentId(null);
-      } else {
-        const newHorario = await admin.insertarHorario(formData);
-        setHorarios([...horarios, newHorario]);
-      }
+      const newHorario = await admin.insertarHorario(formData);
+      setHorarios([...horarios, newHorario]);
+      
       // Limpiar formulario
       setForm({
         ProfesorID: '',
@@ -99,7 +91,7 @@ const CrudHorarios = () => {
       setAnio('');
       setDivision('');
     } catch (error) {
-      console.error('Error al manejar el formulario:', error);
+      console.error('Error al agregar horario:', error);
     }
   };
 
@@ -111,22 +103,6 @@ const CrudHorarios = () => {
     } catch (error) {
       console.error('Error al eliminar horario:', error);
     }
-  };
-
-  // Función para editar un horario
-  const handleEdit = (id) => {
-    const horarioToEdit = horarios.find((horario) => horario.HorarioID === id);
-    setForm({
-      ProfesorID: horarioToEdit.ProfesorID,
-      MateriaID: horarioToEdit.MateriaID,
-      Dia: horarioToEdit.Dia,
-      horaInicio: horarioToEdit.horaInicio,
-      horaFinal: horarioToEdit.horaFinal,
-    });
-    setAnio(horarioToEdit.Anio);
-    setDivision(horarioToEdit.Division);
-    setCurrentId(id);
-    setIsEditing(true);
   };
 
   return (
@@ -194,7 +170,7 @@ const CrudHorarios = () => {
           <label>Hora Final</label>
           <input type="time" name="horaFinal" value={form.horaFinal} onChange={handleChange} />
         </div>
-        <button type="submit">{isEditing ? 'Actualizar Horario' : 'Agregar Horario'}</button>
+        <button type="submit">Agregar Horario</button>
       </form>
 
       {/* Tabla de Horarios */}
@@ -220,7 +196,6 @@ const CrudHorarios = () => {
               <td>{horario.horaInicio}</td>
               <td>{horario.horaFinal}</td>
               <td>
-                <button onClick={() => handleEdit(horario.HorarioID)}>Editar</button>
                 <button onClick={() => handleDelete(horario.HorarioID)}>Eliminar</button>
               </td>
             </tr>
