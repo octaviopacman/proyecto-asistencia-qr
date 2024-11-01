@@ -69,7 +69,6 @@ export class Sesion {
 export class Admin {
     constructor(token) {
         this.token = token;
-        this.baseUrl = 'https://backend-asistencia-qr.vercel.app/api/admin';
     }
 
     async getAllProfesores() {
