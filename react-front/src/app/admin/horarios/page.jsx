@@ -44,9 +44,9 @@ const CrudHorarios = () => {
     const fetchDatos = async () => {
       try {
         const [profesoresData, materiasData, cursosData] = await Promise.all([
-          admin.obtenerProfesores(),
-          admin.obtenerMaterias(),
-          admin.obtenerCursos(),
+          admin.getAllProfesores(), // Llamar a la función correcta
+          admin.getAllMaterias(),   // Llamar a la función correcta
+          admin.listadoCursos(),    // Llamar a la función correcta
         ]);
         setProfesores(profesoresData);
         setMaterias(materiasData);
@@ -98,7 +98,7 @@ const CrudHorarios = () => {
   // Función para eliminar un horario
   const handleDelete = async (id) => {
     try {
-      await admin.eliminarHorario(id);
+      await admin.deleteHorario(id); // Llamar a la función correcta para eliminar horario
       setHorarios(horarios.filter((horario) => horario.HorarioID !== id));
     } catch (error) {
       console.error('Error al eliminar horario:', error);

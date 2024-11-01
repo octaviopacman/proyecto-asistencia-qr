@@ -165,17 +165,17 @@ export class Admin {
     }
 
     //Mostrar todos los horarios
-    async getAllHorarios(horarioData) {
+    async getAllHorarios() {
         const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/horarios', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`
-            },
-            body: JSON.stringify(horarioData)
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.token}`
+          }
         });
         return await response.json();
-    }
+      }
+      
 
     // Insertar un horario
     async insertarHorario(horarioData) {
