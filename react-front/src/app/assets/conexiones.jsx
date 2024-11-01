@@ -219,7 +219,7 @@ export class Admin {
     // Mostrar Horario por curso
     async mostrarHorarioCurso(cursoData) {
         const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/crear/curso', {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.token}`
