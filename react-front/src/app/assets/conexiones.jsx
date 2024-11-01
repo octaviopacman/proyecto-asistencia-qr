@@ -98,7 +98,6 @@ export class Admin {
         this.token = token;
     }
 
-    // Obtener todos los profesores
     async getAllProfesores() {
         const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/profesores', {
             method: 'GET',
@@ -109,9 +108,19 @@ export class Admin {
         return await response.json();
     }
 
-    // Obtener un profesor por ID
-    async getProfesor(id) {
-        const response = await fetch(`https://backend-asistencia-qr.vercel.app/api/admin/profesores/${id}`, {
+    async getAllHorarios() {
+        const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/horarios', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            }
+        });
+        return await response.json();
+    }
+
+    async getAllMaterias() {
+        const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/materias', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${this.token}`
@@ -120,43 +129,9 @@ export class Admin {
         return await response.json();
     }
 
-    // Crear un nuevo profesor
-    async createProfesor(profesorData) {
-        const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/profesores', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`
-            },
-            body: JSON.stringify(profesorData)
-        });
-
-        if (!response.ok) {
-            const errorMessage = await response.text();
-            console.error('Error en la solicitud:', errorMessage); // Verifica el mensaje de error
-            throw new Error(`Error ${response.status}: ${errorMessage}`);
-          }
-        
-        return await response.json();
-    }
-
-    // Actualizar un profesor por ID
-    async updateProfesor(id, profesorData) {
-        const response = await fetch(`https://backend-asistencia-qr.vercel.app/api/admin/profesores/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`
-            },
-            body: JSON.stringify(profesorData)
-        });
-        return await response.json();
-    }
-
-    // Eliminar un profesor por ID
-    async deleteProfesor(id) {
-        const response = await fetch(`https://backend-asistencia-qr.vercel.app/api/admin/profesores/${id}`, {
-            method: 'DELETE',
+    async listadoCursos() {
+        const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/listado/cursos', {
+            method: 'GET',
             headers: {
                 'Authorization': `Bearer ${this.token}`
             }
@@ -164,20 +139,6 @@ export class Admin {
         return await response.json();
     }
 
-    //Mostrar todos los horarios
-    async getAllHorarios() {
-        const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/horarios', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${this.token}`
-          }
-        });
-        return await response.json();
-      }
-      
-
-    // Insertar un horario
     async insertarHorario(horarioData) {
         const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/insertar/horario', {
             method: 'POST',
@@ -189,80 +150,13 @@ export class Admin {
         });
         return await response.json();
     }
-    //Eliminar un horario
-    async deleteHorario(horarioData) {
+
+    async deleteHorario(horarioId) {
         const response = await fetch(`https://backend-asistencia-qr.vercel.app/api/admin/horarios/${horarioId}`, {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`
-            },
-            body: JSON.stringify(horarioData)
-        });
-        return await response.json();
-    }
-
-
-    // Mostrar todas las materias
-    async getAllMaterias(cursoData) {
-        const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/listado/materias', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`
-            },
-            body: JSON.stringify(cursoData)
-        });
-        return await response.json();
-    }
-
-    // Mostrar Horario por curso
-    async mostrarHorarioCurso(cursoData) {
-        const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/crear/curso', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`
-            },
-            body: JSON.stringify(cursoData)
-        });
-        return await response.json();
-    }
-
-
-    // Crear un nuevo curso
-    async crearCurso(cursoData) {
-        const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/crear/curso', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`
-            },
-            body: JSON.stringify(cursoData)
-        });
-        return await response.json();
-    }
-
-    // Obtener listado de cursos
-    async listadoCursos() {
-        const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/listado/cursos', {
-            method: 'GET',
-            headers: {
                 'Authorization': `Bearer ${this.token}`
             }
-        });
-        return await response.json();
-    }
-
-    // Insertar una materia
-    async insertarMateria(materiaData) {
-        const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/insertar/materias', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`
-            },
-            body: JSON.stringify(materiaData)
         });
         return await response.json();
     }

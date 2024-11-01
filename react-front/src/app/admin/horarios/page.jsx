@@ -1,9 +1,9 @@
-'use client'
+'use client';
 import React, { useEffect, useState } from 'react';
 import { Navbar, Nav, Dropdown } from 'react-bootstrap';
 import AdminPage from '../page';
 import { useSession } from '@/app/assets/session';
-import { Admin } from '../../assets/conexiones'; // Ajusta la ruta si es necesario
+import { Admin } from '../../assets/conexiones';
 
 // Componente auxiliar para campos de selección (select)
 const SelectField = ({ label, name, value, options, onChange }) => (
@@ -43,29 +43,28 @@ const CrudHorarios = () => {
   useEffect(() => {
     const fetchDatos = async () => {
       try {
-         const [horariosData, profesoresData, materiasData, cursosData] = await Promise.all([
-            admin.getAllHorarios(),
-            admin.getAllProfesores(),
-            admin.getAllMaterias(),
-            admin.listadoCursos(),
-         ]);
-   
-         console.log("Horarios:", horariosData);
-         console.log("Profesores:", profesoresData);
-         console.log("Materias:", materiasData);
-         console.log("Cursos:", cursosData);
-   
-         setHorarios(horariosData);
-         setProfesores(profesoresData);
-         setMaterias(materiasData);
-         setCursos(cursosData);
+        const [horariosData, profesoresData, materiasData, cursosData] = await Promise.all([
+          admin.getAllHorarios(),
+          admin.getAllProfesores(),
+          admin.getAllMaterias(),
+          admin.listadoCursos(),
+        ]);
+
+        console.log('Horarios:', horariosData);
+        console.log('Profesores:', profesoresData);
+        console.log('Materias:', materiasData);
+        console.log('Cursos:', cursosData);
+
+        setHorarios(horariosData);
+        setProfesores(profesoresData);
+        setMaterias(materiasData);
+        setCursos(cursosData);
       } catch (error) {
-         console.error("Error al obtener datos:", error);
+        console.error('Error al obtener datos:', error);
       }
-   };
-   
-  }, []);
-  console.log(getAllHorarios)
+    };
+    fetchDatos();
+  }, [admin]);
 
   // Manejadores de formulario
   const handleChange = (e) => {
@@ -107,7 +106,7 @@ const CrudHorarios = () => {
   // Función para eliminar un horario
   const handleDelete = async (id) => {
     try {
-      await admin.deleteHorario(id); // Llamar a la función correcta para eliminar horario
+      await admin.deleteHorario(id);
       setHorarios(horarios.filter((horario) => horario.HorarioID !== id));
     } catch (error) {
       console.error('Error al eliminar horario:', error);
