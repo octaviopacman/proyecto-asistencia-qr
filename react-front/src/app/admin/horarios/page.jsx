@@ -43,20 +43,23 @@ const CrudHorarios = () => {
   useEffect(() => {
     const fetchDatos = async () => {
       try {
-        const [profesoresData, materiasData, cursosData] = await Promise.all([
-          admin.getAllProfesores(), // Llamar a la función correcta
+        const [horariosData, profesoresData, materiasData, cursosData] = await Promise.all([
+          admin.getAllHorarios(), // Llamar a la función correcta
           admin.getAllMaterias(),   // Llamar a la función correcta
-          admin.listadoCursos(),    // Llamar a la función correcta
+          admin.listadoCursos(), 
+          admin.getAllProfesores(),   // Llamar a la función correcta
         ]);
         setProfesores(profesoresData);
         setMaterias(materiasData);
         setCursos(cursosData);
+        setHorarios(horariosData)
       } catch (error) {
         console.error('Error al obtener datos:', error);
       }
     };
     fetchDatos();
   }, []);
+  console.log(getAllHorarios)
 
   // Manejadores de formulario
   const handleChange = (e) => {
