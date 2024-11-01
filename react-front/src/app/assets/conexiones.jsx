@@ -71,9 +71,10 @@ export class Admin {
         this.token = token;
     }
 
+    // Profesores
     async getAllProfesores() {
         try {
-            const response = await fetch(`${this.baseUrl}/profesores`, {
+            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/profesores', {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${this.token}`
@@ -87,41 +88,96 @@ export class Admin {
         }
     }
 
-    async getAllHorarios() {
+    async getProfesor(id) {
         try {
-            const response = await fetch(`${this.baseUrl}/horarios`, {
+            const response = await fetch(`https://backend-asistencia-qr.vercel.app/api/admin/profesores/${id}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${this.token}`
                 }
             });
-            if (!response.ok) throw new Error('Error al obtener horarios');
+            if (!response.ok) throw new Error('Error al obtener el profesor');
             return await response.json();
         } catch (error) {
             console.error(error);
-            throw new Error('Error al obtener horarios');
+            throw new Error('Error al obtener el profesor');
         }
     }
 
-    async getAllMaterias() {
+    async createProfesor(profesorData) {
         try {
-            const response = await fetch(`${this.baseUrl}/materias`, {
-                method: 'GET',
+            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/profesores', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.token}`
+                },
+                body: JSON.stringify(profesorData)
+            });
+            if (!response.ok) throw new Error('Error al crear el profesor');
+            return await response.json();
+        } catch (error) {
+            console.error(error);
+            throw new Error('Error al crear el profesor');
+        }
+    }
+
+    async updateProfesor(id, profesorData) {
+        try {
+            const response = await fetch(`https://backend-asistencia-qr.vercel.app/api/admin/profesores/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.token}`
+                },
+                body: JSON.stringify(profesorData)
+            });
+            if (!response.ok) throw new Error('Error al actualizar el profesor');
+            return await response.json();
+        } catch (error) {
+            console.error(error);
+            throw new Error('Error al actualizar el profesor');
+        }
+    }
+
+    async deleteProfesor(id) {
+        try {
+            const response = await fetch(`https://backend-asistencia-qr.vercel.app/api/admin/profesores/${id}`, {
+                method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${this.token}`
                 }
             });
-            if (!response.ok) throw new Error('Error al obtener materias');
+            if (!response.ok) throw new Error('Error al eliminar el profesor');
             return await response.json();
         } catch (error) {
             console.error(error);
-            throw new Error('Error al obtener materias');
+            throw new Error('Error al eliminar el profesor');
         }
     }
 
-    async listadoCursos() {
+    // Cursos
+    async crearCurso(cursoData) {
         try {
-            const response = await fetch(`${this.baseUrl}/listado/cursos`, {
+            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/crear/curso', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.token}`
+                },
+                body: JSON.stringify(cursoData)
+            });
+            if (!response.ok) throw new Error('Error al crear el curso');
+            return await response.json();
+        } catch (error) {
+            console.error(error);
+            throw new Error('Error al crear el curso');
+        }
+    }
+
+    async ListadoCursos() {
+        try {
+            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/listado/cursos', {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${this.token}`
@@ -135,9 +191,10 @@ export class Admin {
         }
     }
 
+    // Horarios
     async insertarHorario(horarioData) {
         try {
-            const response = await fetch(`${this.baseUrl}/insertar/horario`, {
+            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/insertar/horario', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -153,9 +210,9 @@ export class Admin {
         }
     }
 
-    async deleteHorario(horarioId) {
+    async eliminarHorario(horarioId) {
         try {
-            const response = await fetch(`${this.baseUrl}/horarios/${horarioId}`, {
+            const response = await fetch(`https://backend-asistencia-qr.vercel.app/api/admin/horarios/${horarioId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${this.token}`
@@ -166,6 +223,73 @@ export class Admin {
         } catch (error) {
             console.error(error);
             throw new Error('Error al eliminar horario');
+        }
+    }
+
+    async mostrarTodosLosHorarios() {
+        try {
+            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/horarios', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${this.token}`
+                }
+            });
+            if (!response.ok) throw new Error('Error al obtener horarios');
+            return await response.json();
+        } catch (error) {
+            console.error(error);
+            throw new Error('Error al obtener horarios');
+        }
+    }
+
+    // Materias
+    async insertarMateria(materiaData) {
+        try {
+            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/insertar/materias', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.token}`
+                },
+                body: JSON.stringify(materiaData)
+            });
+            if (!response.ok) throw new Error('Error al insertar materia');
+            return await response.json();
+        } catch (error) {
+            console.error(error);
+            throw new Error('Error al insertar materia');
+        }
+    }
+
+    async eliminarMateria(materiaId) {
+        try {
+            const response = await fetch(`https://backend-asistencia-qr.vercel.app/api/admin/materias/${materiaId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${this.token}`
+                }
+            });
+            if (!response.ok) throw new Error('Error al eliminar materia');
+            return await response.json();
+        } catch (error) {
+            console.error(error);
+            throw new Error('Error al eliminar materia');
+        }
+    }
+
+    async ListadoMaterias() {
+        try {
+            const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/listado/materias', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${this.token}`
+                }
+            });
+            if (!response.ok) throw new Error('Error al obtener materias');
+            return await response.json();
+        } catch (error) {
+            console.error(error);
+            throw new Error('Error al obtener materias');
         }
     }
 }
