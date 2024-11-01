@@ -5,7 +5,6 @@ import AdminPage from '../page';
 import { useSession } from '@/app/assets/session';
 import { Admin } from '../../assets/conexiones';
 
-// Componente auxiliar para campos de selección (select)
 const SelectField = ({ label, name, value, options, onChange }) => (
   <div className="mb-4">
     <label>{label}</label>
@@ -96,7 +95,7 @@ const CrudHorarios = () => {
   const handleDelete = async (id) => {
     try {
       await admin.eliminarHorario(id);
-      setHorarios(horarios.filter((horario) => horario.HorarioID !== id));
+      setHorarios(horarios.filter((horario) => horario.horarioid !== id));
     } catch (error) {
       console.error('Error al eliminar horario:', error);
     }
@@ -133,14 +132,14 @@ const CrudHorarios = () => {
           label="Profesor"
           name="ProfesorID"
           value={form.ProfesorID}
-          options={profesores.map((p) => ({ id: p.ProfesorID, nombre: p.Nombre }))}
+          options={profesores.map((p) => ({ id: p.profesorid, nombre: p.nombre }))}
           onChange={handleChange}
         />
         <SelectField
           label="Materia"
           name="MateriaID"
           value={form.MateriaID}
-          options={materias.map((m) => ({ id: m.MateriaID, nombre: m.Nombre }))}
+          options={materias.map((m) => ({ id: m.materiaid, nombre: m.nombre }))}
           onChange={handleChange}
         />
         <div className="mb-4">
@@ -185,15 +184,15 @@ const CrudHorarios = () => {
         </thead>
         <tbody>
           {horarios.map((horario) => (
-            <tr key={horario.HorarioID}>
-              <td>{horario.ProfesorNombre}</td>
-              <td>{horario.MateriaNombre}</td>
-              <td>{`${horario.Anio} - ${horario.Division}`}</td>
-              <td>{horario.Dia}</td>
-              <td>{horario.horaInicio}</td>
-              <td>{horario.horaFinal}</td>
+            <tr key={horario.horarioid}>
+              <td>{profesores.find((p) => p.profesorid === horario.profesorid)?.nombre || 'N/A'}</td>
+              <td>{materias.find((m) => m.materiaid === horario.materiaid)?.nombre || 'N/A'}</td>
+              <td>{cursos.find((c) => c.cursoid === horario.cursoid)?.nombre || 'N/A'}</td>
+              <td>{horario.dia}</td>
+              <td>{horario.fechainicio}</td>
+              <td>{horario.fechafin}</td>
               <td>
-                <button onClick={() => handleDelete(horario.HorarioID)}>Eliminar</button>
+                <button onClick={() => handleDelete(horario.horarioid)}>Eliminar</button>
               </td>
             </tr>
           ))}
