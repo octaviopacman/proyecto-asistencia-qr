@@ -206,7 +206,7 @@ export class Admin {
     // Mostrar todas las materias
     async getAllMaterias(cursoData) {
         const response = await fetch('https://backend-asistencia-qr.vercel.app/api/admin/listado/materias', {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.token}`
