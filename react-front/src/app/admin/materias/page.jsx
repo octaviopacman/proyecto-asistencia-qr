@@ -8,7 +8,6 @@ const CrudMaterias = () => {
   const [materias, setMaterias] = useState([]);
   const [form, setForm] = useState({
     nombremateria: '',
-    Horario: '',
   });
   const [errors, setErrors] = useState([]);
   const { user } = useSession();
@@ -35,10 +34,9 @@ const CrudMaterias = () => {
 
   // Validación del formulario
   const validateForm = () => {
-    const { nombremateria, Horario } = form;
+    const { nombremateria} = form;
     const newErrors = [];
     if (!nombremateria) newErrors.push('El nombre de la materia es requerido.');
-    if (!Horario) newErrors.push('El horario es requerido.');
     if (newErrors.length > 0) {
       setErrors(newErrors);
       return false;
@@ -55,7 +53,7 @@ const CrudMaterias = () => {
     try {
       const data = await panelAdmin.insertarMateria(form);
       setMaterias((prev) => [...prev, data]);
-      setForm({ nombremateria: '', Horario: '' });
+      setForm({ nombremateria: '' });
     } catch (error) {
       console.error('Error al agregar materia:', error);
     }
@@ -105,15 +103,6 @@ const CrudMaterias = () => {
                 onChange={handleChange}
               />
             </Form.Group>
-            <Form.Group controlId="formHorario">
-              <Form.Label>Horario</Form.Label>
-              <Form.Control
-                type="text"
-                name="Horario"
-                value={form.Horario}
-                onChange={handleChange}
-              />
-            </Form.Group>
             <Button variant="primary" type="submit" className="align-self-end mt-2">
               Agregar Materia
             </Button>
@@ -127,7 +116,7 @@ const CrudMaterias = () => {
           <ListGroup className="mt-3">
             {materias.map((materia) => (
               <ListGroup.Item key={materia.materiaid} className="d-flex justify-content-between align-items-center">
-                <span>{materia.nombremateria} - {materia.Horario}</span>
+                <span>{materia.nombremateria}</span>
                 <Button variant="outline-danger" size="sm" onClick={() => handleDelete(materia.materiaid)}>
                   Eliminar
                 </Button>
