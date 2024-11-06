@@ -74,6 +74,8 @@ const CrudHorarios = () => {
       CursoID: cursos.find((curso) => curso.anio === anio && curso.division === division)?.Cursoid,
     };
 
+    console.log('Datos a enviar:', formData);
+
     try {
       const newHorario = await admin.insertarHorario(formData);
       setHorarios([...horarios, newHorario]);
