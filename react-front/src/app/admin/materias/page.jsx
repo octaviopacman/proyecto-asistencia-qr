@@ -1,6 +1,8 @@
-'use client'
+'use client';
 import React, { useEffect, useState } from 'react';
-import { Navbar, Nav, Dropdown } from 'react-bootstrap';
+import { Navbar, Nav, Form, Button, Container, Row, Col, ListGroup, Alert } from 'react-bootstrap';
+import { Admin } from '../../assets/conexiones';
+import { useSession } from '../../assets/session';
 
 const CrudMaterias = () => {
   const [materias, setMaterias] = useState([]);
@@ -8,145 +10,133 @@ const CrudMaterias = () => {
     NombreMateria: '',
     Horario: '',
   });
-
-  const apiUrl = 'https://backend-asistencia-qr.vercel.app/api/materias'; // URL de la API para las materias
+  const [errors, setErrors] = useState([]);
+  const { user } = useSession();
+  const panelAdmin = user ? new Admin(user.token) : null;
 
   // Obtener todas las materias del backend cuando el componente se monta
   useEffect(() => {
-    fetch(apiUrl)
-      .then((response) => response.json())
-      .then((data) => setMaterias(data))
-      .catch((error) => console.error('Error al obtener materias:', error));
-  }, []);
+    if (!panelAdmin) return;
+    const fetchMaterias = async () => {
+      try {
+        const datos = await panelAdmin.ListadoMaterias();
+        setMaterias(datos);
+      } catch (error) {
+        console.error("Error al obtener las materias:", error);
+      }
+    };
+    fetchMaterias();
+  }, [panelAdmin]);
 
   // Manejadores de formulario
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // Validación del formulario
+  const validateForm = () => {
+    const { NombreMateria, Horario } = form;
+    const newErrors = [];
+    if (!NombreMateria) newErrors.push('El nombre de la materia es requerido.');
+    if (!Horario) newErrors.push('El horario es requerido.');
+    if (newErrors.length > 0) {
+      setErrors(newErrors);
+      return false;
+    }
+    setErrors([]);
+    return true;
+  };
+
   // Enviar el formulario (agregar materia)
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
 
-    fetch(apiUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(form),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setMaterias([...materias, data]);
-      })
-      .catch((error) => console.error('Error al agregar materia:', error));
-
-    // Limpiar formulario
-    setForm({
-      NombreMateria: '',
-      Horario: '',
-    });
+    try {
+      const data = await panelAdmin.insertarMateria(form);
+      setMaterias((prev) => [...prev, data]);
+      setForm({ NombreMateria: '', Horario: '' });
+    } catch (error) {
+      console.error('Error al agregar materia:', error);
+    }
   };
 
   // Función para eliminar una materia
-  const handleDelete = (id) => {
-    fetch(`${apiUrl}/${id}`, {
-      method: 'DELETE',
-    })
-      .then(() => {
-        setMaterias(materias.filter((materia) => materia.MateriaID !== id));
-      })
-      .catch((error) => console.error('Error al eliminar materia:', error));
+  const handleDelete = async (id) => {
+    if (!window.confirm('¿Estás seguro de eliminar esta materia?')) return;
+
+    try {
+      await panelAdmin.eliminarMateria(id);
+      setMaterias((prev) => prev.filter((materia) => materia.MateriaID !== id));
+    } catch (error) {
+      console.error('Error al eliminar materia:', error);
+    }
   };
 
   return (
-    <div className="container">
-      <Navbar bg="dark" data-bs-theme="dark">
-        <Nav.Link><img src=".." alt='App Icon' height={100} /></Nav.Link>
-        <Navbar.Brand href="/dashboard">Menú de Asistencias</Navbar.Brand>
-        <Nav className="me-auto">
-          <Nav.Link href='/dashboard/asistencias'>Asistencias</Nav.Link>
-          <Nav.Link href="/dashboard/materias">Materias</Nav.Link>
-          <Nav.Link href="/dashboard/preceptores">Preceptores</Nav.Link>
-        </Nav>
-        <Nav>
-          <Dropdown drop='start'>
-            <Dropdown.Toggle>
-              Administración
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              {/* Inserta componente de administración si es necesario */}
-            </Dropdown.Menu>
-          </Dropdown>
-        </Nav>
+    <Container>
+      <Navbar bg="dark" variant="dark" className="mb-4">
+        <Container>
+          <Navbar.Brand>Panel de Administración</Navbar.Brand>
+          <Nav className="me-auto">
+            <Nav.Link href="#home">Inicio</Nav.Link>
+          </Nav>
+        </Container>
       </Navbar>
 
-      <h1 className="my-4">Gestión de Materias</h1>
+      <Row>
+        <Col md={12} className="mb-4">
+          {errors.length > 0 && (
+            <Alert variant="danger">
+              <ul>
+                {errors.map((error, index) => (
+                  <li key={index}>{error}</li>
+                ))}
+              </ul>
+            </Alert>
+          )}
+          <Form onSubmit={handleSubmit} className="d-flex flex-wrap gap-3">
+            <Form.Group controlId="formNombreMateria">
+              <Form.Label>Nombre de la Materia</Form.Label>
+              <Form.Control
+                type="text"
+                name="NombreMateria"
+                value={form.NombreMateria}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="formHorario">
+              <Form.Label>Horario</Form.Label>
+              <Form.Control
+                type="text"
+                name="Horario"
+                value={form.Horario}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Button variant="primary" type="submit" className="align-self-end mt-2">
+              Agregar Materia
+            </Button>
+          </Form>
+        </Col>
+      </Row>
 
-      {/* Formulario */}
-      <form onSubmit={handleSubmit}>
-        <div className="row mb-3">
-          <div className="col-md-6">
-            <label>Nombre de la Materia</label>
-            <input
-              type="text"
-              name="NombreMateria"
-              className="form-control"
-              value={form.NombreMateria}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="col-md-6">
-            <label>Horario</label>
-            <input
-              type="text"
-              name="Horario"
-              className="form-control"
-              value={form.Horario}
-              onChange={handleChange}
-              required
-            />
-          </div>
-        </div>
-
-        <button type="submit" className="btn btn-primary">
-          Agregar Materia
-        </button>
-      </form>
-
-      {/* Lista de Materias */}
-      <h2 className="my-4">Lista de Materias</h2>
-      {materias.length === 0 ? (
-        <p>No hay materias registradas.</p>
-      ) : (
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Horario</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
+      <Row>
+        <Col md={10} className="mx-auto">
+          <h4 className="text-center">Listado de Materias</h4>
+          <ListGroup className="mt-3">
             {materias.map((materia) => (
-              <tr key={materia.MateriaID}>
-                <td>{materia.NombreMateria}</td>
-                <td>{materia.Horario}</td>
-                <td>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => handleDelete(materia.MateriaID)}
-                  >
-                    Eliminar
-                  </button>
-                </td>
-              </tr>
+              <ListGroup.Item key={materia.MateriaID} className="d-flex justify-content-between align-items-center">
+                <span>{materia.NombreMateria} - {materia.Horario}</span>
+                <Button variant="outline-danger" size="sm" onClick={() => handleDelete(materia.MateriaID)}>
+                  Eliminar
+                </Button>
+              </ListGroup.Item>
             ))}
-          </tbody>
-        </table>
-      )}
-    </div>
+          </ListGroup>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
