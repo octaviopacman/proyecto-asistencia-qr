@@ -253,10 +253,15 @@ export class Admin {
                 },
                 body: JSON.stringify(materiaData)
             });
-            if (!response.ok) throw new Error('Error al insertar materia');
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error("Detalles del error del servidor:", errorText);
+                throw new Error('Error al insertar materia');
+            }
+            
             return await response.json();
         } catch (error) {
-            console.error(error);
+            console.error("Error en insertarMateria:", error);
             throw new Error('Error al insertar materia');
         }
     }

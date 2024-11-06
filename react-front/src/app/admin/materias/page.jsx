@@ -50,14 +50,20 @@ const CrudMaterias = () => {
     e.preventDefault();
     if (!validateForm()) return;
 
+    // Imprime los datos del formulario y el token
+    console.log("Datos del formulario enviados:", form);
+    console.log("Token de usuario:", user ? user.token : "Token no disponible");
+
     try {
-      const data = await panelAdmin.insertarMateria(form);
-      setMaterias((prev) => [...prev, data]);
-      setForm({ nombremateria: '' });
+        console.log("Llamando a insertarMateria con:", form);  // Justo antes de la llamada
+        const data = await panelAdmin.insertarMateria(form);
+        console.log("Respuesta del servidor al agregar materia:", data);  // Para ver la respuesta
+        setMaterias((prev) => [...prev, data]);
+        setForm({ nombremateria: '' });
     } catch (error) {
-      console.error('Error al agregar materia:', error);
+        console.error("Error al agregar materia:", error);  // Imprime el error detallado
     }
-  };
+};
 
   // Función para eliminar una materia
   const handleDelete = async (id) => {
