@@ -71,7 +71,7 @@ const CrudHorarios = () => {
     e.preventDefault();
     const formData = {
       ...form,
-      CursoID: cursos.find((curso) => curso.Anio === anio && curso.Division === division)?.CursoID,
+      CursoID: cursos.find((curso) => curso.anio === anio && curso.division === division)?.Cursoid,
     };
 
     try {
