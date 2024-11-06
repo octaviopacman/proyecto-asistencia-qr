@@ -69,20 +69,23 @@ const CrudHorarios = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
+    // Buscar el curso que coincide con `anio` y `division`
     const curso = cursos.find((curso) => curso.anio === anio && curso.division === division);
+    
     if (!curso) {
+      // Si no se encuentra un curso que coincida, muestra un error
       setErrors(["El curso seleccionado no es válido. Por favor, elige un año y división correctos."]);
       return;
     }
-
+  
     const formData = {
       ...form,
-      CursoID: curso.cursoid,
+      CursoID: curso.cursoid,  // Asegurarse de enviar `cursoid` como `CursoID`
     };
-
+  
     console.log('Datos a enviar:', formData);
-
+  
     try {
       const newHorario = await admin.insertarHorario(formData);
       setHorarios([...horarios, newHorario]);
@@ -99,6 +102,7 @@ const CrudHorarios = () => {
       console.error('Error al agregar horario:', error);
     }
   };
+  
 
   const handleDelete = async (id) => {
     if (!window.confirm('¿Estás seguro de eliminar este horario?')) return;
