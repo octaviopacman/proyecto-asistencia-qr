@@ -254,15 +254,15 @@ export class Admin {
                 body: JSON.stringify(materiaData)
             });
             if (!response.ok) {
-                const errorText = await response.text();
-                console.error("Detalles del error del servidor:", errorText);
-                throw new Error('Error al insertar materia');
+                const errorText = await response.text();  // Obtener detalles del error desde el servidor
+                console.error("Detalles del error del servidor:", errorText);  // Registrar detalles
+                throw new Error('Error al insertar horario');
             }
             
             return await response.json();
         } catch (error) {
-            console.error("Error en insertarMateria:", error);
-            throw new Error('Error al insertar materia');
+            console.error("Error en insertarHorario:", error);
+            throw new Error('Error al insertar horario');
         }
     }
 
