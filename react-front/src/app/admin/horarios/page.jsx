@@ -164,7 +164,7 @@ const CrudHorarios = () => {
           <span>
             {`${profesores.find((p) => p.profesorid === horario.profesorid)?.nombre || 'N/A'} - 
             ${materias.find((m) => m.materiaid === horario.materiaid)?.nombremateria || 'N/A'} - 
-            ${cursos.find((c) => c.cursoid === horario.cursoid)?.Anio || ''} ${cursos.find((c) => c.cursoid === horario.cursoid)?.Division || ''} - 
+            ${cursos.find((c) => c.cursoid === horario.cursoid)?.anio || ''} ${cursos.find((c) => c.cursoid === horario.cursoid)?.division || ''} - 
             Día: ${horario.dia} - Hora Inicio: ${horario.horainicio} - Hora Final: ${horario.horafinal}`}
           </span>
           <div>
