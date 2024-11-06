@@ -68,8 +68,10 @@ const CrudHorarios = () => {
     console.log('Lista de cursos:', cursos);
     e.preventDefault();
 
-    const curso = cursos.find((curso) => curso.anio === anio && curso.division === division);
-    
+    const curso = cursos.find(
+      (curso) => String(curso.anio) === String(anio) && String(curso.division) === String(division)
+    );
+        
     if (!curso) {
       setErrors(["El curso seleccionado no es válido. Por favor, elige un año y división correctos."]);
       return;
