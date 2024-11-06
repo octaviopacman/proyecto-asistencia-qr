@@ -63,6 +63,9 @@ const CrudHorarios = () => {
   };
 
   const handleSubmit = async (e) => {
+    console.log('Año seleccionado:', anio);
+    console.log('División seleccionada:', division);
+    console.log('Lista de cursos:', cursos);
     e.preventDefault();
 
     const curso = cursos.find((curso) => curso.anio === anio && curso.division === division);
