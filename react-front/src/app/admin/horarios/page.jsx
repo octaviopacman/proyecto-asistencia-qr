@@ -1,22 +1,22 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { Navbar, Nav, Dropdown } from 'react-bootstrap';
+import { Navbar, Nav, Dropdown, Form, Button, Container, Row, Col, ListGroup, Alert } from 'react-bootstrap';
 import AdminPage from '../page';
 import { useSession } from '@/app/assets/session';
 import { Admin } from '../../assets/conexiones';
 
 const SelectField = ({ label, name, value, options, onChange }) => (
-  <div className="mb-4">
-    <label>{label}</label>
-    <select name={name} onChange={onChange} value={value} required>
+  <Form.Group className="mb-3">
+    <Form.Label>{label}</Form.Label>
+    <Form.Control as="select" name={name} onChange={onChange} value={value} required>
       <option value="">Seleccione {label}</option>
       {options.map((option) => (
         <option key={option.id} value={option.id}>
           {option.nombre}
         </option>
       ))}
-    </select>
-  </div>
+    </Form.Control>
+  </Form.Group>
 );
 
 const CrudHorarios = () => {
@@ -34,7 +34,7 @@ const CrudHorarios = () => {
     horaInicio: '',
     horaFinal: '',
   });
-
+  const [errors, setErrors] = useState([]);
   const admin = new Admin(user.token);
 
   useEffect(() => {
@@ -77,7 +77,6 @@ const CrudHorarios = () => {
     try {
       const newHorario = await admin.insertarHorario(formData);
       setHorarios([...horarios, newHorario]);
-      
       setForm({
         ProfesorID: '',
         MateriaID: '',
@@ -93,6 +92,8 @@ const CrudHorarios = () => {
   };
 
   const handleDelete = async (id) => {
+    if (!window.confirm('¿Estás seguro de eliminar este horario?')) return;
+
     try {
       await admin.eliminarHorario(id);
       setHorarios(horarios.filter((horario) => horario.horarioid !== id));
@@ -102,103 +103,73 @@ const CrudHorarios = () => {
   };
 
   return (
-    <div className="container">
-      <Navbar bg="dark" data-bs-theme="dark">
-        <Nav.Link>
-          <img src="" alt='App Icon' height={100} />
-        </Nav.Link>
-        <Navbar.Brand href="/dashboard">Menú de Asistencias</Navbar.Brand>
-        <Nav className="me-auto">
-          <Nav.Link href='/dashboard/asistencias'>Asistencias</Nav.Link>
-          <Nav.Link href="/dashboard/materias">Materias</Nav.Link>
-          <Nav.Link href="/dashboard/preceptores">Preceptores</Nav.Link>
-        </Nav>
-        <Nav>
-          <Dropdown drop='start'>
-            <Dropdown.Toggle>
-              Administración
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <AdminPage />
-            </Dropdown.Menu>
-          </Dropdown>
-        </Nav>
+    <Container>
+      <Navbar bg="dark" variant="dark" className="mb-4">
+        <Container>
+          <Navbar.Brand>Menú de Asistencias</Navbar.Brand>
+          <Nav className="me-auto">
+            <Nav.Link href="/dashboard/asistencias">Asistencias</Nav.Link>
+            <Nav.Link href="/dashboard/materias">Materias</Nav.Link>
+            <Nav.Link href="/dashboard/preceptores">Preceptores</Nav.Link>
+          </Nav>
+          <Nav>
+            <Dropdown drop="start">
+              <Dropdown.Toggle>Administración</Dropdown.Toggle>
+              <Dropdown.Menu>
+                <AdminPage />
+              </Dropdown.Menu>
+            </Dropdown>
+          </Nav>
+        </Container>
       </Navbar>
 
-      <h1 className="my-4">Gestión de Horarios</h1>
+      <Row>
+        <Col md={12} className="mb-4">
+          {errors.length > 0 && (
+            <Alert variant="danger">
+              <ul>
+                {errors.map((error, index) => (
+                  <li key={index}>{error}</li>
+                ))}
+              </ul>
+            </Alert>
+          )}
+          <Form onSubmit={handleSubmit} className="d-flex flex-wrap gap-3">
+            <SelectField label="Profesor" name="ProfesorID" value={form.ProfesorID} options={profesores.map((p) => ({ id: p.profesorid, nombre: p.nombre }))} onChange={handleChange} />
+            <SelectField label="Materia" name="MateriaID" value={form.MateriaID} options={materias.map((m) => ({ id: m.materiaid, nombre: m.nombre }))} onChange={handleChange} />
+            <Form.Group controlId="formDia">
+              <Form.Label>Día</Form.Label>
+              <Form.Control type="text" name="Dia" value={form.Dia} onChange={handleChange} />
+            </Form.Group>
+            <Form.Group controlId="formHoraInicio">
+              <Form.Label>Hora Inicio</Form.Label>
+              <Form.Control type="time" name="horaInicio" value={form.horaInicio} onChange={handleChange} />
+            </Form.Group>
+            <Form.Group controlId="formHoraFinal">
+              <Form.Label>Hora Final</Form.Label>
+              <Form.Control type="time" name="horaFinal" value={form.horaFinal} onChange={handleChange} />
+            </Form.Group>
+            <Button variant="primary" type="submit" className="align-self-end mt-2">Agregar Horario</Button>
+          </Form>
+        </Col>
+      </Row>
 
-      <form onSubmit={handleSubmit}>
-        <SelectField
-          label="Profesor"
-          name="ProfesorID"
-          value={form.ProfesorID}
-          options={profesores.map((p) => ({ id: p.profesorid, nombre: p.nombre }))}
-          onChange={handleChange}
-        />
-        <SelectField
-          label="Materia"
-          name="MateriaID"
-          value={form.MateriaID}
-          options={materias.map((m) => ({ id: m.materiaid, nombre: m.nombre }))}
-          onChange={handleChange}
-        />
-        <div className="mb-4">
-          <label>Año</label>
-          <select value={anio} onChange={(e) => handleCursoChange(e, 'anio')} required>
-            <option value="">Seleccione Año</option>
-            {[...new Set(cursos.map((curso) => curso.Anio))].map((anio) => (
-              <option key={anio} value={anio}>{anio}</option>
+      <Row>
+        <Col md={10} className="mx-auto">
+          <h4 className="text-center">Listado de Horarios</h4>
+          <ListGroup className="mt-3">
+            {horarios.map((horario) => (
+              <ListGroup.Item key={horario.horarioid} className="d-flex justify-content-between align-items-center">
+                <span>{`${profesores.find((p) => p.profesorid === horario.profesorid)?.nombre || 'N/A'} - ${materias.find((m) => m.materiaid === horario.materiaid)?.nombre || 'N/A'} - ${horario.dia}`}</span>
+                <div>
+                  <Button variant="outline-danger" size="sm" onClick={() => handleDelete(horario.horarioid)}>Eliminar</Button>
+                </div>
+              </ListGroup.Item>
             ))}
-          </select>
-          <label>División</label>
-          <select value={division} onChange={(e) => handleCursoChange(e, 'division')} required>
-            <option value="">Seleccione División</option>
-            {[...new Set(cursos.map((curso) => curso.Division))].map((division) => (
-              <option key={division} value={division}>{division}</option>
-            ))}
-          </select>
-        </div>
-
-        <div className="mb-4">
-          <label>Día</label>
-          <input type="text" name="Dia" value={form.Dia} onChange={handleChange} required />
-          <label>Hora Inicio</label>
-          <input type="time" name="horaInicio" value={form.horaInicio} onChange={handleChange} required />
-          <label>Hora Final</label>
-          <input type="time" name="horaFinal" value={form.horaFinal} onChange={handleChange} required />
-        </div>
-        <button type="submit">Agregar Horario</button>
-      </form>
-
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Profesor</th>
-            <th>Materia</th>
-            <th>Curso</th>
-            <th>Día</th>
-            <th>Hora Inicio</th>
-            <th>Hora Fin</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {horarios.map((horario) => (
-            <tr key={horario.horarioid}>
-              <td>{profesores.find((p) => p.profesorid === horario.profesorid)?.nombre || 'N/A'}</td>
-              <td>{materias.find((m) => m.materiaid === horario.materiaid)?.nombre || 'N/A'}</td>
-              <td>{cursos.find((c) => c.cursoid === horario.cursoid)?.nombre || 'N/A'}</td>
-              <td>{horario.dia}</td>
-              <td>{horario.fechainicio}</td>
-              <td>{horario.fechafin}</td>
-              <td>
-                <button onClick={() => handleDelete(horario.horarioid)}>Eliminar</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </ListGroup>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
