@@ -7,7 +7,7 @@ import { useSession } from '../../assets/session';
 const CrudMaterias = () => {
   const [materias, setMaterias] = useState([]);
   const [form, setForm] = useState({
-    NombreMateria: '',
+    nombremateria: '',
     Horario: '',
   });
   const [errors, setErrors] = useState([]);
@@ -35,9 +35,9 @@ const CrudMaterias = () => {
 
   // Validación del formulario
   const validateForm = () => {
-    const { NombreMateria, Horario } = form;
+    const { nombremateria, Horario } = form;
     const newErrors = [];
-    if (!NombreMateria) newErrors.push('El nombre de la materia es requerido.');
+    if (!nombremateria) newErrors.push('El nombre de la materia es requerido.');
     if (!Horario) newErrors.push('El horario es requerido.');
     if (newErrors.length > 0) {
       setErrors(newErrors);
@@ -55,7 +55,7 @@ const CrudMaterias = () => {
     try {
       const data = await panelAdmin.insertarMateria(form);
       setMaterias((prev) => [...prev, data]);
-      setForm({ NombreMateria: '', Horario: '' });
+      setForm({ nombremateria: '', Horario: '' });
     } catch (error) {
       console.error('Error al agregar materia:', error);
     }
@@ -67,7 +67,7 @@ const CrudMaterias = () => {
 
     try {
       await panelAdmin.eliminarMateria(id);
-      setMaterias((prev) => prev.filter((materia) => materia.MateriaID !== id));
+      setMaterias((prev) => prev.filter((materia) => materia.materiaid !== id));
     } catch (error) {
       console.error('Error al eliminar materia:', error);
     }
@@ -96,12 +96,12 @@ const CrudMaterias = () => {
             </Alert>
           )}
           <Form onSubmit={handleSubmit} className="d-flex flex-wrap gap-3">
-            <Form.Group controlId="formNombreMateria">
+            <Form.Group controlId="formnombremateria">
               <Form.Label>Nombre de la Materia</Form.Label>
               <Form.Control
                 type="text"
-                name="NombreMateria"
-                value={form.NombreMateria}
+                name="nombremateria"
+                value={form.nombremateria}
                 onChange={handleChange}
               />
             </Form.Group>
@@ -126,9 +126,9 @@ const CrudMaterias = () => {
           <h4 className="text-center">Listado de Materias</h4>
           <ListGroup className="mt-3">
             {materias.map((materia) => (
-              <ListGroup.Item key={materia.MateriaID} className="d-flex justify-content-between align-items-center">
-                <span>{materia.NombreMateria} - {materia.Horario}</span>
-                <Button variant="outline-danger" size="sm" onClick={() => handleDelete(materia.MateriaID)}>
+              <ListGroup.Item key={materia.materiaid} className="d-flex justify-content-between align-items-center">
+                <span>{materia.nombremateria} - {materia.Horario}</span>
+                <Button variant="outline-danger" size="sm" onClick={() => handleDelete(materia.materiaid)}>
                   Eliminar
                 </Button>
               </ListGroup.Item>
