@@ -137,17 +137,18 @@ const CrudHorarios = () => {
           <Form onSubmit={handleSubmit} className="d-flex flex-wrap gap-3">
             <SelectField label="Profesor" name="ProfesorID" value={form.ProfesorID} options={profesores.map((p) => ({ id: p.profesorid, nombre: p.nombre }))} onChange={handleChange} />
             <SelectField label="Materia" name="MateriaID" value={form.MateriaID} options={materias.map((m) => ({ id: m.materiaid, nombre: m.nombremateria }))} onChange={handleChange} />
+            <SelectField label="Curso" name="CursoID" value={form.CursoID} options={cursos.map((c) => ({ id: c.cursoid, nombre: `${c.Anio} - ${c.Division}` }))} onChange={handleChange}/>
             <Form.Group controlId="formDia">
               <Form.Label>Día</Form.Label>
               <Form.Control type="text" name="Dia" value={form.Dia} onChange={handleChange} />
             </Form.Group>
             <Form.Group controlId="formHoraInicio">
               <Form.Label>Hora Inicio</Form.Label>
-              <Form.Control type="time" name="horaInicio" value={form.horaInicio} onChange={handleChange} />
+              <Form.Control type="time" name="horaInicio" value={form.horainicio} onChange={handleChange} />
             </Form.Group>
             <Form.Group controlId="formHoraFinal">
               <Form.Label>Hora Final</Form.Label>
-              <Form.Control type="time" name="horaFinal" value={form.horaFinal} onChange={handleChange} />
+              <Form.Control type="time" name="horaFinal" value={form.horafinal} onChange={handleChange} />
             </Form.Group>
             <Button variant="primary" type="submit" className="align-self-end mt-2">Agregar Horario</Button>
           </Form>
@@ -155,20 +156,26 @@ const CrudHorarios = () => {
       </Row>
 
       <Row>
-        <Col md={10} className="mx-auto">
-          <h4 className="text-center">Listado de Horarios</h4>
-          <ListGroup className="mt-3">
-            {horarios.map((horario) => (
-              <ListGroup.Item key={horario.horarioid} className="d-flex justify-content-between align-items-center">
-                <span>{`${profesores.find((p) => p.profesorid === horario.profesorid)?.nombre || 'N/A'} - ${materias.find((m) => m.materiaid === horario.materiaid)?.nombre || 'N/A'} - ${horario.dia}`}</span>
-                <div>
-                  <Button variant="outline-danger" size="sm" onClick={() => handleDelete(horario.horarioid)}>Eliminar</Button>
-                </div>
-              </ListGroup.Item>
-            ))}
-          </ListGroup>
-        </Col>
-      </Row>
+  <Col md={10} className="mx-auto">
+    <h4 className="text-center">Listado de Horarios</h4>
+    <ListGroup className="mt-3">
+      {horarios.map((horario) => (
+        <ListGroup.Item key={horario.horarioid} className="d-flex justify-content-between align-items-center">
+          <span>
+            {`${profesores.find((p) => p.profesorid === horario.profesorid)?.nombre || 'N/A'} - 
+            ${materias.find((m) => m.materiaid === horario.materiaid)?.nombremateria || 'N/A'} - 
+            ${cursos.find((c) => c.cursoid === horario.cursoid)?.Anio || ''} ${cursos.find((c) => c.cursoid === horario.cursoid)?.Division || ''} - 
+            Día: ${horario.dia} - Hora Inicio: ${horario.horainicio} - Hora Final: ${horario.horafinal}`}
+          </span>
+          <div>
+            <Button variant="outline-danger" size="sm" onClick={() => handleDelete(horario.horarioid)}>Eliminar</Button>
+          </div>
+        </ListGroup.Item>
+      ))}
+    </ListGroup>
+  </Col>
+</Row>
+
     </Container>
   );
 };
