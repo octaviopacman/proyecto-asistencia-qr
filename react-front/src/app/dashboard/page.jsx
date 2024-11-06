@@ -25,7 +25,7 @@ function Admin() {
         const fetchData = async () => {
             try {
                 const asistencias = await dashboard.contarAsistencias();
-                const horarioProfesor = await dashboard.mostrarHorarioProfesor(user.profesorId); // Usa el ID del profesor actual
+                const horarioProfesor = await dashboard.mostrarHorarioProfesor();
 
                 const resultados = {
                     asistencias: asistencias || {},

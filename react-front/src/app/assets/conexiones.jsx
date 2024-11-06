@@ -21,9 +21,9 @@ export class Dashboard {
         }
     }
 
-    async mostrarHorarioProfesor(profesorId) {
+    async mostrarHorarioProfesor() {
         try {
-            const response = await fetch(`${this.baseUrl}/admin/horarios/profesor/${profesorId}`, {
+            const response = await fetch(`${this.baseUrl}/profesor/listado/horario/profesor/`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
