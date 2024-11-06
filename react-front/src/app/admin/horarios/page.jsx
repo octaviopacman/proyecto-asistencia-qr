@@ -69,9 +69,16 @@ const CrudHorarios = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const curso = cursos.find((curso) => curso.anio === anio && curso.division === division);
+    if (!curso) {
+      setErrors(["El curso seleccionado no es válido. Por favor, elige un año y división correctos."]);
+      return;
+    }
+
     const formData = {
       ...form,
-      CursoID: cursos.find((curso) => curso.anio === anio && curso.division === division)?.cursoid,
+      CursoID: curso.cursoid,
     };
 
     console.log('Datos a enviar:', formData);
