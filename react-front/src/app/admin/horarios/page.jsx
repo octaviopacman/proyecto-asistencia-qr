@@ -62,30 +62,21 @@ const CrudHorarios = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleCursoChange = (e, campo) => {
-    if (campo === 'anio') setAnio(e.target.value);
-    if (campo === 'division') setDivision(e.target.value);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    // Buscar el curso que coincide con `anio` y `division`
+
     const curso = cursos.find((curso) => curso.anio === anio && curso.division === division);
     
     if (!curso) {
-      // Si no se encuentra un curso que coincida, muestra un error
       setErrors(["El curso seleccionado no es válido. Por favor, elige un año y división correctos."]);
       return;
     }
-  
+
     const formData = {
       ...form,
-      CursoID: curso.cursoid,  // Asegurarse de enviar `cursoid` como `CursoID`
+      CursoID: curso.cursoid,
     };
-  
-    console.log('Datos a enviar:', formData);
-  
+
     try {
       const newHorario = await admin.insertarHorario(formData);
       setHorarios([...horarios, newHorario]);
@@ -102,7 +93,6 @@ const CrudHorarios = () => {
       console.error('Error al agregar horario:', error);
     }
   };
-  
 
   const handleDelete = async (id) => {
     if (!window.confirm('¿Estás seguro de eliminar este horario?')) return;
@@ -150,18 +140,35 @@ const CrudHorarios = () => {
           <Form onSubmit={handleSubmit} className="d-flex flex-wrap gap-3">
             <SelectField label="Profesor" name="ProfesorID" value={form.ProfesorID} options={profesores.map((p) => ({ id: p.profesorid, nombre: p.nombre }))} onChange={handleChange} />
             <SelectField label="Materia" name="MateriaID" value={form.MateriaID} options={materias.map((m) => ({ id: m.materiaid, nombre: m.nombremateria }))} onChange={handleChange} />
-            <SelectField label="Curso" name="CursoID" value={form.CursoID} options={cursos.map((c) => ({ id: c.cursoid, nombre: `${c.anio} - ${c.division}` }))} onChange={handleChange}/>
+            <Form.Group controlId="formAnio">
+              <Form.Label>Año</Form.Label>
+              <Form.Control as="select" value={anio} onChange={(e) => setAnio(e.target.value)} required>
+                <option value="">Seleccione Año</option>
+                {[...new Set(cursos.map((curso) => curso.anio))].map((anio) => (
+                  <option key={anio} value={anio}>{anio}</option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+            <Form.Group controlId="formDivision">
+              <Form.Label>División</Form.Label>
+              <Form.Control as="select" value={division} onChange={(e) => setDivision(e.target.value)} required>
+                <option value="">Seleccione División</option>
+                {[...new Set(cursos.map((curso) => curso.division))].map((division) => (
+                  <option key={division} value={division}>{division}</option>
+                ))}
+              </Form.Control>
+            </Form.Group>
             <Form.Group controlId="formDia">
               <Form.Label>Día</Form.Label>
               <Form.Control type="text" name="Dia" value={form.Dia} onChange={handleChange} />
             </Form.Group>
             <Form.Group controlId="formHoraInicio">
               <Form.Label>Hora Inicio</Form.Label>
-              <Form.Control type="time" name="horaInicio" value={form.horainicio} onChange={handleChange} />
+              <Form.Control type="time" name="horaInicio" value={form.horaInicio} onChange={handleChange} />
             </Form.Group>
             <Form.Group controlId="formHoraFinal">
               <Form.Label>Hora Final</Form.Label>
-              <Form.Control type="time" name="horaFinal" value={form.horafinal} onChange={handleChange} />
+              <Form.Control type="time" name="horaFinal" value={form.horaFinal} onChange={handleChange} />
             </Form.Group>
             <Button variant="primary" type="submit" className="align-self-end mt-2">Agregar Horario</Button>
           </Form>
@@ -169,26 +176,25 @@ const CrudHorarios = () => {
       </Row>
 
       <Row>
-  <Col md={10} className="mx-auto">
-    <h4 className="text-center">Listado de Horarios</h4>
-    <ListGroup className="mt-3">
-      {horarios.map((horario) => (
-        <ListGroup.Item key={horario.horarioid} className="d-flex justify-content-between align-items-center">
-          <span>
-            {`${profesores.find((p) => p.profesorid === horario.profesorid)?.nombre || 'N/A'} - 
-            ${materias.find((m) => m.materiaid === horario.materiaid)?.nombremateria || 'N/A'} - 
-            ${cursos.find((c) => c.cursoid === horario.cursoid)?.anio || ''} ${cursos.find((c) => c.cursoid === horario.cursoid)?.division || ''} - 
-            Día: ${horario.dia} - Hora Inicio: ${horario.horainicio} - Hora Final: ${horario.horafinal}`}
-          </span>
-          <div>
-            <Button variant="outline-danger" size="sm" onClick={() => handleDelete(horario.horarioid)}>Eliminar</Button>
-          </div>
-        </ListGroup.Item>
-      ))}
-    </ListGroup>
-  </Col>
-</Row>
-
+        <Col md={10} className="mx-auto">
+          <h4 className="text-center">Listado de Horarios</h4>
+          <ListGroup className="mt-3">
+            {horarios.map((horario) => (
+              <ListGroup.Item key={horario.horarioid} className="d-flex justify-content-between align-items-center">
+                <span>
+                  {`${profesores.find((p) => p.profesorid === horario.profesorid)?.nombre || 'N/A'} - 
+                  ${materias.find((m) => m.materiaid === horario.materiaid)?.nombremateria || 'N/A'} - 
+                  ${cursos.find((c) => c.cursoid === horario.cursoid)?.anio || ''} ${cursos.find((c) => c.cursoid === horario.cursoid)?.division || ''} - 
+                  Día: ${horario.dia} - Hora Inicio: ${horario.horainicio} - Hora Final: ${horario.horafinal}`}
+                </span>
+                <div>
+                  <Button variant="outline-danger" size="sm" onClick={() => handleDelete(horario.horarioid)}>Eliminar</Button>
+                </div>
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+        </Col>
+      </Row>
     </Container>
   );
 };
