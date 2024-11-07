@@ -19,6 +19,12 @@ function Admin() {
     const { user } = useSession();
     const router = useRouter();
 
+    // Verifica que el token esté disponible
+    if (!user || !user.token) {
+        router.push("/login");
+        return null;
+    }
+
     const dashboard = new Dashboard(user.token);
 
     // Fetch data on component mount
@@ -35,15 +41,21 @@ function Admin() {
 
                 setData(resultados);
             } catch (error) {
-                console.error("Error al obtener los datos del dashboard:", error);
-                setError("Hubo un problema al cargar los datos.");
+                if (error.response && error.response.status === 403) {
+                    console.error("Error 403: Acceso denegado");
+                    setError("No tienes permiso para acceder a estos datos. Redirigiendo a inicio de sesión...");
+                    router.push("/login");
+                } else {
+                    console.error("Error al obtener los datos del dashboard:", error);
+                    setError("Hubo un problema al cargar los datos.");
+                }
             } finally {
                 setLoading(false);
             }
         };
 
         fetchData();
-    }, [dashboard]);
+    }, [dashboard, router]);
 
     if (loading) {
         return <p>Cargando datos...</p>;
