@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { Dashboard } from '../assets/conexiones';
 import { useSession } from "../assets/session";
 import AdminPage from "../admin/page";
-import { useSession } from '../assets/session';
+
 
 function Admin() {
     const {user,login,logout} = useSession();
@@ -78,13 +78,16 @@ function Admin() {
                         <Nav.Link href="/dashboard/materias">Materias</Nav.Link>
                         <Nav.Link href="/dashboard/preceptores">Preceptores</Nav.Link>
                     </Nav>
-                    <Nav><Button onClick={() => logout}></Button></Nav>
+                    
                     <Dropdown align="end">
                         <Dropdown.Toggle variant="secondary">Administración</Dropdown.Toggle>
                         <Dropdown.Menu>
                             <AdminPage />
                         </Dropdown.Menu>
                     </Dropdown>
+                    <Nav>
+                        <Button color='danger' onClick={() => logout}>Cerrar Sesion</Button>
+                    </Nav>
                 </Container>
             </Navbar>
 
