@@ -92,7 +92,7 @@ function Admin() {
                         </Dropdown.Menu>
                     </Dropdown>
                     <Nav>
-                        <Button color='danger' onClick={() => logout}>Cerrar Sesion</Button>
+                        <Button color='danger' onClick={() => logOut()}>Cerrar Sesion</Button>
                     </Nav>
                 </Container>
             </Navbar>
