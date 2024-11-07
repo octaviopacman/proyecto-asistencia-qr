@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import { Dashboard } from '../assets/conexiones';
 import { useSession } from "../assets/session";
 import AdminPage from "../admin/page";
+import LoadingSpinner from '../components/loadingSpinner';
 
 
 function Admin() {
@@ -60,7 +61,7 @@ function Admin() {
         return null;
     }
     if (loading) {
-        return <p>Cargando datos...</p>;
+        return <LoadingSpinner />;
     }
 
     if (error) {
