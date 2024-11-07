@@ -22,13 +22,9 @@ function Admin() {
     const router = useRouter();
 
     // Verifica que el token esté disponible
-    if (!user || !user.token) {
-        router.push("/login");
-        return null;
-    }
-
+    
     const dashboard = new Dashboard(user.token);
-
+    
     // Fetch data on component mount
     useEffect(() => {
         const fetchData = async () => {
@@ -59,6 +55,10 @@ function Admin() {
         fetchData();
     }, [dashboard, router]);
 
+    if (!user || !user.token) {
+        router.push("/login");
+        return null;
+    }
     if (loading) {
         return <p>Cargando datos...</p>;
     }
