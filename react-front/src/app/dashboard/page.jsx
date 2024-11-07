@@ -8,15 +8,16 @@ import { useRouter } from 'next/navigation';
 import { Dashboard } from '../assets/conexiones';
 import { useSession } from "../assets/session";
 import AdminPage from "../admin/page";
+import { useSession } from '../assets/session';
 
 function Admin() {
+    const {user,login,logout} = useSession();
     const [data, setData] = useState({
         asistencias: { asistencias: 0, inasistencias: 0 },
         horarioProfesor: []
     });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const { user } = useSession();
     const router = useRouter();
 
     // Verifica que el token esté disponible
@@ -77,6 +78,7 @@ function Admin() {
                         <Nav.Link href="/dashboard/materias">Materias</Nav.Link>
                         <Nav.Link href="/dashboard/preceptores">Preceptores</Nav.Link>
                     </Nav>
+                    <Nav><Button onClick={() => logout}></Button></Nav>
                     <Dropdown align="end">
                         <Dropdown.Toggle variant="secondary">Administración</Dropdown.Toggle>
                         <Dropdown.Menu>
