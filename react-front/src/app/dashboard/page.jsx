@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Nav, Navbar, Container, Card, Col, Row, Button, Dropdown, Alert } from 'react-bootstrap';
+import { Nav, Navbar, Container, Card, Col, Row, Button, Dropdown } from 'react-bootstrap';
 import QRCodeComponent from '../login/codigo';
 import styles from './page.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -17,10 +17,11 @@ function Admin() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { user } = useSession();
-    const Router = useRouter();
+    const router = useRouter();
 
     const dashboard = new Dashboard(user.token);
 
+    // Fetch data on component mount
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -28,7 +29,7 @@ function Admin() {
                 const horarioProfesor = await dashboard.mostrarHorarioProfesor();
 
                 const resultados = {
-                    asistencias: asistencias || {},
+                    asistencias: asistencias || { asistencias: 0, inasistencias: 0 },
                     horarioProfesor: horarioProfesor || []
                 };
 
@@ -36,30 +37,41 @@ function Admin() {
             } catch (error) {
                 console.error("Error al obtener los datos del dashboard:", error);
                 setError("Hubo un problema al cargar los datos.");
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchData();
-    }, []);
+    }, [dashboard]);
+
+    if (loading) {
+        return <p>Cargando datos...</p>;
+    }
+
+    if (error) {
+        return <p>{error}</p>;
+    }
 
     return (
         <div>
-            <Navbar bg="dark" data-bs-theme="dark">
-                <Nav.Link><img src="appicon.png" className={styles.icono} alt='App Icon' height={100} /></Nav.Link>
-                <Navbar.Brand href="/dashboard">Menú de Asistencias</Navbar.Brand>
-                <Nav className="me-auto">
-                    <Nav.Link href='/dashboard/asistencias'>Asistencias</Nav.Link>
-                    <Nav.Link href="/dashboard/materias">Materias</Nav.Link>
-                    <Nav.Link href="/dashboard/preceptores">Preceptores</Nav.Link>
-                </Nav>
-                <Nav>
-                    <Dropdown drop='start'>
-                        <Dropdown.Toggle>Administración</Dropdown.Toggle>
+            <Navbar bg="dark" variant="dark" className="mb-4">
+                <Container>
+                    <Navbar.Brand href="/dashboard">
+                        <img src="appicon.png" className={styles.icono} alt="App Icon" height={40} /> Menú de Asistencias
+                    </Navbar.Brand>
+                    <Nav className="me-auto">
+                        <Nav.Link href="/dashboard/asistencias">Asistencias</Nav.Link>
+                        <Nav.Link href="/dashboard/materias">Materias</Nav.Link>
+                        <Nav.Link href="/dashboard/preceptores">Preceptores</Nav.Link>
+                    </Nav>
+                    <Dropdown align="end">
+                        <Dropdown.Toggle variant="secondary">Administración</Dropdown.Toggle>
                         <Dropdown.Menu>
                             <AdminPage />
                         </Dropdown.Menu>
                     </Dropdown>
-                </Nav>
+                </Container>
             </Navbar>
 
             <Container className={styles.tarjetas}>
@@ -69,7 +81,13 @@ function Admin() {
                             <Card.Body>
                                 <Card.Title>Asistencias</Card.Title>
                                 {data.asistencias ? (
-                                    <DonutChart attendance={data.asistencias.asistencias} absence={data.asistencias.inasistencias} width={150} height={150} className={styles['donut-chart']} />
+                                    <DonutChart
+                                        attendance={data.asistencias.asistencias}
+                                        absence={data.asistencias.inasistencias}
+                                        width={150}
+                                        height={150}
+                                        className={styles['donut-chart']}
+                                    />
                                 ) : (
                                     <Card.Text>No tienes asistencias registradas</Card.Text>
                                 )}
@@ -81,7 +99,7 @@ function Admin() {
                             <Card.Body>
                                 <Card.Title>Materias</Card.Title>
                                 <Card.Text>No tienes Materias designadas</Card.Text>
-                                <Button href='/dashboard/materias'>Ver más</Button>
+                                <Button href="/dashboard/materias" variant="primary">Ver más</Button>
                             </Card.Body>
                         </Card>
                     </Col>
@@ -93,11 +111,14 @@ function Admin() {
                                 <Card.Title>Horario de Clases</Card.Title>
                                 {data.horarioProfesor.length > 0 ? (
                                     data.horarioProfesor.map((curso) => (
-                                        <Card.Text key={curso.cursoid}>
-                                            <strong>Curso:</strong> {curso.cursoid} <br />
-                                            <strong>Día:</strong> {curso.dia} <br />
-                                            <strong>Hora:</strong> {curso.horainicio} - {curso.horafinal}
-                                        </Card.Text>
+                                        <div key={curso.cursoid}>
+                                            <Card.Text>
+                                                <strong>Curso:</strong> {curso.cursoid} <br />
+                                                <strong>Día:</strong> {curso.dia} <br />
+                                                <strong>Hora:</strong> {curso.horainicio} - {curso.horafinal}
+                                            </Card.Text>
+                                            <hr />
+                                        </div>
                                     ))
                                 ) : (
                                     <Card.Text>No tienes clases pendientes.</Card.Text>

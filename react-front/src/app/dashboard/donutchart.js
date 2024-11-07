@@ -2,7 +2,6 @@ import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
 
-// Registro de los componentes necesarios
 Chart.register(ArcElement, Tooltip, Legend);
 
 const DonutChart = ({ attendance, absence }) => {
@@ -17,9 +16,7 @@ const DonutChart = ({ attendance, absence }) => {
     ]
   };
 
-  
-
-  return <Doughnut style={{width: '200', height:'200'}} data={data} />;
+  return <Doughnut data={data} style={{ width: '200px', height: '200px' }} />;
 };
 
 export default DonutChart;
