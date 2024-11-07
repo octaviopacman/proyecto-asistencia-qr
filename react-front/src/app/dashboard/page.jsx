@@ -86,12 +86,7 @@ function Admin() {
                         <Nav.Link href="/dashboard/preceptores">Preceptores</Nav.Link>
                     </Nav>
                     
-                    <Dropdown align="end">
-                        <Dropdown.Toggle variant="secondary">Administración</Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            <AdminPage />
-                        </Dropdown.Menu>
-                    </Dropdown>
+                    
                     <Nav>
                         <Button color='danger' onClick={() => logOut()}>Cerrar Sesion</Button>
                     </Nav>
