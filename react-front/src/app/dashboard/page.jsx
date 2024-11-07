@@ -88,7 +88,7 @@ function Admin() {
                     
                     
                     <Nav>
-                        <Button color='danger' onClick={() => logOut()}>Cerrar Sesion</Button>
+                        <Button variant='danger' onClick={() => logOut()}>Cerrar Sesion</Button>
                     </Nav>
                 </Container>
             </Navbar>
