@@ -12,6 +12,7 @@ function Login() {
   const [correo, setCorreo] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const [boton, setBoton] = useState(false);
   const [codigo, setCodigo] = useState('');
   const [errors, setErrors] = useState({});
   const [rol, setRol] = useState(''); // Nueva variable de estado para el rol
@@ -63,6 +64,7 @@ function Login() {
       setMessage('');
       setErrors({});
       login(usuario);
+      setBoton(true);
       setRol(usuario.rol); // Establece el rol devuelto por la API
       setCodigo(<QRCodeComponent data={usuario.token} />);
       console.log(usuario);
@@ -119,7 +121,8 @@ function Login() {
         <div className={styles.codigo}>
           {codigo}
         </div>
-        <button className={styles.btnMenu} onClick={handleMenuNavigation}>Ir al Menú</button>
+        {boton ? 
+        <button className={styles.btnMenu} onClick={handleMenuNavigation}>Ir al Menú</button> : <></>}
       </div>
     </div>
   );
