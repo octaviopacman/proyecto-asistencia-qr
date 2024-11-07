@@ -106,7 +106,7 @@ function Admin() {
                                 {data.asistencias ? (
                                     <DonutChart
                                         attendance={data.asistencias.asistencias}
-                                        absence={data.asistencias.inasistencias}
+                                        absence={data.asistencias.inasistencias + 1}
                                         width={150}
                                         height={150}
                                         className={styles['donut-chart']}
