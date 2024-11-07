@@ -68,6 +68,7 @@ function Admin() {
     }
 
     const logOut = () => {
+        console.log("Cierre de sesión...");
         logout();
         router.push("/login");
     }
