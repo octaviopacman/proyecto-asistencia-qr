@@ -67,6 +67,11 @@ function Admin() {
         return <p>{error}</p>;
     }
 
+    const logOut = () => {
+        logout();
+        router.push("/login");
+    }
+
     return (
         <div>
             <Navbar bg="dark" variant="dark" className="mb-4">
