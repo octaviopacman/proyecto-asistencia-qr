@@ -1,4 +1,4 @@
-'use client'
+"use client"
 import { useState, useEffect } from 'react';
 import { Nav, Navbar, Container, Card, Col, Row, Button, Dropdown } from 'react-bootstrap';
 import QRCodeComponent from '../login/codigo';
