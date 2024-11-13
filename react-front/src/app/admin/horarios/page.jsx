@@ -38,7 +38,7 @@ const CrudHorarios = () => {
   const [anio, setAnio] = useState('');
   const [division, setDivision] = useState('');
   const [form, setForm] = useState({
-    ProfesorID: option.id,
+    ProfesorID: {},
     MateriaID: '',
     Dia: '',
     horaInicio: '',
