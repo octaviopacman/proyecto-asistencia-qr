@@ -81,11 +81,11 @@ function Admin() {
                     <Navbar.Brand href="/dashboard">
                         <img src="appicon.png" className={styles.icono} alt="App Icon" height={40} /> Menú de Asistencias
                     </Navbar.Brand>
-                    <Nav className="me-auto">
+                    {/* <Nav className="me-auto">
                         <Nav.Link href="/dashboard/asistencias">Asistencias</Nav.Link>
                         <Nav.Link href="/dashboard/materias">Materias</Nav.Link>
                         <Nav.Link href="/dashboard/preceptores">Preceptores</Nav.Link>
-                    </Nav>
+                    </Nav> */}
                     
                     
                     <Nav>
