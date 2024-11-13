@@ -10,18 +10,19 @@ const SelectField = ({ label, name, value, options, onChange }) => (
     <Form.Label>{label}</Form.Label>
     <Form.Control
       as="select"
-      name={name} // El nombre coincide con el campo esperado en `handleChange`
+      name={name}
       value={value}
-      onChange={(e) => onChange({ target: { name, value: e.target.value } })} // Pasamos el id del profesor como `value`
+      onChange={(e) => onChange({ target: { name, value: e.target.value } })}
       required
     >
       <option value="">Seleccione {label}</option>
       {options.map((option) => (
         <option key={option.id} value={option.id}>
-          {option.nombre}
+          {option.nombre} {/* Se muestra el nombre, pero el valor es el ID */}
         </option>
       ))}
     </Form.Control>
+
   </Form.Group>
 );
 
@@ -71,6 +72,7 @@ const CrudHorarios = () => {
     console.log("Evento: ", e);
     setForm({ ...form, [e.target.name]: e.target.value });
   };
+  
 
   const handleSubmit = async (e) => {
     console.log('Año seleccionado:', anio);
