@@ -18,7 +18,7 @@ const SelectField = ({ label, name, value, options, onChange }) => (
       <option value="">Seleccione {label}</option>
       {options.map((option) => (
         <option key={option.id} value={option.id}>
-          {option} {/* Se muestra el nombre, pero el valor es el ID */}
+          {option.id} {/* Se muestra el nombre, pero el valor es el ID */}
         </option>
       ))}
     </Form.Control>
