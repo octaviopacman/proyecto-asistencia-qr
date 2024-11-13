@@ -18,7 +18,7 @@ const SelectField = ({ label, name, value, options, onChange }) => (
       <option value="">Seleccione {label}</option>
       {options.map((option) => (
         <option key={option.id} value={option.id}>
-          {option.nombre} {/* Se muestra el nombre, pero el valor es el ID */}
+          {option} {/* Se muestra el nombre, pero el valor es el ID */}
         </option>
       ))}
     </Form.Control>
@@ -38,7 +38,7 @@ const CrudHorarios = () => {
   const [anio, setAnio] = useState('');
   const [division, setDivision] = useState('');
   const [form, setForm] = useState({
-    ProfesorID: '',
+    ProfesorID: option.id,
     MateriaID: '',
     Dia: '',
     horaInicio: '',
