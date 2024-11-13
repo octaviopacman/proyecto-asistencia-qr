@@ -10,9 +10,9 @@ const SelectField = ({ label, name, value, options, onChange }) => (
     <Form.Label>{label}</Form.Label>
     <Form.Control
       as="select"
-      name={name}
+      name={name} // Este nombre coincide con el campo esperado en `handleChange`
       value={value}
-      onChange={(e) => onChange(e.target.value)} // Aquí pasamos solo el `value`
+      onChange={(e) => onChange({ target: { name, value: e.target.value } })} // Aquí pasamos el evento con `name` y `value`
       required
     >
       <option value="">Seleccione {label}</option>
@@ -66,13 +66,10 @@ const CrudHorarios = () => {
     fetchDatos();
   }, [admin]);
 
-  const handleChange = (selectedValue) => {
-    setForm((prevForm) => ({
-      ...prevForm,
-      ProfesorID: selectedValue, // Guardamos directamente el `profesorid`
-    }));
+  const handleChange = (e) => {
+    console.log("Evento: ", e);
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
-  
 
   const handleSubmit = async (e) => {
     console.log('Año seleccionado:', anio);
