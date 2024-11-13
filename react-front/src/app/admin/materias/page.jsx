@@ -5,6 +5,10 @@ import { Admin } from '../../assets/conexiones';
 import { useSession } from '../../assets/session';
 
 const CrudMaterias = () => {
+  function capitalizar(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  }
+
   const [materias, setMaterias] = useState([]);
   const [form, setForm] = useState({
     nombremateria: '',
@@ -105,7 +109,7 @@ const CrudMaterias = () => {
               <Form.Control
                 type="text"
                 name="nombremateria"
-                value={form.nombremateria}
+                value={capitalizar(form.nombremateria)}
                 onChange={handleChange}
               />
             </Form.Group>
