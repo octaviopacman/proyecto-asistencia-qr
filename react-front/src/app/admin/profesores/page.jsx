@@ -25,7 +25,6 @@ const CrudProfesores = () => {
     const fetchProfesores = async () => {
       try {
         const datos = await panelAdmin.getAllProfesores();
-        console.log('datos recibidos de profesores', datos)
         setProfesores(datos);
       } catch (error) {
         console.error("Error al obtener los profesores:", error);
@@ -33,7 +32,8 @@ const CrudProfesores = () => {
     };
     fetchProfesores();
   }, [panelAdmin]);
-
+  console.log('datos recibidos de profesores', profesores)
+  
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -66,7 +66,6 @@ const CrudProfesores = () => {
 
     const dataToSend = { ...form };
     if (isEditing) {
-      delete dataToSend.password;
       const data = await panelAdmin.updateProfesor(currentId, dataToSend);
       setProfesores((prev) => prev.map((profesor) => (profesor.id === currentId ? data : profesor)));
       setIsEditing(false);
