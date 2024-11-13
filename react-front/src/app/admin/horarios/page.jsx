@@ -146,7 +146,7 @@ const CrudHorarios = () => {
             </Alert>
           )}
           <Form onSubmit={handleSubmit} className="d-flex flex-wrap gap-3">
-            <SelectField label="Profesor" name="ProfesorID" value={form.ProfesorID} options={profesores.map((p) => ({ id: p.profesorid, /* nombre: p.nombre */ }))} onChange={handleChange} />
+            <SelectField label="Profesor" name="ProfesorID" value={form.ProfesorID} options={profesores.map((p) => ({ id: p.profesorid, nombre: p.nombre }))} onChange={handleChange} />
             <SelectField label="Materia" name="MateriaID" value={form.MateriaID} options={materias.map((m) => ({ id: m.materiaid, nombre: m.nombremateria }))} onChange={handleChange} />
             <Form.Group controlId="formAnio">
               <Form.Label>Año</Form.Label>
