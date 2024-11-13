@@ -10,9 +10,9 @@ const SelectField = ({ label, name, value, options, onChange }) => (
     <Form.Label>{label}</Form.Label>
     <Form.Control
       as="select"
-      name={name} // Este nombre coincide con el campo esperado en `handleChange`
+      name={name} // El nombre coincide con el campo esperado en `handleChange`
       value={value}
-      onChange={(e) => onChange({ target: { name, value: e.target.value } })} // Aquí pasamos el evento con `name` y `value`
+      onChange={(e) => onChange({ target: { name, value: e.target.value } })} // Pasamos el id del profesor como `value`
       required
     >
       <option value="">Seleccione {label}</option>
@@ -24,6 +24,7 @@ const SelectField = ({ label, name, value, options, onChange }) => (
     </Form.Control>
   </Form.Group>
 );
+
 
 
 
@@ -160,6 +161,7 @@ const CrudHorarios = () => {
               options={profesores.map((p) => ({ id: p.profesorid, nombre: `${p.nombre} ${p.apellido}` }))}
               onChange={handleChange}
             />
+
 
             <SelectField label="Materia" name="MateriaID" value={form.MateriaID} options={materias.map((m) => ({ id: m.materiaid, nombre: m.nombremateria }))} onChange={handleChange} />
             <Form.Group controlId="formAnio">
