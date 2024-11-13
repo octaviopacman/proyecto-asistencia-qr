@@ -8,16 +8,23 @@ import { Admin } from '../../assets/conexiones';
 const SelectField = ({ label, name, value, options, onChange }) => (
   <Form.Group className="mb-3">
     <Form.Label>{label}</Form.Label>
-    <Form.Control as="select" name={name} onChange={onChange} value={value} required>
+    <Form.Control
+      as="select"
+      name={name}
+      value={value}
+      onChange={(e) => onChange(e.target.value)} // Aquí pasamos solo el `value`
+      required
+    >
       <option value="">Seleccione {label}</option>
       {options.map((option) => (
-        <option key={option.id} value={option.id}> {/* Usamos el id aquí */}
-          {option.nombre} {/* Mostramos el nombre y apellido */}
+        <option key={option.id} value={option.id}>
+          {option.nombre}
         </option>
       ))}
     </Form.Control>
   </Form.Group>
 );
+
 
 
 const CrudHorarios = () => {
@@ -59,10 +66,13 @@ const CrudHorarios = () => {
     fetchDatos();
   }, [admin]);
 
-  const handleChange = (e) => {
-    console.log("Evento: ",e);
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (selectedValue) => {
+    setForm((prevForm) => ({
+      ...prevForm,
+      ProfesorID: selectedValue, // Guardamos directamente el `profesorid`
+    }));
   };
+  
 
   const handleSubmit = async (e) => {
     console.log('Año seleccionado:', anio);
@@ -73,7 +83,7 @@ const CrudHorarios = () => {
     const curso = cursos.find(
       (curso) => String(curso.anio) === String(anio) && String(curso.division) === String(division)
     );
-        
+
     if (!curso) {
       setErrors(["El curso seleccionado no es válido. Por favor, elige un año y división correctos."]);
       return;
@@ -146,7 +156,14 @@ const CrudHorarios = () => {
             </Alert>
           )}
           <Form onSubmit={handleSubmit} className="d-flex flex-wrap gap-3">
-            <SelectField label="Profesor" name="ProfesorID" value={form.ProfesorID} options={profesores.map((p) => ({ id: p.profesorid, nombre: p.nombre }))} onChange={handleChange} />
+            <SelectField
+              label="Profesor"
+              name="ProfesorID"
+              value={form.ProfesorID}
+              options={profesores.map((p) => ({ id: p.profesorid, nombre: `${p.nombre} ${p.apellido}` }))}
+              onChange={handleChange}
+            />
+
             <SelectField label="Materia" name="MateriaID" value={form.MateriaID} options={materias.map((m) => ({ id: m.materiaid, nombre: m.nombremateria }))} onChange={handleChange} />
             <Form.Group controlId="formAnio">
               <Form.Label>Año</Form.Label>
