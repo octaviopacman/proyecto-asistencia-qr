@@ -11,13 +11,14 @@ const SelectField = ({ label, name, value, options, onChange }) => (
     <Form.Control as="select" name={name} onChange={onChange} value={value} required>
       <option value="">Seleccione {label}</option>
       {options.map((option) => (
-        <option key={option.id} value={option.id}>
-          {option.nombre}
+        <option key={option.id} value={option.id}> {/* Usamos el id aquí */}
+          {option.nombre} {/* Mostramos el nombre y apellido */}
         </option>
       ))}
     </Form.Control>
   </Form.Group>
 );
+
 
 const CrudHorarios = () => {
   const { user } = useSession();
