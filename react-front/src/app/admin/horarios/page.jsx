@@ -68,6 +68,8 @@ const CrudHorarios = () => {
     fetchDatos();
   }, [admin]);
 
+  console.log(horarios,profesores,materias,cursos);
+
   const handleChange = (e) => {
     console.log("Evento: ", e);
     setForm({ ...form, [e.target.name]: e.target.value });
