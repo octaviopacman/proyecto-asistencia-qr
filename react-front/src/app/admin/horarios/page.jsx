@@ -210,7 +210,7 @@ const CrudHorarios = () => {
             {horarios.map((horario) => (
               <ListGroup.Item key={horario.horarioid} className="d-flex justify-content-between align-items-center">
                 <span>
-                  {`${profesores.find((p) => parseInt(p.profesorid) === parseInt(horario.profesorid))?.nombre} - 
+                  {`${profesores.find((p) => parseInt(p.id) === parseInt(horario.profesorid))?.nombre} - 
                   ${materias.find((m) => parseInt(m.materiaid) === parseInt(horario.materiaid))?.nombremateria} - 
                   ${cursos.find((c) => parseInt(c.cursoid) === parseInt(horario.cursoid))?.anio || ''} ${cursos.find((c) => parseInt(c.cursoid) === parseInt(horario.cursoid))?.division || ''} - 
                   Día: ${String(horario.dia)} - Hora Inicio: ${String(horario.horainicio)} - Hora Final: ${String(horario.horafinal)}`}
