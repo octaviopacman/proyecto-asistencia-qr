@@ -68,18 +68,18 @@ const CrudHorarios = () => {
     fetchDatos();
   }, [admin]);
 
-  console.log(horarios,profesores,materias,cursos);
+  
 
   const handleChange = (e) => {
-    console.log("Evento: ", e);
+    
     setForm({ ...form, [e.target.name]: e.target.value });
   };
   
 
   const handleSubmit = async (e) => {
-    console.log('Año seleccionado:', anio);
+    /* console.log('Año seleccionado:', anio);
     console.log('División seleccionada:', division);
-    console.log('Lista de cursos:', cursos);
+    console.log('Lista de cursos:', cursos); */
     e.preventDefault();
 
     const curso = cursos.find(
@@ -95,7 +95,7 @@ const CrudHorarios = () => {
       ...form,
       CursoID: curso.cursoid,
     };
-    console.log("Datos del formulario: ", formData);
+    /* console.log("Datos del formulario: ", formData); */
 
     try {
       const newHorario = await admin.insertarHorario(formData);
