@@ -210,8 +210,8 @@ const CrudHorarios = () => {
                 <span>
                   {`${profesores.find((p) => parseInt(p.profesorid) === parseInt(horario.profesorid))?.nombre || 'N/A'} - 
                   ${materias.find((m) => parseInt(m.materiaid) === parseInt(horario.materiaid))?.nombremateria || 'N/A'} - 
-                  ${cursos.find((c) => parseInt(c.cursoid) === parseInt(horario.cursoid))?.anio || ''} ${cursos.find((c) => c.cursoid === horario.cursoid)?.division || ''} - 
-                  Día: ${horario.dia} - Hora Inicio: ${horario.horainicio} - Hora Final: ${horario.horafinal}`}
+                  ${cursos.find((c) => parseInt(c.cursoid) === parseInt(horario.cursoid))?.anio || ''} ${cursos.find((c) => parseInt(c.cursoid) === parseInt(horario.cursoid))?.division || ''} - 
+                  Día: ${String(horario.dia)} - Hora Inicio: ${String(horario.horainicio)} - Hora Final: ${String(horario.horafinal)}`}
                 </span>
                 <div>
                   <Button variant="outline-danger" size="sm" onClick={() => handleDelete(horario.horarioid)}>Eliminar</Button>
