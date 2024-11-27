@@ -26,9 +26,6 @@ const SelectField = ({ label, name, value, options, onChange }) => (
   </Form.Group>
 );
 
-
-
-
 const CrudHorarios = () => {
   const { user } = useSession();
   const [horarios, setHorarios] = useState([]);
