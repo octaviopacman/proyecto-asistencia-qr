@@ -158,8 +158,8 @@ const CrudHorarios = () => {
             <SelectField
               label="Profesor"
               name="ProfesorID"
-              value={form.ProfesorID}
-              options={profesores.map((p) => ({ id: p.profesorid, nombre: `${p.nombre} ${p.apellido}` }))}
+              value={form.id}
+              options={profesores.map((p) => ({ id: p.id, nombre: `${p.nombre} ${p.apellido}` }))}
               onChange={handleChange}
             />
 
