@@ -38,8 +38,8 @@ const CrudHorarios = () => {
     ProfesorID: '',
     MateriaID: '',
     Dia: '',
-    horaInicio: '',
-    horaFinal: '',
+   /*  horaInicio: '',
+    horaFinal: '', */
   });
   const [errors, setErrors] = useState([]);
   const admin = new Admin(user.token);
@@ -101,7 +101,7 @@ const CrudHorarios = () => {
         ProfesorID: '',
         MateriaID: '',
         Dia: '',
-        /* horaInicio: '',
+       /*  horaInicio: '',
         horaFinal: '', */
       });
       setAnio('');
@@ -210,7 +210,7 @@ const CrudHorarios = () => {
                   {`${profesores.find((p) => parseInt(p.id) === parseInt(horario.profesorid))?.nombre} - 
                   ${materias.find((m) => parseInt(m.materiaid) === parseInt(horario.materiaid))?.nombremateria} - 
                   ${cursos.find((c) => parseInt(c.cursoid) === parseInt(horario.cursoid))?.anio || ''} ${cursos.find((c) => parseInt(c.cursoid) === parseInt(horario.cursoid))?.division || ''} - 
-                  Día: ${String(horario.dia)} - Hora Inicio: ${String(horario.horainicio)} - Hora Final: ${String(horario.horafinal)}`}
+                  Día: ${String(horario.dia)} `}
                 </span>
                 <div>
                   <Button variant="outline-danger" size="sm" onClick={() => handleDelete(horario.horarioid)}>Eliminar</Button>
