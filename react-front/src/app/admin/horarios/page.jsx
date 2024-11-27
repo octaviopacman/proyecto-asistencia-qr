@@ -171,7 +171,7 @@ const CrudHorarios = () => {
               name="MateriaID"
               value={form.MateriaID}
               options={materias.map((m) => ({
-                id: m.materiaid,
+                nombremateria: m.nombremateria,
                 label: m.nombremateria, 
               }))}
               onChange={handleChange}
