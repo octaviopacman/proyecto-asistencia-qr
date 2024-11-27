@@ -68,7 +68,7 @@ const CrudHorarios = () => {
     fetchDatos();
   }, [admin]);
 
-  
+  console.log(horarios);
 
   const handleChange = (e) => {
     
