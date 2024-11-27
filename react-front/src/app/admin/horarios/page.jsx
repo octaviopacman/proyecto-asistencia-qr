@@ -155,19 +155,27 @@ const CrudHorarios = () => {
             </Alert>
           )}
           <Form onSubmit={handleSubmit} className="d-flex flex-wrap gap-3">
+
             <SelectField
               label="Profesor"
               name="ProfesorID"
-              value={form.ProfesorID} 
+              value={form.ProfesorID}
               options={profesores.map((p) => ({
                 id: p.id,
-                label: `${p.nombre} ${p.apellido}`,
+                label: `${p.nombre} ${p.apellido}`, // nombre y apellido concatenados
               }))}
               onChange={handleChange}
             />
-
-
-            <SelectField label="Materia" name="MateriaID" value={form.MateriaID} options={materias.map((m) => ({ id: m.materiaid, nombre: m.nombremateria }))} onChange={handleChange} />
+            <SelectField
+              label="Materia"
+              name="MateriaID"
+              value={form.MateriaID}
+              options={materias.map((m) => ({
+                id: m.materiaid,
+                label: m.nombremateria, // Mostrar nombre de la materia
+              }))}
+              onChange={handleChange}
+            />
             <Form.Group controlId="formAnio">
               <Form.Label>Año</Form.Label>
               <Form.Control as="select" value={anio} onChange={(e) => setAnio(e.target.value)} required>
