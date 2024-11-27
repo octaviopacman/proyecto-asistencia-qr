@@ -162,7 +162,7 @@ const CrudHorarios = () => {
               value={form.ProfesorID}
               options={profesores.map((p) => ({
                 id: p.nombre,
-                label: `${p.nombre} ${p.apellido}`, 
+                label: `${p.nombre} ${p.apellido}`,
               }))}
               onChange={handleChange}
             />
@@ -172,7 +172,7 @@ const CrudHorarios = () => {
               value={form.MateriaID}
               options={materias.map((m) => ({
                 id: m.nombremateria,
-                label: m.nombremateria, 
+                label: m.nombremateria,
               }))}
               onChange={handleChange}
             />
@@ -199,11 +199,11 @@ const CrudHorarios = () => {
               <Form.Control type="text" name="Dia" value={form.Dia} onChange={handleChange} />
             </Form.Group>
             <Form.Group controlId="formHoraInicio">
-              <Form.Label>Hora Inicio</Form.Label>
+              <Form.Label>Hora Inicio</Form.Label>{/*arreglado por thiago */}
               <Form.Control type="time" name="horaInicio" value={form.fechainicio} onChange={handleChange} />
-            </Form.Group>
+            </Form.Group> 
             <Form.Group controlId="formHoraFinal">
-              <Form.Label>Hora Final</Form.Label>
+              <Form.Label>Hora Final</Form.Label>{/*arreglado por thiago */}
               <Form.Control type="time" name="horaFinal" value={form.horaFinal} onChange={handleChange} />
             </Form.Group>
             <Button variant="primary" type="submit" className="align-self-end mt-2">Agregar Horario</Button>
