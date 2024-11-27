@@ -39,7 +39,7 @@ const CrudHorarios = () => {
     MateriaID: '',
     Dia: '',
     fechainicio: '',
-    fechafin: '' + ":00",
+    fechafin: toString('') + ":00",
   });
   const [errors, setErrors] = useState([]);
   const admin = new Admin(user.token);
