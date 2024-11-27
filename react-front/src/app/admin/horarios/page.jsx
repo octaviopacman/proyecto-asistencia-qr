@@ -161,7 +161,7 @@ const CrudHorarios = () => {
               name="ProfesorID"
               value={form.ProfesorID}
               options={profesores.map((p) => ({
-                /* id: p.id, */
+                id: p.nombre,
                 label: `${p.nombre} ${p.apellido}`, 
               }))}
               onChange={handleChange}
@@ -171,7 +171,7 @@ const CrudHorarios = () => {
               name="MateriaID"
               value={form.MateriaID}
               options={materias.map((m) => ({
-                /* id: m.materiaid, */
+                id: m.materiaid,
                 label: m.nombremateria, 
               }))}
               onChange={handleChange}
