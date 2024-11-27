@@ -38,8 +38,8 @@ const CrudHorarios = () => {
     ProfesorID: '',
     MateriaID: '',
     Dia: '',
-   /*  horaInicio: '',
-    horaFinal: '', */
+    horaInicio: '',
+    horaFinal: '',
   });
   const [errors, setErrors] = useState([]);
   const admin = new Admin(user.token);
@@ -68,10 +68,10 @@ const CrudHorarios = () => {
   console.log(horarios);
 
   const handleChange = (e) => {
-    
+
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-  
+
 
   const handleSubmit = async (e) => {
     /* console.log('Año seleccionado:', anio);
@@ -101,8 +101,8 @@ const CrudHorarios = () => {
         ProfesorID: '',
         MateriaID: '',
         Dia: '',
-       /*  horaInicio: '',
-        horaFinal: '', */
+        horaInicio: '',
+        horaFinal: '',
       });
       setAnio('');
       setDivision('');
@@ -210,7 +210,7 @@ const CrudHorarios = () => {
                   {`${profesores.find((p) => parseInt(p.id) === parseInt(horario.profesorid))?.nombre} - 
                   ${materias.find((m) => parseInt(m.materiaid) === parseInt(horario.materiaid))?.nombremateria} - 
                   ${cursos.find((c) => parseInt(c.cursoid) === parseInt(horario.cursoid))?.anio || ''} ${cursos.find((c) => parseInt(c.cursoid) === parseInt(horario.cursoid))?.division || ''} - 
-                  Día: ${String(horario.dia)} `}
+                  Día: ${String(horario.dia)} - Hora Inicio: ${String(horario.horainicio)} - Hora Final: ${String(horario.horafinal)}`}
                 </span>
                 <div>
                   <Button variant="outline-danger" size="sm" onClick={() => handleDelete(horario.horarioid)}>Eliminar</Button>
