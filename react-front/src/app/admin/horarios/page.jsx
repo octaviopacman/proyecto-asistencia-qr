@@ -39,7 +39,7 @@ const CrudHorarios = () => {
     MateriaID: '',
     Dia: '',
     fechainicio: '',
-    fechafin: toString('') + ":00",
+    fechafin: '',
   });
   const [errors, setErrors] = useState([]);
   const admin = new Admin(user.token);
@@ -203,6 +203,7 @@ const CrudHorarios = () => {
               <Form.Control 
                name="fechainicio"
                value={form.fechainicio}
+               step={2}
                type='time' 
                onChange={handleChange} />
             </Form.Group>
@@ -210,6 +211,7 @@ const CrudHorarios = () => {
               <Form.Label>Hora Final</Form.Label>
               <Form.Control
                 type="time"
+                step={2}
                 name="fechafin"
                 value={form.fechafin}
                 onChange={handleChange}
