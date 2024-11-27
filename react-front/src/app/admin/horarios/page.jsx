@@ -199,13 +199,24 @@ const CrudHorarios = () => {
               <Form.Control type="text" name="Dia" value={form.Dia} onChange={handleChange} />
             </Form.Group>
             <Form.Group controlId="formHoraInicio">
-              <Form.Label>Hora Inicio</Form.Label>{/*arreglado por thiago */}
-              <Form.Control type="time" name="horaInicio" value={form.fechainicio} onChange={handleChange} />
-            </Form.Group> 
-            <Form.Group controlId="formHoraFinal">
-              <Form.Label>Hora Final</Form.Label>{/*arreglado por thiago */}
-              <Form.Control type="time" name="horaFinal" value={form.horaFinal} onChange={handleChange} />
+              <Form.Label>Hora Inicio</Form.Label>
+              <Form.Control
+                type="time"
+                name="fechainicio" // Debe coincidir con el estado
+                value={form.fechainicio}
+                onChange={handleChange}
+              />
             </Form.Group>
+            <Form.Group controlId="formHoraFinal">
+              <Form.Label>Hora Final</Form.Label>
+              <Form.Control
+                type="time"
+                name="horaFinal"
+                value={form.horaFinal}
+                onChange={handleChange}
+              />
+            </Form.Group>
+
             <Button variant="primary" type="submit" className="align-self-end mt-2">Agregar Horario</Button>
           </Form>
         </Col>
