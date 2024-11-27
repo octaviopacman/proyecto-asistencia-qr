@@ -65,7 +65,7 @@ const CrudHorarios = () => {
     fetchDatos();
   }, [admin]);
 
-  console.log(horarios);
+  
 
   const handleChange = (e) => {
 
@@ -92,7 +92,7 @@ const CrudHorarios = () => {
       ...form,
       CursoID: curso.cursoid,
     };
-    /* console.log("Datos del formulario: ", formData); */
+    console.log("Datos del formulario: ", formData);
 
     try {
       const newHorario = await admin.insertarHorario(formData);
