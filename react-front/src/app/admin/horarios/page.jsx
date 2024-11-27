@@ -156,7 +156,7 @@ const CrudHorarios = () => {
           )}
           <Form onSubmit={handleSubmit} className="d-flex flex-wrap gap-3">
 
-            <SelectField
+            <SelectField {/* arrglado por thiago*/}
               label="Profesor"
               name="ProfesorID"
               value={form.ProfesorID}
@@ -166,7 +166,7 @@ const CrudHorarios = () => {
               }))}
               onChange={handleChange}
             />
-            <SelectField
+            <SelectField {/* arrglado por thiago*/}
               label="Materia"
               name="MateriaID"
               value={form.MateriaID}
