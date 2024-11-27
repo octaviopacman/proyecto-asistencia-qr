@@ -38,8 +38,8 @@ const CrudHorarios = () => {
     ProfesorID: '',
     MateriaID: '',
     Dia: '',
-    horaInicio: '',
-    horaFinal: '',
+    fechainicio: '',
+    fechafin: '',
   });
   const [errors, setErrors] = useState([]);
   const admin = new Admin(user.token);
@@ -101,8 +101,8 @@ const CrudHorarios = () => {
         ProfesorID: '',
         MateriaID: '',
         Dia: '',
-        horaInicio: '',
-        horaFinal: '',
+        fechainicio: '',
+        fechafin: '',
       });
       setAnio('');
       setDivision('');
@@ -189,7 +189,7 @@ const CrudHorarios = () => {
             </Form.Group>
             <Form.Group controlId="formHoraInicio">
               <Form.Label>Hora Inicio</Form.Label>
-              <Form.Control type="time" name="horaInicio" value={form.horaInicio} onChange={handleChange} />
+              <Form.Control type="time" name="horaInicio" value={form.fechainicio} onChange={handleChange} />
             </Form.Group>
             <Form.Group controlId="formHoraFinal">
               <Form.Label>Hora Final</Form.Label>
@@ -210,7 +210,7 @@ const CrudHorarios = () => {
                   {`${profesores.find((p) => parseInt(p.id) === parseInt(horario.profesorid))?.nombre} - 
                   ${materias.find((m) => parseInt(m.materiaid) === parseInt(horario.materiaid))?.nombremateria} - 
                   ${cursos.find((c) => parseInt(c.cursoid) === parseInt(horario.cursoid))?.anio || ''} ${cursos.find((c) => parseInt(c.cursoid) === parseInt(horario.cursoid))?.division || ''} - 
-                  Día: ${String(horario.dia)} - Hora Inicio: ${String(horario.horainicio)} - Hora Final: ${String(horario.horafinal)}`}
+                  Día: ${String(horario.dia)} - Hora Inicio: ${String(horario.fechainicio)} - Hora Final: ${String(horario.fechafin)}`}
                 </span>
                 <div>
                   <Button variant="outline-danger" size="sm" onClick={() => handleDelete(horario.horarioid)}>Eliminar</Button>
