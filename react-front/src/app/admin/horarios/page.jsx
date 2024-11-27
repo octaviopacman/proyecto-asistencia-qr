@@ -101,8 +101,8 @@ const CrudHorarios = () => {
         ProfesorID: '',
         MateriaID: '',
         Dia: '',
-        horaInicio: '',
-        horaFinal: '',
+        /* horaInicio: '',
+        horaFinal: '', */
       });
       setAnio('');
       setDivision('');
