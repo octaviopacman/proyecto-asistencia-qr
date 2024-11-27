@@ -156,7 +156,7 @@ const CrudHorarios = () => {
           )}
           <Form onSubmit={handleSubmit} className="d-flex flex-wrap gap-3">
 
-            <SelectField 
+            <SelectField
               label="Profesor"
               name="ProfesorID"
               value={form.ProfesorID}
@@ -166,7 +166,7 @@ const CrudHorarios = () => {
               }))}
               onChange={handleChange}
             />
-            <SelectField 
+            <SelectField
               label="Materia"
               name="MateriaID"
               value={form.MateriaID}
@@ -200,19 +200,16 @@ const CrudHorarios = () => {
             </Form.Group>
             <Form.Group controlId="formHoraInicio">
               <Form.Label>Hora Inicio</Form.Label>
-              <Form.Control
-                type="time"
-                name="fechaInicio"
-                value={form.fechainicio}
-                onChange={handleChange}
-              />
+              <Form.Control name="fechainicio"
+               value={form.fechainicio} 
+               onChange={handleChange} />
             </Form.Group>
             <Form.Group controlId="formHoraFinal">
               <Form.Label>Hora Final</Form.Label>
               <Form.Control
                 type="time"
-                name="horaFinal"
-                value={form.horaFinal}
+                name="fechafin"
+                value={form.fechafin}
                 onChange={handleChange}
               />
             </Form.Group>
