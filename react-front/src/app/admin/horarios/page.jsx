@@ -200,8 +200,10 @@ const CrudHorarios = () => {
             </Form.Group>
             <Form.Group controlId="formHoraInicio">
               <Form.Label>Hora Inicio</Form.Label>
-              <Form.Control name="fechainicio"
-               value={form.fechainicio} 
+              <Form.Control 
+               name="fechainicio"
+               value={form.fechainicio}
+               type='time' 
                onChange={handleChange} />
             </Form.Group>
             <Form.Group controlId="formHoraFinal">
